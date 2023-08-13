@@ -59,7 +59,9 @@ ROOT_URLCONF = 'EPIST.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            '../Users/Templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

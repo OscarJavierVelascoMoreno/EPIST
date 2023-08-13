@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from ckeditor.fields import RichTextField
 from datetime import date
 from Users.models import User
@@ -21,7 +22,7 @@ class Forum(models.Model):
 
     title = models.CharField(max_length=100, unique=True)
     description = RichTextField()
-    creation_date = models.DateField(default=date.today())
+    creation_date = models.DateField(timezone.now)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
     state = models.CharField(choices=FRM_STATE_CHOICES, default='open')
     project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
@@ -37,7 +38,7 @@ class Discussion(models.Model):
 
     title = models.CharField(max_length=100, unique=True)
     description = RichTextField()
-    creation_date = models.DateField(default=date.today())
+    creation_date = models.DateField(timezone.now)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
     state = models.CharField(choices=DCS_STATE_CHOICES, default='open')
     forum_id = models.ForeignKey(Forum, null=True, on_delete=models.CASCADE)
@@ -78,7 +79,7 @@ class Message(models.Model):
 
     title = models.CharField(max_length=100)
     description = RichTextField()
-    creation_date = models.DateField(default=date.today())
+    creation_date = models.DateField(timezone.now)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     discussion_id = models.ForeignKey(Discussion, on_delete=models.CASCADE)
     mark_relevant = models.BooleanField()

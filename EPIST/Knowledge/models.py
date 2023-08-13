@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from ckeditor.fields import RichTextField
 from datetime import date
 from Users.models import User
@@ -32,7 +33,7 @@ class Knowledge(models.Model):
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
     approved_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_approved')
     partner_ids = models.ManyToManyField(User)
-    creation_date = models.DateField(default=date.today())
+    creation_date = models.DateField(timezone.now)
     approved_date = models.DateField(blank=True, null=True)
     active = models.BooleanField(default=True)
 
@@ -53,7 +54,7 @@ class KnowledgeStep(models.Model):
     title = models.CharField(max_length=100)
     description = RichTextField()
     knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE)
-    creation_date = models.DateField(default=date.today())
+    creation_date = models.DateField(timezone.now)
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
