@@ -52,7 +52,8 @@ class KnowledgeStep(models.Model):
 
     title = models.CharField(max_length=100)
     description = RichTextField()
-    Knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE)
+    knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE)
+    creation_date = models.DateField(default=date.today())
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
