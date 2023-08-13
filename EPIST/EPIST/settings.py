@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Users',
     'Projects',
     'Knowledge',
+    'Forums',
 ]
 
 MIDDLEWARE = [
