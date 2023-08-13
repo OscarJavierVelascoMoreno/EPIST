@@ -2,10 +2,11 @@ from django.db import models
 from Users.models import User
 
 STATE_CHOICES = (
-    ("draft", "Borrador"),
-    ("in_progress", "En Progreso"),
-    ("closed", "Cerrado"),
+    ("draft", "Draft"),
+    ("in_progress", "In Progress"),
+    ("closed", "Closed"),
 )
+
 
 # Class for projects
 class Project(models.Model):
@@ -19,3 +20,13 @@ class Project(models.Model):
     @staticmethod
     def close_project(self):
         self.state = 'closed'
+
+    def __str__(self):
+        return self.name
+
+
+class User(User):
+    project_ids = models.ManyToManyField(Project)
+
+    def __str__(self):
+        return self.name
