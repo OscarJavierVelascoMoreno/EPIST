@@ -86,13 +86,13 @@ body {
 }
 
 .nav_opt_about{
-    padding: 10%;
     height: 30%;
     display: flex;
     align-items: flex-end;
 }
 
 .nav_opt_about ul{
+    padding: 10%;
     width: 100%;
     list-style-type: none;
 }
@@ -114,6 +114,7 @@ body {
 }
 
 .nav_settings_opt a{
+    padding-top: 10%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -126,4 +127,65 @@ body {
     width: 20%;
     height: 20%;
     padding-right: 5%;
+}
+
+.content_base{
+    width: 80%;
+    height: 100%;
+    background-color: white;
+}
+
+.content_header{
+    display: flex;
+    justify-content: flex-start;
+    height: 10%;
+}
+
+.content_header_welcome{
+    width: 70%;
+    height: 100%;
+}
+
+.content_header_welcome h1{
+    margin: 3% 0 0 5%;
+}
+
+.content_header_welcome h3{
+    margin: 0 0 0 5%;
+}
+
+.content_header_users{
+    width: 30%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.content_header_users a{
+    font-size: 30px;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.content_header_users a img{
+    width: 20%;
+    height: 20%;
+}
+
+.content_main{
+    height: 90%;
+    background-color: #D9D9D9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content_main_container{
+    border-radius: 25px;
+    background-color: black;
+    height: 90%;
+    width: 90%;
 }
