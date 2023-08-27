@@ -4,20 +4,20 @@ from datetime import date
 from Users.models import User
 
 STATE_CHOICES = (
-    ("draft", "Draft"),
-    ("in_progress", "In Progress"),
-    ("closed", "Closed"),
+    ("draft", "Borrador"),
+    ("in_progress", "En Progreso"),
+    ("closed", "Cerrado"),
 )
 
 
 # Class for projects
 class Project(models.Model):
 
-    title = models.CharField(max_length=100, unique=True)
-    description = models.TextField()
-    creation_date = models.DateField(timezone.now)
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    state = models.CharField(choices=STATE_CHOICES, default='draft')
+    title = models.CharField(max_length=100, unique=True, verbose_name="Título")
+    description = models.TextField(verbose_name="Descripción")
+    creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name="Creado Por")
+    state = models.CharField(choices=STATE_CHOICES, default='draft', verbose_name="Estado")
 
     @staticmethod
     def close_project(self):
@@ -28,4 +28,4 @@ class Project(models.Model):
 
 
 class User(User):
-    project_ids = models.ManyToManyField(Project)
+    project_ids = models.ManyToManyField(Project, verbose_name="Proyectos")
