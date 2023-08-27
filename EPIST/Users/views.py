@@ -33,5 +33,14 @@ def user_details(request):
 def user_edit(request):
     return render(request, "user_edit.html")
 
-def user_delete(request):
-    return render(request, "user_delete.html")
+def user_delete(request, id):
+    user = User.objects.get(id=id)
+    first_name = user.first_name
+    last_name = user.last_name
+    if request.method == 'POST':
+        user.delete()
+        return redirect("users_list")
+    return render(request, "user_delete.html", {
+        'first_name': first_name,
+        'last_name': last_name
+        })

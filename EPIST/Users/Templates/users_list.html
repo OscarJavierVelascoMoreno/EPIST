@@ -41,24 +41,14 @@ Usuario
                 <td>{{user.ident_number}}</td>
                 <td>
                     <div class="actions_list">
-                        <a href="{% url 'user_edit' %}"> <img class="actions_list_icon" src="../static/Icons/edit_353430-checkbox-edit-pen-pencil_107516.svg" alt="Create User"> Editar</a>
-                        <a href="#popup-box"> <img class="actions_list_icon" src="../static/Icons/delete_emblemunreadable_93487.svg" alt="Create User"> Eliminar</a>
+                        <a href="{% url 'user_edit' %}"> <img class="actions_list_icon" src="../static/Icons/edit_353430-checkbox-edit-pen-pencil_107516.svg" alt="Edit User"> Editar</a>
+                        <a href="{% url 'user_delete' user.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_emblemunreadable_93487.svg" alt="Delete User"> Eliminar</a>
                     </div>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <div id="popup-box" class="modal">
-        <div class="modal_content">
-            <h1>Se eliminará el usuario permanentemente. ¿Desea continuar?</h1>
-            <div class="modal_options">
-                <a class="option_delete" href="#">Eliminar</a>
-                <a class="option_cancel" href="#">Cancelar</a>
-            </div>
-        </div>
-    </div>
 
 </div>
 
