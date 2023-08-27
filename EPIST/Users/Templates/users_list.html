@@ -1,0 +1,65 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+Usuarios de Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, </h1>
+<h3>Aquí puedes ver todos los usuarios registrados en el sistema.</h3>
+
+{% endblock %}
+
+{% block user_name %}
+
+Usuario
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="content_main_container">
+    <a class="create_button" href="{% url 'user_create' %}"> <img class="create_icon" src="../static/Icons/create_new_add_plus_icon_219839.svg" alt="Create User"> Crear Usuario</a>
+
+    <table class="table_list">
+        <thead>
+            <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Número de Identificación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td>{{user.ident_number}}</td>
+                <td>
+                    <div class="actions_list">
+                        <a href="{% url 'user_edit' %}"> <img class="actions_list_icon" src="../static/Icons/edit_353430-checkbox-edit-pen-pencil_107516.svg" alt="Create User"> Editar</a>
+                        <a href="#popup-box"> <img class="actions_list_icon" src="../static/Icons/delete_emblemunreadable_93487.svg" alt="Create User"> Eliminar</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="popup-box" class="modal">
+        <div class="modal_content">
+            <h1>Se eliminará el usuario permanentemente. ¿Desea continuar?</h1>
+            <div class="modal_options">
+                <a class="option_delete" href="#">Eliminar</a>
+                <a class="option_cancel" href="#">Cancelar</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
