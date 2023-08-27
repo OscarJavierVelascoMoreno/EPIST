@@ -45,7 +45,7 @@ body {
 
 .nav_var_icon h1{
     color: aliceblue;
-    font-size: 40px;
+    font-size: 200%;
 }
 
 .nav_var_option{
@@ -74,7 +74,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 30px;
+    font-size: 200%;
     color: aliceblue;
     text-decoration: none;
 }
@@ -103,7 +103,7 @@ body {
 }
 
 .nav_opt_about ul li a{
-    font-size: 30px;
+    font-size: 200%;
     color: aliceblue;
     text-decoration: none;
 }
@@ -118,7 +118,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    font-size: 30px;
+    font-size: 200%;
     color: aliceblue;
     text-decoration: none;
 }
@@ -141,17 +141,17 @@ body {
     height: 10%;
 }
 
-.content_header_welcome{
+.content_header_title{
     width: 70%;
     height: 100%;
 }
 
-.content_header_welcome h1{
-    margin: 3% 0 0 5%;
+.content_header_title h1{
+    margin: 2% 0 0 3%;
 }
 
-.content_header_welcome h3{
-    margin: 0 0 0 5%;
+.content_header_title h3{
+    margin: 0 0 0 3%;
 }
 
 .content_header_users{
@@ -162,7 +162,7 @@ body {
 }
 
 .content_header_users a{
-    font-size: 30px;
+    font-size: 200%;
     color: black;
     text-decoration: none;
     display: flex;
@@ -184,8 +184,224 @@ body {
 }
 
 .content_main_container{
-    border-radius: 25px;
+    border-radius: 3%;
     background-color: black;
     height: 90%;
     width: 90%;
+}
+
+.table_list{
+    margin: 5%;
+    width: 90%;
+    max-height: 80%;
+}
+
+.table_list thead tr th{
+    background: #D9D9D9;
+    font-size: 120%;
+    padding: 1%;
+}
+
+.table_list tbody tr td{
+    background: #D9D9D9;
+    font-size: 120%;
+    padding: 2%;
+}
+
+.actions_list{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions_list a{
+    font-size: 120%;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.create_button{
+    text-decoration: none;
+    color: black;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    height: 4%;
+    width: 15%;
+    margin: 2%;
+    font-size: 150%;
+    display: flex;
+    align-items: center;
+    padding: 1%;
+}
+
+.create_button:hover{
+    background-color: #C6C6C6;
+}
+
+.create_icon{
+    height: 100%;
+    margin: 0;
+    padding: 5%;
+}
+
+.create_main_container{
+    border-radius: 3%;
+    background-color: black;
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create_container{
+    border-radius: 3%;
+    background: #D9D9D9;
+    width: 70%;
+    height: 70%;
+    padding: 5%;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.create_container form .form_row{
+    padding: 4% 3% 0 3%;
+}
+
+.many2many_data label{
+    font-size: 150%;
+}
+
+.many2many_data label{
+    font-size: 150%;
+}
+
+.many2many_selection{
+    margin: 1%;
+}
+
+.many2many_selection input{
+    margin: 1%;
+}
+
+.create_container form .form_row .input_data{
+    width: 100%;
+    height: 40px;
+    position: relative;
+    background: #D9D9D9;
+}
+
+.input_data input{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 200%;
+    border-bottom: 2px solid black;
+}
+
+.input_data input:focus ~ label, .textarea textarea:focus ~ label,
+.input_data input:valid ~ label, .textarea textarea:valid ~ label{
+    transform: translateY(-40px);
+    font-size: 150%;
+    color: black;
+}
+
+.input_data label{
+    position: absolute;
+    pointer-events: none;
+    bottom: 15%;
+    font-size: 150%;
+    transition: all 0.3s ease;
+}
+
+.input_data .underline{
+    position: absolute;
+    bottom: 0;
+    height: 1%;
+    width: 100%;
+}
+
+.input_data .underline:before{
+    position: absolute;
+    content: "";
+    height: 1%;
+    width: 100%;
+    background: black;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.input_data input:focus ~ .underline:before,
+.input_data input:valid ~ .underline:before,
+.textarea textarea:focus ~ .underline:before,
+.textarea textarea:valid ~ .underline:before{
+    transform: scale(1);
+}
+
+.submit-btn .input_data input{
+    background: none;
+    border: none;
+    color: black;
+    font-size: 150%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+}
+
+.submit-btn .input_data input:hover{
+    background: #C6C6C6;
+}
+
+.modal {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.modal_content {
+    position: absolute;
+    background: #D9D9D9;
+    width: 50%;
+    padding: 1%;
+    border-radius: 4px;
+}
+
+.modal:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal_options{
+    padding: 3% 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 200%;
+}
+
+.option_delete{
+    text-decoration: none;
+    color: black;
+}
+
+.option_delete:hover{
+    color: red;
+}
+
+.option_cancel{
+    text-decoration: none;
+    color: black;
+}
+
+.option_cancel:hover{
+    color: green;
 }
