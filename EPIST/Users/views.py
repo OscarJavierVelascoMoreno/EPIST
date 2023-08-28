@@ -41,7 +41,7 @@ def user_create(request):
             user.save()
         except Exception as e:
             return render(request, 'exception_popup.html', {'exception': e})
-        return redirect('users_list')
+        return redirect("user_details", id=user.id)
     return render(request, "user_create.html", {'form': form})
 
 def user_details(request, id):
@@ -54,7 +54,7 @@ def user_edit(request, id):
     form = UserForm(request.POST or None, instance=user)
     if form.is_valid() and request.method == 'POST':
         form.save()
-        return redirect('users_list')
+        return redirect("user_details", id=user.id)
     return render(request, "user_edit.html", {'form': form, 'user': user})
 
 def user_delete(request, id):
