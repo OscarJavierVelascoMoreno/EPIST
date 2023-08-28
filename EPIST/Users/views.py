@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from Projects.models import User
+from django.contrib.auth.hashers import make_password
 from .forms import UserForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -35,7 +36,9 @@ def user_create(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
         try:
-            form.save()
+            user = form.save()
+            user.password = make_password(user.password)
+            user.save()
         except Exception as e:
             return render(request, 'exception_popup.html', {'exception': e})
         return redirect('users_list')
@@ -65,3 +68,24 @@ def user_delete(request, id):
         'first_name': first_name,
         'last_name': last_name
         })
+
+def user_change_password(request, id):
+    user = User.objects.get(id=id)
+    old_error = False
+    new_error = False
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        if user.check_password(old_password):
+            new_password = request.POST['new_password']
+            new_password_confirm = request.POST['new_password_confirm']
+            if new_password_confirm == new_password:
+                user.password = make_password(new_password)
+                user.save()
+                return redirect("user_details", id=user.id)
+            else:
+                new_error = "La nueva contraseña y su confirmación no coinciden."
+                return render(request, "user_change_password.html", {'user':user, "new_error": new_error, "old_error": old_error})
+        else:
+            old_error = "La contraseña no coincide con la antigua contraseña."
+            return render(request, "user_change_password.html", {'user':user, "new_error": new_error, "old_error": old_error})
+    return render(request, "user_change_password.html", {'user':user, "new_error": new_error, "old_error": old_error})

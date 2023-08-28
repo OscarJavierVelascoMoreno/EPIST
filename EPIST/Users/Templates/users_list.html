@@ -22,27 +22,23 @@ Usuario
 {% block main_container %}
 
 <div class="content_main_container">
-    <a class="create_button" href="{% url 'user_create' %}"> <img class="create_icon" src="../static/Icons/create_new_add_plus_icon_219839.svg" alt="Create User"> Crear Usuario</a>
+    <a class="create_button" href="{% url 'user_create' %}"> <img class="create_icon" src="../static/Icons/create_icon.svg" alt="Create User"> Crear Usuario</a>
 
     <table class="table_list">
         <thead>
             <tr>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Número de Identificación</th>
+                <th>Identificación - Nombre</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% for user in page_obj %}
             <tr>
-                <td><a class="a_details" href="{% url 'user_details' user.id %}">{{user.first_name}}</a></td>
-                <td><a class="a_details" href="{% url 'user_details' user.id %}">{{user.last_name}}</a></td>
-                <td><a class="a_details" href="{% url 'user_details' user.id %}">{{user.ident_number}}</a></td>
-                <td>
+                <td width="70%"><a class="a_details" href="{% url 'user_details' user.id %}">{{user.ident_number}} - {{user.first_name}} {{user.last_name}}</a></td>
+                <td width="30%">
                     <div class="actions_list">
-                        <a href="{% url 'user_edit' user.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_353430-checkbox-edit-pen-pencil_107516.svg" alt="Edit User"> Editar</a>
-                        <a href="{% url 'user_delete' user.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_emblemunreadable_93487.svg" alt="Delete User"> Eliminar</a>
+                        <a href="{% url 'user_edit' user.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
+                        <a href="{% url 'user_delete' user.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_list_icon.svg" alt="Delete User"> Eliminar</a>
                     </div>
                 </td>
             </tr>

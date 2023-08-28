@@ -33,16 +33,19 @@ Usuario
                             <span class="tags">{{ project }}</span>
                         {% endfor %}
                     </div>
+                {% elif field.name == 'password' %}
                 {% else %}
                     <div class="form_row">
-                        <div class="input_data">
-                            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" value="{{ field.value | default:'' }}" readonly>
+                        <div class="input_data_details">
+                            {{ field.label }}: {{ field.value | default:'' }}
                         </div>
                     </div>
                 {% endif %}
             {% endfor %}
             <div class="details_form_footer">
-                <button class="back_to_list_details" type="button" onclick="location.href = '/users_list'">Volver</a>
+                <a class="details_action" href="{% url 'user_edit' user.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
+                <a class="details_action" href="{% url 'user_delete' user.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete User"> Eliminar</a>
+                <a class="details_action" href="{% url 'users_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete User"> Volver</a>
             </div>
         </form>
     </div>
