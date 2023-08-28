@@ -2,7 +2,7 @@
 
 {% block title %}
 
-Usuario Epist KMS
+{{ first_name }} {{ last_name }} Epist KMS
 
 {% endblock %}
 
@@ -26,8 +26,8 @@ Usuario
         <h1>Se eliminará el usuario {{ first_name }} {{ last_name }} permanentemente. ¿Deseas continuar?</h1>
         <form method="post" class="delete_form">
             {% csrf_token %}
-            <input class="form_button delete_button" type="submit" value="Si, eliminar.">
-            <button class="form_button cancel_button" type="button" onclick="location.href = '/users_list'">No, cancelar</a>
+            <input class="delete_form_button delete_button" type="submit" value="Si, eliminar.">
+            <button class="delete_form_button cancel_button" type="button" onclick="location.href = '/users_list'">No, cancelar</a>
         </form>
     </div>
 </div>

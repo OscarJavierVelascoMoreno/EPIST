@@ -9,7 +9,7 @@ Usuario Epist KMS
 {% block content_header %}
 
 <h1>Hola, </h1>
-<h3>Aquí puedes ver la información personal de Usuario registrada en el sistema.</h3>
+<h3>Aquí puedes ver la información personal de {{ user.first_name }} {{ user.last_name }} registrada en el sistema.</h3>
 
 {% endblock %}
 
@@ -21,6 +21,31 @@ Usuario
 
 {% block main_container %}
 
-Contenido de pruebas
+<div class="create_main_container">
+    <div class="create_container">
+        <form method="get">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'project_ids' %}
+                    <div class="many2many_details">
+                        <span>Proyectos</span><br><br>
+                        {% for project in user.project_ids.all %}
+                            <span class="tags">{{ project }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="form_row">
+                        <div class="input_data">
+                            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" value="{{ field.value | default:'' }}" readonly>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="details_form_footer">
+                <button class="back_to_list_details" type="button" onclick="location.href = '/users_list'">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

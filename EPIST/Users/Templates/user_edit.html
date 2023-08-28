@@ -9,7 +9,7 @@ Crear usuario de Epist KMS
 {% block content_header %}
 
 <h1>Hola, </h1>
-<h3>Aquí puedes modificar algunos datos de Usuario.</h3>
+<h3>Aquí puedes modificar algunos datos de {{ user.first_name }} {{ user.last_name }}.</h3>
 
 {% endblock %}
 
@@ -21,6 +21,35 @@ Usuario
 
 {% block main_container %}
 
-Contenido de pruebas
+<div class="create_main_container">
+    <div class="create_container">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'project_ids' %}
+                    <div class="form_row">
+                        <div class="many2many_data">
+                            <label for="">Proyectos</label>
+                            {{ form.project_ids }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="form_row">
+                        <div class="input_data">
+                            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" value="{{ field.value | default:'' }}" required>
+                            <div class="underline"></div>
+                            <label for="">{{ field.label }}</label>
+                        </div>
+                    </div>
+                {% endif %}
+                <div>{{field.errors}}</div>
+            {% endfor %}
+            <div class="edit_form_footer">
+                <input class="edit_form_button edit_button" type="submit" value="Guardar">
+                <button class="edit_form_button cancel_button" type="button" onclick="location.href = '/users_list'">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

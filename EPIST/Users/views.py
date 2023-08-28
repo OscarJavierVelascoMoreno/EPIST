@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import User
+from Projects.models import User
 from .forms import UserForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Base views here.
 def baseView(request):
@@ -15,7 +16,20 @@ def welcome(request):
 def users_list(request):
     users = User.objects.all()
     order_users = users.order_by('first_name')
-    return render(request, "users_list.html", {'users': order_users})
+
+    page_num = request.GET.get('page', 1)
+    paginator = Paginator(order_users, 4)
+
+    try:
+        page_obj = paginator.page(page_num)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver the first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # if the page is out of range, deliver the last page
+        page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, "users_list.html", {'page_obj': page_obj})
 
 def user_create(request):
     form = UserForm(request.POST or None)
@@ -27,11 +41,18 @@ def user_create(request):
         return redirect('users_list')
     return render(request, "user_create.html", {'form': form})
 
-def user_details(request):
-    return render(request, "user_details.html")
+def user_details(request, id):
+    user = User.objects.get(id=id)
+    form = UserForm(request.POST or None, instance=user)
+    return render(request, "user_details.html", {'form': form, 'user': user})
 
-def user_edit(request):
-    return render(request, "user_edit.html")
+def user_edit(request, id):
+    user = User.objects.get(id=id)
+    form = UserForm(request.POST or None, instance=user)
+    if form.is_valid() and request.method == 'POST':
+        form.save()
+        return redirect('users_list')
+    return render(request, "user_edit.html", {'form': form, 'user': user})
 
 def user_delete(request, id):
     user = User.objects.get(id=id)

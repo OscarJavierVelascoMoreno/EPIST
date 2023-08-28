@@ -208,6 +208,15 @@ body {
     padding: 2%;
 }
 
+.a_details{
+    text-decoration: none;
+    color: black;
+}
+
+.a_details:hover{
+    color: #205DBA;
+}
+
 .actions_list{
     display: flex;
     width: 100%;
@@ -274,16 +283,26 @@ body {
     font-size: 150%;
 }
 
-.many2many_data label{
-    font-size: 150%;
-}
-
 .many2many_selection{
     margin: 1%;
 }
 
 .many2many_selection input{
     margin: 1%;
+}
+
+.many2many_details{
+    padding: 5%;
+    font-size: 120%;
+}
+
+.tags{
+    border-radius: 25px;
+    background-color: black;
+    color: #D9D9D9;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
 }
 
 .create_container form .form_row .input_data{
@@ -364,7 +383,7 @@ body {
     margin: 5%;
 }
 
-.form_button{
+.delete_form_button{
     padding: 1%;
     width: 40%;
     font-size: 200%;
@@ -379,3 +398,76 @@ body {
     background: #FFC107;
 }
 
+.edit_form_footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5%;
+}
+
+.edit_form_button{
+    padding: 1%;
+    width: 40%;
+    font-size: 120%;
+}
+
+.edit_button:hover{
+    background: black;
+    color: #D9D9D9;
+}
+
+.pagination_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination{
+    width: 20%;
+    font-size: 120%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5%;
+    color: #D9D9D9;
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+}
+
+.show_a_pagination{
+    text-decoration: underline #D9D9D9;
+    color: #D9D9D9;
+}
+
+.hide_a_pagination{
+    pointer-events: none;
+    cursor: not-allowed;
+    color: transparent;
+    user-select: none;
+    text-decoration: none;
+}
+
+.details_form_footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.back_to_list_details{
+    width: 10%;
+    font-size: 120%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5%;
+    color: black;
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+}
+
+.back_to_list_details:hover{
+    color: #D9D9D9;
+    background: black;
+}
