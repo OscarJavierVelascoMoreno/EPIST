@@ -61,6 +61,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             '../Users/Templates',
+            '../Projecs/Templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -91,6 +92,7 @@ DATABASES = {
     }
 }
 
+LOGIN_REDIRECT_URL = "/welcome/"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -8,14 +8,8 @@ Crear usuario de Epist KMS
 
 {% block content_header %}
 
-<h1>Hola, </h1>
-<h3>Aquí puedes modificar algunos datos de {{ user.first_name }} {{ user.last_name }}.</h3>
-
-{% endblock %}
-
-{% block user_name %}
-
-Usuario
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes modificar algunos datos de {{ selected_user.first_name }} {{ selected_user.last_name }}.</h3>
 
 {% endblock %}
 
@@ -35,7 +29,7 @@ Usuario
                     </div>
                 {% elif field.name == 'password' %}
                     <div class="form_row">
-                        <a class="update_password_button" href="{% url 'user_change_password' user.id %}"> <img class="update_password_icon" src="../static/Icons/password_icon.svg" alt="Update Password"> Cambiar contraseña</a>
+                        <a class="update_password_button" href="{% url 'user_change_password' selected_user.id %}"> <img class="update_password_icon" src="../static/Icons/password_icon.svg" alt="Update Password"> Cambiar contraseña</a>
                     </div>
                 {% else %}
                     <div class="form_row">

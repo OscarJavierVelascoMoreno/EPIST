@@ -8,14 +8,8 @@
 
 {% block content_header %}
 
-<h1>Hola, </h1>
+<h1>Hola, {{ user.first_name }}</h1>
 <h3>Estas a punto de eliminar la información personal de {{ first_name }} {{ last_name }} registrada en el sistema.</h3>
-
-{% endblock %}
-
-{% block user_name %}
-
-Usuario
 
 {% endblock %}
 

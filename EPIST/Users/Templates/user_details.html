@@ -8,14 +8,8 @@ Usuario Epist KMS
 
 {% block content_header %}
 
-<h1>Hola, </h1>
-<h3>Aquí puedes ver la información personal de {{ user.first_name }} {{ user.last_name }} registrada en el sistema.</h3>
-
-{% endblock %}
-
-{% block user_name %}
-
-Usuario
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes ver la información personal de {{ selected_user.first_name }} {{ selected_user.last_name }} registrada en el sistema.</h3>
 
 {% endblock %}
 
@@ -29,7 +23,7 @@ Usuario
                 {% if field.name == 'project_ids' %}
                     <div class="many2many_details">
                         <span>Proyectos</span><br><br>
-                        {% for project in user.project_ids.all %}
+                        {% for project in selected_user.project_ids.all %}
                             <span class="tags">{{ project }}</span>
                         {% endfor %}
                     </div>
@@ -43,8 +37,8 @@ Usuario
                 {% endif %}
             {% endfor %}
             <div class="details_form_footer">
-                <a class="details_action" href="{% url 'user_edit' user.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
-                <a class="details_action" href="{% url 'user_delete' user.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete User"> Eliminar</a>
+                <a class="details_action" href="{% url 'user_edit' selected_user.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
+                <a class="details_action" href="{% url 'user_delete' selected_user.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete User"> Eliminar</a>
                 <a class="details_action" href="{% url 'users_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete User"> Volver</a>
             </div>
         </form>

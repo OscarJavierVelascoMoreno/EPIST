@@ -66,8 +66,25 @@
                             <img src="../static/Icons/notification_icon.svg" alt="Notificaciones">
                         </a>
                         <a href=".">
-                            <img src="../static/Icons/user_icon.svg" alt="Perfil">
-                            {% block user_name %} {% endblock %}
+                            <div class="nav-container">
+                                <ul class="nav-items">
+                                    <!-- Dropdown menu -->
+                                    <li class="nav-item nav-item-dropdown">
+                                        <a class="dropdown-trigger" href="#"><img src="../static/Icons/user_icon.svg" alt="Perfil">{{ user.first_name }}</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-menu-item">
+                                                <a href="{% url 'user_details' user.id %}">Ver Perfil</a>
+                                            </li>
+                                            <li class="dropdown-menu-item">
+                                                <a href="{% url 'user_change_password' user.id %}">Cambiar Contraseña</a>
+                                            </li>
+                                            <li class="dropdown-menu-item">
+                                                <a href="{% url 'logout' %}">Cerrar Sesion</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </a>
                     </div>
                 </div>

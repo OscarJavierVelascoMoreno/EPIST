@@ -282,6 +282,14 @@ body {
     padding: 4% 3% 0 3%;
 }
 
+.many2many_data div{
+    display: flex;
+}
+
+.many2many_data div label{
+    display: flex;
+}
+
 .many2many_data label{
     font-size: 150%;
 }
@@ -510,4 +518,70 @@ form .form-row .textarea{
 
 .update_password_icon{
     width: 10%;
+}
+
+.nav-container {
+  background-color: #fff;
+  display: flex;
+  padding-right: 20%;
+}
+
+.nav-container ul, li {
+  list-style: none;
+  -webkit-padding-start: 0;
+}
+
+.nav-container a{
+  text-decoration: none;
+  color: black;
+}
+
+/*Navigation menu*/
+.nav-item {
+  display: inline;
+}
+
+/*Dropdown menu*/
+.nav-item-dropdown:hover .dropdown-menu{
+    display: block;
+    opacity: 1;
+}
+
+.dropdown-trigger {
+    &:focus + .dropdown-menu {
+        display: block;
+        opacity: 1;
+    }
+}
+
+.dropdown-menu {
+    background-color: black;
+    display: inline-block;
+    text-align: right;
+    position: absolute;
+    top: 8%;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    width: 8%;
+}
+
+.dropdown-menu a{
+    color: #D9D9D9;
+    font-size: 100%;
+}
+
+.dropdown-menu-item:hover{
+    background-color: #D9D9D9;
+}
+
+.dropdown-menu-item:hover a{
+    color: black;
+    background-color: #D9D9D9;
+}
+
+.dropdown-menu-item {
+  cursor: pointer;
+  padding: 10%;
+  text-align: center;
 }

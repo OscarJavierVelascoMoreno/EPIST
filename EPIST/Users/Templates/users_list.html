@@ -8,14 +8,8 @@ Usuarios de Epist KMS
 
 {% block content_header %}
 
-<h1>Hola, </h1>
+<h1>Hola, {{ user.first_name }}</h1>
 <h3>Aquí puedes ver todos los usuarios registrados en el sistema.</h3>
-
-{% endblock %}
-
-{% block user_name %}
-
-Usuario
 
 {% endblock %}
 
@@ -32,13 +26,13 @@ Usuario
             </tr>
         </thead>
         <tbody>
-            {% for user in page_obj %}
+            {% for user_data in page_obj %}
             <tr>
-                <td width="70%"><a class="a_details" href="{% url 'user_details' user.id %}">{{user.ident_number}} - {{user.first_name}} {{user.last_name}}</a></td>
+                <td width="70%"><a class="a_details" href="{% url 'user_details' user_data.id %}">{{user_data.ident_number}} - {{user_data.first_name}} {{user_data.last_name}}</a></td>
                 <td width="30%">
                     <div class="actions_list">
-                        <a href="{% url 'user_edit' user.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
-                        <a href="{% url 'user_delete' user.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_list_icon.svg" alt="Delete User"> Eliminar</a>
+                        <a href="{% url 'user_edit' user_data.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
+                        <a href="{% url 'user_delete' user_data.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_list_icon.svg" alt="Delete User"> Eliminar</a>
                     </div>
                 </td>
             </tr>

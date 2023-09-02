@@ -8,14 +8,8 @@ Error durante la creación
 
 {% block content_header %}
 
-<h1>Hola, </h1>
+<h1>Hola, {{ user.first_name }}</h1>
 <h3>Aquí puedes registrar un nuevo usuario en el sistema.</h3>
-
-{% endblock %}
-
-{% block user_name %}
-
-Usuario
 
 {% endblock %}
 
