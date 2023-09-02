@@ -28,6 +28,7 @@ Crear usuario de Epist KMS
                         </div>
                     </div>
                 {% elif field.name == 'password' %}
+                    <input name="password" type="password" value="{{ field.value }}" readonly hidden>
                     <div class="form_row">
                         <a class="update_password_button" href="{% url 'user_change_password' selected_user.id %}"> <img class="update_password_icon" src="../static/Icons/password_icon.svg" alt="Update Password"> Cambiar contraseña</a>
                     </div>

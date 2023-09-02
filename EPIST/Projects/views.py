@@ -26,7 +26,9 @@ def projects_list(request):
 def project_create(request):
     form = ProjectForm(request.POST or None)
     if form.is_valid():
-        project = form.save()
+        project = form.save(commit=False)
+        project.created_by = request.user
+        project.save()
         return redirect("project_details", id=project.id)
     return render(request, "project_create.html", {'form': form})
 
