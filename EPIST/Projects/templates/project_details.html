@@ -1,0 +1,61 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+Usuario Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, </h1>
+<h3>Aquí puedes ver la información del proyecto {{ project.title }} registrada en el sistema.</h3>
+
+{% endblock %}
+
+{% block user_name %}
+
+Usuario
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_main_container">
+    <div class="create_container">
+        <form method="get">
+            {% csrf_token %}
+            <div class="view_project_header">
+                <div class="project_tittle_container">
+                    <label class="project_field_label">Título: </label>
+                    <p class="description_content">{{ project.title }}</p>
+                </div>
+                <div class="project_state_container">
+                    <label class="project_field_label">Estado</label>
+                    <label class="project_state_tag">{{ project.get_state_display }}</label>
+                </div>
+            </div>
+            <div class="form_row">
+                <label class="project_field_label">Descripción:</label>
+                <textarea class="text_area_detail" name="description" rows="8" readonly>{{ project.description }}</textarea>
+            </div>
+            <div class="view_project_footer">
+                <div class="project_field_container">
+                    <label class="project_field_label">Creado por: </label>
+                    <p class="description_content">{{ project.created_by }}</p>
+                </div>
+                <div class="project_field_container">
+                    <label class="project_field_label">Creado en:</label>
+                    <p class="description_content">{{ project.creation_date }}</p>
+                </div>
+            </div>
+            <div class="details_form_footer">
+                <a class="details_action" href="{% url 'project_edit' project.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Project"> Editar</a>
+                <a class="details_action" href="{% url 'project_delete' project.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Project"> Eliminar</a>
+                <a class="details_action" href="{% url 'projects_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete Project"> Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

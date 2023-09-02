@@ -1,0 +1,72 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+Crear usuario de Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, </h1>
+<h3>Aquí puedes modificar algunos datos de {{ user.first_name }} {{ user.last_name }}.</h3>
+
+{% endblock %}
+
+{% block user_name %}
+
+Usuario
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_main_container">
+    <div class="create_container">
+        <form method="post">
+            {% csrf_token %}
+            <div class="state_container">
+                <label class="state_label">Estado:</label>
+                <div class="state_select">
+                    <select name="state">
+                    {% if project.state == 'draft' %}
+                        <option value="draft" selected>Borrador</option>
+                    {% else %}
+                        <option value="draft">Borrador</option>
+                    {% endif %}
+                    {% if project.state == 'in_progress' %}
+                        <option value="in_progress" selected>En Progreso</option>
+                    {% else %}
+                        <option value="in_progress">En Progreso</option>
+                    {% endif %}
+                    {% if project.state == 'closed' %}
+                        <option value="closed" selected>Cerrado</option>
+                    {% else %}
+                        <option value="closed">Cerrado</option>
+                    {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="input_data">
+                    <input name="title" value="{{ project.title }}" type="text" required>
+                    <div class="underline"></div>
+                    <label for="">Titulo</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-data textarea">
+                    <label for="">Descripcion del proyecto.</label><br />
+                    <div class="underline"></div>
+                    <textarea name="description" rows="8" cols="80" required>{{ project.description }}</textarea>
+                </div>
+            </div>
+            <div class="edit_form_footer">
+                <input class="edit_form_button edit_button" type="submit" value="Guardar">
+                <button class="edit_form_button cancel_button" type="button" onclick="location.href = '/projects_list'">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
