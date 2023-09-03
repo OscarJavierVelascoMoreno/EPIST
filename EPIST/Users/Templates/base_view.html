@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../static/css/base.css">
         <link rel="stylesheet" href="../static/css/project_base.css">
+        <link rel="stylesheet" href="../static/css/knowledge_base.css">
         <title>{% block title %} {% endblock %}</title>
     </head>
     <body>
@@ -14,7 +15,7 @@
             <div class="nav_bar_ver">
                 <div class="nav_var_icon">
                     <img src="../static/Icons/epist_main_icon.svg" alt="EPIST">
-                    <h1>EPIST KMS</h1>
+                    <a style="text-decoration: none;" href="{% url 'welcome' %}"><h1>EPIST KMS</h1></a>
                 </div>
                 <div class="nav_opt_list">
                     <ul>
@@ -31,7 +32,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="{% url 'knowledges_list' %}">
                                 <img src="../static/Icons/knowledge_icon.svg" alt="Conocimiento">
                                 Conocimiento
                             </a>

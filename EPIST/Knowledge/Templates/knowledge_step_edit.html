@@ -1,4 +1,4 @@
-{% extends "base_view_settings.html" %}
+{% extends "base_view.html" %}
 
 {% block title %}
 
@@ -9,7 +9,7 @@ Crear Proyecto de Epist KMS
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes registrar un nuevo Proyecto en el sistema.</h3>
+<h3>Aquí puedes modificar algunos datos del paso {{ knowledge_step.title }}</h3>
 
 {% endblock %}
 
@@ -19,27 +19,18 @@ Crear Proyecto de Epist KMS
     <div class="create_container">
         <form method="post">
             {% csrf_token %}
-            <div class="state_container">
-                <label class="state_label">Estado:</label>
-                <div class="state_select">
-                    <select name="state">
-                        <option value="draft">Borrador</option>
-                        <option value="in_progress">En Progreso</option>
-                        <option value="closed">Cerrado</option>
-                    </select>
-                </div>
-            </div>
             <div class="form_row">
                 <div class="input_data">
-                    <input name="title" type="text" required>
+                    <input name="title" type="text" value="{{ knowledge_step.title }}" required>
                     <div class="underline"></div>
                     <label for="">Titulo</label>
                 </div>
             </div>
             <div class="form-row">
                 <div class="project_description_container">
-                    <label for="">Descripción del proyecto.</label><br />
-                    <textarea class="text_area_description" name="description" rows="8" required></textarea>
+                    <label for="">Descripción:</label><br/>
+                    {{ form.media }}
+                    {{ form.description }}
                 </div>
             </div>
             <div>{{field.errors}}</div>

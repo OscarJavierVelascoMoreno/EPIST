@@ -62,6 +62,7 @@ TEMPLATES = [
         'DIRS': [
             '../Users/Templates',
             '../Projecs/Templates',
+            '../Knowledge/Templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

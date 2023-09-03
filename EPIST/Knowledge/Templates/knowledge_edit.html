@@ -1,0 +1,75 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+Crear Conocimiento de Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes modificar algunos datos de {{ knowledge.title }}.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_knowledge_container">
+    <div class="knowledge_header_create">
+        <form method="post">
+            {% csrf_token %}
+            <div class="knowledge_basic_data">
+                <div class="title_container">
+                    <label for="">Titulo: </label>
+                    <input name="title" type="text" value="{{ knowledge.title }}" required>
+                </div>
+                <div>{{fields.title.errors}}</div>
+                <div class="project_container">
+                    <label for="">Proyecto: </label>
+                    <select name="project_id" id="project_id" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
+                        {% for project in projects %}
+                            {% if project.id == knowledge.project_id.id %}
+                                <option value="{{ project.id }}" selected>{{ project.title }}</option>
+                            {% else %}
+                                <option value="{{ project.id }}">{{ project.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="project_container">
+                <label for="">Tipo: </label>
+                <select name="type_id" id="type_id" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
+                    {% for type in types %}
+                        {% if project.id == knowledge.project_id.id %}
+                            <option value="{{ type.id }}" selected>{{ type.title }}</option>
+                        {% else %}
+                            <option value="{{ type.id }}">{{ type.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="knowledge_description_container">
+                <label for="">Descripción: </label><br />
+                <textarea class="text_area_description" name="note" rows="3" required>{{ knowledge.note }}</textarea>
+            </div>
+            <div class="pagination_container">
+                <div class="pagination">
+                    <div class="input_data">
+                        <input type="submit" value="Guardar">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="knowledge_steps_details_edit">
+        {% for knowledge_step in steps %}
+            <div class="knowledge_step">
+                <a href="{% url 'knowledge_step_details' knowledge_step.id %}">{{ knowledge_step.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

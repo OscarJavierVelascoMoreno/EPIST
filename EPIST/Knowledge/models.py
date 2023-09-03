@@ -6,10 +6,10 @@ from Users.models import User
 from Projects.models import Project
 
 KNL_STATE_CHOICES = (
-    ("new", "New"),
-    ("for_approval", "For Approval"),
-    ("approved", "Approved"),
-    ("archived", "Archived"),
+    ("new", "Nuevo"),
+    ("for_approval", "Por Aprobar"),
+    ("approved", "Aprobado"),
+    ("archived", "Archivado"),
 )
 
 
@@ -32,8 +32,7 @@ class Knowledge(models.Model):
     note = RichTextField()
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
     approved_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_approved')
-    partner_ids = models.ManyToManyField(User)
-    creation_date = models.DateField(timezone.now)
+    creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     approved_date = models.DateField(blank=True, null=True)
     active = models.BooleanField(default=True)
 
@@ -54,7 +53,7 @@ class KnowledgeStep(models.Model):
     title = models.CharField(max_length=100)
     description = RichTextField()
     knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE)
-    creation_date = models.DateField(timezone.now)
+    creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
