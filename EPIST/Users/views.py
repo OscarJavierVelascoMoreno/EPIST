@@ -4,14 +4,20 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from .forms import UserForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 
 # Welcome view here.
+@login_required()
 def welcome(request):
     return render(request, "welcome.html")
 
-# Users views here.
+@login_required()
+def settings(request):
+    return render(request, "base_view_settings.html")
 
+# Users views here.
+@login_required()
 def users_list(request):
     users = User.objects.all()
     order_users = users.order_by('first_name')
@@ -30,6 +36,7 @@ def users_list(request):
 
     return render(request, "users_list.html", {'page_obj': page_obj})
 
+@login_required()
 def user_create(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
@@ -42,11 +49,13 @@ def user_create(request):
         return redirect("user_details", id=selected_user.id)
     return render(request, "user_create.html", {'form': form})
 
+@login_required()
 def user_details(request, id):
     selected_user = User.objects.get(id=id)
     form = UserForm(request.POST or None, instance=selected_user)
     return render(request, "user_details.html", {'form': form, 'selected_user': selected_user})
 
+@login_required()
 def user_edit(request, id):
     selected_user = User.objects.get(id=id)
     form = UserForm(request.POST or None, instance=selected_user)
@@ -55,6 +64,7 @@ def user_edit(request, id):
         return redirect("user_details", id=selected_user.id)
     return render(request, "user_edit.html", {'form': form, 'selected_user': selected_user})
 
+@login_required()
 def user_delete(request, id):
     user = User.objects.get(id=id)
     first_name = user.first_name
@@ -67,6 +77,7 @@ def user_delete(request, id):
         'last_name': last_name
         })
 
+@login_required()
 def user_change_password(request, id):
     selected_user = User.objects.get(id=id)
     old_error = False
@@ -104,6 +115,7 @@ def page_login(request):
 
     return render(request, "login.html")
 
+@login_required()
 def page_logout(request):
     logout(request)
     return redirect('login')

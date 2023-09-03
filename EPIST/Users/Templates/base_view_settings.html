@@ -14,26 +14,26 @@
             <div class="nav_bar_ver">
                 <div class="nav_var_icon">
                     <img src="../static/Icons/epist_main_icon.svg" alt="EPIST">
-                    <h1>EPIST KMS</h1>
+                    <a style="text-decoration: none;" href="{% url 'welcome' %}"><h1>EPIST KMS</h1></a>
+                </div>
+                <div class="nav_settings_opt">
+                    <a href="">
+                        <img src="../static/Icons/settings_icon.svg" alt="Inicio">
+                        Ajustes
+                    </a>
                 </div>
                 <div class="nav_opt_list">
                     <ul>
                         <li>
-                            <a href="{% url 'welcome' %}">
-                                <img src="../static/Icons/home_icon.svg" alt="Inicio">
-                                Inicio
+                            <a href="{% url 'users_list' %}">
+                                <img src="../static/Icons/users-svgrepo-com.svg" alt="usuarios">
+                                Usuarios
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <img src="../static/Icons/forum_main_icon.svg" alt="Foro">
-                                Foro
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="../static/Icons/knowledge_icon.svg" alt="Conocimiento">
-                                Conocimiento
+                            <a href="{% url 'projects_list' %}">
+                                <img src="../static/Icons/tasks-svgrepo-com.svg" alt="Proyectos">
+                                Proyectos
                             </a>
                         </li>
                     </ul>
@@ -47,12 +47,6 @@
                             <a href="">Acerca de</a>
                         </li>
                     </ul>
-                </div>
-                <div class="nav_settings_opt">
-                    <a href="{% url 'settings' %}">
-                        <img src="../static/Icons/settings_icon.svg" alt="Inicio">
-                        Ajustes
-                    </a>
                 </div>
             </div>
             <div class="content_base">

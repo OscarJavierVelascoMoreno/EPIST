@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Project
 from .forms import ProjectForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 # projects views here.
-
+@login_required()
 def projects_list(request):
     projects = Project.objects.all()
     order_projects = projects.order_by('title')
@@ -23,6 +24,7 @@ def projects_list(request):
 
     return render(request, "projects_list.html", {'page_obj': page_obj})
 
+@login_required()
 def project_create(request):
     form = ProjectForm(request.POST or None)
     if form.is_valid():
@@ -32,11 +34,13 @@ def project_create(request):
         return redirect("project_details", id=project.id)
     return render(request, "project_create.html", {'form': form})
 
+@login_required()
 def project_details(request, id):
     project = Project.objects.get(id=id)
     form = ProjectForm(request.POST or None, instance=project)
     return render(request, "project_details.html", {'form': form, 'project': project})
 
+@login_required()
 def project_edit(request, id):
     project = Project.objects.get(id=id)
     form = ProjectForm(request.POST or None, instance=project)
@@ -45,6 +49,7 @@ def project_edit(request, id):
         return redirect("project_details", id=project.id)
     return render(request, "project_edit.html", {'form': form, 'project': project})
 
+@login_required()
 def project_delete(request, id):
     project = Project.objects.get(id=id)
     title = project.title
