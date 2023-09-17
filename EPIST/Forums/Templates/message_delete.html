@@ -9,7 +9,7 @@
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Estas a punto de eliminar el paso de conocimiento: {{ title }} registrado en el sistema.</h3>
+<h3>Estas a punto de eliminar el mensaje: {{ title }} registrado en el sistema.</h3>
 
 {% endblock %}
 
@@ -17,7 +17,7 @@
 
 <div class="create_main_container">
     <div class="create_container">
-        <h1>Se eliminará el paso de conocimiento {{ title }} permanentemente. ¿Deseas continuar?</h1>
+        <h1>Se eliminará el mensaje {{ title }} permanentemente. ¿Deseas continuar?</h1>
         <form method="post" class="delete_form">
             {% csrf_token %}
             <input class="delete_form_button delete_button" type="submit" value="Si, eliminar.">

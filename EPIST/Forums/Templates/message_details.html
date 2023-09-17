@@ -2,14 +2,14 @@
 
 {% block title %}
 
-Usuario Epist KMS
+Mensaje Epist KMS
 
 {% endblock %}
 
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes ver la información del paso de conocimiento {{ knowledge_step.title }}.</h3>
+<h3>Aquí puedes ver la información del mensaje {{ message.title }} en la discusión {{ message.discussion_id.title }}.</h3>
 
 {% endblock %}
 
@@ -22,29 +22,29 @@ Usuario Epist KMS
             <div class="view_project_header">
                 <div class="project_tittle_container">
                     <label class="project_field_label">Título: </label>
-                    <p class="description_content">{{ knowledge_step.title }}</p>
+                    <p class="description_content">{{ message.title }}</p>
                 </div>
             </div>
             <div class="form_row">
                 <label class="project_field_label">Descripción:</label>
                 <div class="knowledge_step_description">
-                    {{ knowledge_step.description|safe }}
+                    {{ message.description|safe }}
                 </div>
             </div>
             <div class="view_project_footer">
                 <div class="project_field_container">
                     <label class="project_field_label">Creado por: </label>
-                    <p class="description_content">{{ knowledge_step.created_by }}</p>
+                    <p class="description_content">{{ message.created_by }}</p>
                 </div>
                 <div class="project_field_container">
                     <label class="project_field_label">Creado en:</label>
-                    <p class="description_content">{{ knowledge_step.creation_date }}</p>
+                    <p class="description_content">{{ message.creation_date }}</p>
                 </div>
             </div>
             <div class="details_form_footer">
-                <a class="details_action" href="{% url 'knowledge_step_edit' knowledge_step.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Knowledge Step"> Editar</a>
-                <a class="details_action" href="{% url 'knowledge_step_delete' knowledge_step.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Knowledge Step"> Eliminar</a>
-                <a class="details_action" href="{% url 'knowledge_details' knowledge_step.knowledge_id.id %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Back to Knowledge"> Volver</a>
+                <a class="details_action" href="{% url 'message_edit' message.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Message"> Editar</a>
+                <a class="details_action" href="{% url 'message_delete' message.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Message"> Eliminar</a>
+                <a class="details_action" href="{% url 'discussion_details' message.discussion_id.id %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Back to Discussion"> Volver</a>
             </div>
         </form>
     </div>

@@ -9,7 +9,7 @@ Crear Proyecto de Epist KMS
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes modificar algunos datos del paso {{ knowledge_step.title }}</h3>
+<h3>Aquí puedes modificar algunos datos del mensaje {{ message.title }}</h3>
 
 {% endblock %}
 
@@ -21,7 +21,7 @@ Crear Proyecto de Epist KMS
             {% csrf_token %}
             <div class="form_row">
                 <div class="input_data">
-                    <input name="title" type="text" value="{{ knowledge_step.title }}" required>
+                    <input name="title" type="text" value="{{ message.title }}" required>
                     <div class="underline"></div>
                     <label for="">Titulo</label>
                 </div>

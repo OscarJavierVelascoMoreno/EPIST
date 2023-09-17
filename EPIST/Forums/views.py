@@ -122,7 +122,7 @@ def message_create(request, id):
 def message_details(request, id):
     message = Message.objects.get(id=id)
     form = DiscussionForm(request.POST or None, instance=message)
-    return render(request, "message_create.html", {'form': form, 'message': message})
+    return render(request, "message_details.html", {'form': form, 'message': message})
 
 @login_required()
 def message_edit(request, id):
@@ -137,7 +137,7 @@ def message_edit(request, id):
 def message_delete(request, id):
     message = Message.objects.get(id=id)
     discussion = message.discussion_id.id
-    title = message.description
+    title = message.title
     if request.method == 'POST':
         message.delete()
         return redirect("discussion_details", id=discussion)
