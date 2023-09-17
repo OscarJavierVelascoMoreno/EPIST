@@ -77,6 +77,7 @@ class Discussion(models.Model):
 
 class Message(models.Model):
 
+    title = models.CharField(max_length=100)
     description = RichTextField()
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

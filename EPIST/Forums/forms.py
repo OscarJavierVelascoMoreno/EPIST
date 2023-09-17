@@ -14,11 +14,11 @@ class DiscussionForm(forms.ModelForm):
 
     class Meta:
         model = Discussion
-        fields = ['title', 'description', 'forum_id', 'project_id']
+        fields = ['title', 'description']
 
 
 class MessageForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        fields = ['description', 'discussion_id', 'mark_relevant']
+        fields = ['title', 'description', 'mark_relevant']

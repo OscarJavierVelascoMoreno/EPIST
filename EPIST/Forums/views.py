@@ -65,33 +65,35 @@ def forum_delete(request, id):
 
 # Discussion views here.
 @login_required()
-def discussion_create(request, forum_id, project_id):
-    form = Discussion(request.POST or None)
-    forum = Forum.objects.get(id=forum_id)
-    project = Project.objects.get(id=project_id)
+def discussion_create(request, id):
+    form = DiscussionForm(request.POST or None)
+    forum = Forum.objects.get(id=id)
+    project = Project.objects.get(id=forum.project_id.id)
     if form.is_valid():
         discussion = form.save(commit=False)
         discussion.created_by = request.user
         discussion.forum_id = forum
         discussion.project_id = project
         discussion.save()
-        return redirect("discussion_details", id=id)
+        return redirect("discussion_details", id=discussion.id)
     return render(request, "discussion_create.html", {'form': form, 'forum': forum, 'project': project})
 
 @login_required()
 def discussion_details(request, id):
     discussion = Discussion.objects.get(id=id)
+    messages = Message.objects.filter(discussion_id=id)
     form = DiscussionForm(request.POST or None, instance=discussion)
-    return render(request, "discussion_details.html", {'form': form, 'discussion': discussion})
+    return render(request, "discussion_details.html", {'form': form, 'discussion': discussion, 'messages': messages})
 
 @login_required()
 def discussion_edit(request, id):
     discussion = Discussion.objects.get(id=id)
+    messages = Message.objects.filter(discussion_id=id)
     form = DiscussionForm(request.POST or None, instance=discussion)
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("discussion_details", id=discussion.id)
-    return render(request, "discussion_edit.html", {'form': form, 'discussion': discussion})
+    return render(request, "discussion_edit.html", {'form': form, 'discussion': discussion, 'messages': messages})
 
 @login_required()
 def discussion_delete(request, id):
@@ -99,7 +101,7 @@ def discussion_delete(request, id):
     forum = discussion.forum_id.id
     title = discussion.title
     if request.method == 'POST':
-        forum.delete()
+        discussion.delete()
         return redirect("forum_details", id=forum)
     return render(request, "discussion_delete.html", {'title': title, 'forum': forum})
 
@@ -120,7 +122,7 @@ def message_create(request, id):
 def message_details(request, id):
     message = Message.objects.get(id=id)
     form = DiscussionForm(request.POST or None, instance=message)
-    return render(request, "discussion_details.html", {'form': form, 'message': message})
+    return render(request, "message_create.html", {'form': form, 'message': message})
 
 @login_required()
 def message_edit(request, id):
@@ -129,7 +131,7 @@ def message_edit(request, id):
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("message_details", id=message.id)
-    return render(request, "discussion_edit.html", {'form': form, 'message': message})
+    return render(request, "message_edit.html", {'form': form, 'message': message})
 
 @login_required()
 def message_delete(request, id):
@@ -139,4 +141,4 @@ def message_delete(request, id):
     if request.method == 'POST':
         message.delete()
         return redirect("discussion_details", id=discussion)
-    return render(request, "discussion_delete.html", {'title': title, 'message': message})
+    return render(request, "message_delete.html", {'title': title, 'message': message})

@@ -9,39 +9,40 @@ Crear Proyecto de Epist KMS
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes registrar un nuevo paso para el conocimiento {{ knowledge.title }}</h3>
+<h3>Aquí puedes registrar una nueva discusión para el foro {{ forum.title }}</h3>
 
 {% endblock %}
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+<div class="create_knowledge_container">
+    <div class="knowledge_header_create">
         <form method="post">
             {% csrf_token %}
-            <div class="form_row">
-                <div class="input_data">
+            <div class="knowledge_basic_data">
+                <div class="title_container">
+                    <label for="">Titulo: </label>
                     <input name="title" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Titulo</label>
                 </div>
+                <div>{{fields.title.errors}}</div>
             </div>
-            <div class="form-row">
-                <div class="project_description_container">
-                    <label for="">Descripción:</label><br/>
-                    {{ form.media }}
-                    {{ form.description }}
-                </div>
+            <div class="knowledge_description_container">
+                <label for="">Descripción: </label><br />
+                <textarea class="text_area_description" name="description" rows="3" required></textarea>
             </div>
-            <div>{{field.errors}}</div>
-            <div class="form_row">
-                <div class="form_row submit-btn">
+            <div class="pagination_container">
+                <div class="pagination">
                     <div class="input_data">
                         <input type="submit" value="Guardar">
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+    <div class="knowledge_steps_create">
+        <div class="alert_steps_create">
+            <p>Aqui podras crear nuevos mensajes luego de registrar la nueva discusión.</p>
+        </div>
     </div>
 </div>
 

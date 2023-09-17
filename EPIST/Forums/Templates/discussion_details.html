@@ -9,44 +9,58 @@ Usuario Epist KMS
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes ver la información del paso de conocimiento {{ knowledge_step.title }}.</h3>
+<h3>Aquí puedes ver la información de la discusión {{ discussion.title }} registrada en el sistema.</h3>
 
 {% endblock %}
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
-        <form method="get">
-            {% csrf_token %}
-            <div class="view_project_header">
-                <div class="project_tittle_container">
-                    <label class="project_field_label">Título: </label>
-                    <p class="description_content">{{ knowledge_step.title }}</p>
-                </div>
+<div class="create_knowledge_container">
+    <div class="knowledge_header_details">
+        {% csrf_token %}
+        <div class="knowledge_detail">
+            <div class="knowledge_detail_rows">
+                <label for="">Titulo: </label>
+                <p>{{ discussion.title }}</p>
             </div>
-            <div class="form_row">
-                <label class="project_field_label">Descripción:</label>
-                <div class="knowledge_step_description">
-                    {{ knowledge_step.description|safe }}
-                </div>
+            <div class="knowledge_detail_rows">
+                <label for="">Proyecto: </label>
+                <p>{{ discussion.project_id }}</p>
             </div>
-            <div class="view_project_footer">
-                <div class="project_field_container">
-                    <label class="project_field_label">Creado por: </label>
-                    <p class="description_content">{{ knowledge_step.created_by }}</p>
-                </div>
-                <div class="project_field_container">
-                    <label class="project_field_label">Creado en:</label>
-                    <p class="description_content">{{ knowledge_step.creation_date }}</p>
-                </div>
+            <div class="knowledge_detail_rows">
+                <label for="">Estado: </label>
+                <label class="knowledge_state_tag">{{ discussion.get_state_display }}</label>
             </div>
-            <div class="details_form_footer">
-                <a class="details_action" href="{% url 'knowledge_step_edit' knowledge_step.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Knowledge Step"> Editar</a>
-                <a class="details_action" href="{% url 'knowledge_step_delete' knowledge_step.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Knowledge Step"> Eliminar</a>
-                <a class="details_action" href="{% url 'knowledge_details' knowledge_step.knowledge_id.id %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Back to Knowledge"> Volver</a>
+            <div class="knowledge_detail_rows">
+                <label>Creado por: </label>
+                <p>{{ discussion.created_by }}</p>
             </div>
-        </form>
+            <div class="knowledge_detail_rows">
+                <label>Creado en:</label>
+                <p>{{ discussion.creation_date }}</p>
+            </div>
+        </div>
+        <div class="knowledge_detail">
+            <div class="knowledge_description">
+                <label for="">Descripción: </label><br/>
+                <textarea class="knowledge_text_area_detail" name="description" rows="3" readonly>{{ discussion.description }}</textarea>
+            </div>
+            <div class="knowledge_details_form_footer">
+                <a class="details_action" href="{% url 'discussion_edit' discussion.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Discussion"> Editar</a>
+                <a class="details_action" href="{% url 'discussion_delete' discussion.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Discussion"> Eliminar</a>
+                <a class="details_action" href="{% url 'forum_details' discussion.forum_id.id %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="List Discussions"> Volver</a>
+            </div>
+        </div>
+    </div>
+    <div class="knowledge_steps_details">
+        <div class="actions_list">
+            <a href="{% url 'message_create' discussion.id %}"> Crear un nuevo Mensaje </a>
+        </div>
+        {% for message in messages %}
+            <div class="knowledge_step">
+                <a href="{% url 'message_details' message.id %}">{{ message.title }}</a>
+            </div>
+        {% endfor %}
     </div>
 </div>
 
