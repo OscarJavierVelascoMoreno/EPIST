@@ -7,13 +7,13 @@ from Projects.models import Project
 from Knowledge.models import Knowledge, KnowledgeStep
 
 FRM_STATE_CHOICES = (
-    ("open", "Open"),
-    ("closed", "Closed"),
+    ("open", "Abierto"),
+    ("closed", "Cerrado"),
 )
 
 DCS_STATE_CHOICES = (
-    ("open", "Open"),
-    ("closed", "Closed"),
+    ("open", "Abierto"),
+    ("closed", "Cerrado"),
 )
 
 
@@ -22,7 +22,7 @@ class Forum(models.Model):
 
     title = models.CharField(max_length=100, unique=True)
     description = RichTextField()
-    creation_date = models.DateField(timezone.now)
+    creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
     state = models.CharField(choices=FRM_STATE_CHOICES, default='open')
     project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
@@ -38,7 +38,7 @@ class Discussion(models.Model):
 
     title = models.CharField(max_length=100, unique=True)
     description = RichTextField()
-    creation_date = models.DateField(timezone.now)
+    creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
     state = models.CharField(choices=DCS_STATE_CHOICES, default='open')
     forum_id = models.ForeignKey(Forum, null=True, on_delete=models.CASCADE)
@@ -77,9 +77,8 @@ class Discussion(models.Model):
 
 class Message(models.Model):
 
-    title = models.CharField(max_length=100)
     description = RichTextField()
-    creation_date = models.DateField(timezone.now)
+    creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     discussion_id = models.ForeignKey(Discussion, on_delete=models.CASCADE)
     mark_relevant = models.BooleanField()

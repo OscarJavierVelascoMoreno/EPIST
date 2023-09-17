@@ -1,0 +1,29 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+{{ title }} Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Estas a punto de eliminar el conocimiento: {{ title }} registrado en el sistema.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_main_container">
+    <div class="create_container">
+        <h1>Se eliminará el conocimiento {{ title }} permanentemente. ¿Deseas continuar?</h1>
+        <form method="post" class="delete_form">
+            {% csrf_token %}
+            <input class="delete_form_button delete_button" type="submit" value="Si, eliminar.">
+            <button class="delete_form_button cancel_button" type="button" onclick="location.href = '/forums_list'">No, cancelar</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

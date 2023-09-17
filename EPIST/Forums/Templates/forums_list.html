@@ -1,0 +1,67 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+Proyectos de Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes ver todos los foros en el sistema.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="content_main_container">
+    <a class="create_button" href="{% url 'forum_create' %}"> <img class="create_icon" src="../static/Icons/create_icon.svg" alt="Create Forum"> Crear Foro</a>
+
+    <table class="table_list">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Proyecto</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for forum in page_obj %}
+            <tr>
+                <td width="40%"><a class="a_details" href="{% url 'forum_details' forum.id %}">{{forum.title}}</a></td>
+                <td width="10%">{{forum.get_state_display}}</td>
+                <td width="20%">{{forum.project_id}}</td>
+                <td width="30%">
+                    <div class="actions_list">
+                        <a href="{% url 'forum_edit' forum.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_icon.svg" alt="Edit Forum"> Editar</a>
+                        <a href="{% url 'forum_delete' forum.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_list_icon.svg" alt="Delete Forum"> Eliminar</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination_container">
+        <span class="pagination">
+            {% if page_obj.has_previous %}
+                <a class="show_a_pagination" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% else %}
+                <a href="" class="hide_a_pagination">Anterior</a>
+            {% endif %}
+            <span>
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+                <a class="show_a_pagination" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            {% else %}
+                <a href="" class="hide_a_pagination">Siguiente</a>
+            {% endif %}
+        </span>
+    </div>
+
+</div>
+
+{% endblock %}
