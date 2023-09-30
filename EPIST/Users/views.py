@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from Projects.models import User
+from Projects.models import User, Project
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
-from .forms import UserForm
+from .forms import UserForm, UserFormCreate
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 
@@ -38,16 +38,20 @@ def users_list(request):
 
 @login_required()
 def user_create(request):
-    form = UserForm(request.POST or None)
+    form = UserFormCreate(request.POST or None)
+    projects_list = Project.objects.all()
     if form.is_valid():
         try:
             selected_user = form.save()
             selected_user.password = make_password(selected_user.password)
+            for project in request.POST.getlist('projects'):
+                selected_user.project_ids.add(Project.objects.get(id=int(project)))
             selected_user.save()
         except Exception as e:
+            selected_user.delete()
             return render(request, 'exception_popup.html', {'exception': e})
         return redirect("user_details", id=selected_user.id)
-    return render(request, "user_create.html", {'form': form})
+    return render(request, "user_create.html", {'form': form, 'projects_list': projects_list})
 
 @login_required()
 def user_details(request, id):

@@ -12,3 +12,9 @@ class UserForm(forms.ModelForm):
         queryset=Project.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
+
+
+class UserFormCreate(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'ident_number', 'email', 'username', 'password']

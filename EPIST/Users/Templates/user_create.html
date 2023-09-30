@@ -20,24 +20,25 @@ Crear usuario de Epist KMS
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                {% if field.name == 'project_ids' %}
-                    <div class="form_row">
-                        <div class="many2many_data">
-                            <label for="">Proyectos</label>
-                            {{ field }}
-                        </div>
+                <div class="form_row">
+                    <div class="input_data">
+                        <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required>
+                        <div class="underline"></div>
+                        <label for="">{{ field.label }}</label>
                     </div>
-                {% else %}
-                    <div class="form_row">
-                        <div class="input_data">
-                            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required>
-                            <div class="underline"></div>
-                            <label for="">{{ field.label }}</label>
-                        </div>
-                    </div>
-                {% endif %}
+                </div>
                 <div>{{field.errors}}</div>
             {% endfor %}
+            <div class="form_row">
+                <div class="many2many_data">
+                    <label for="">Proyectos</label>
+                    <select name="projects" id="projects" multiple required>
+                        {% for project in projects_list %}
+                            <option value="{{ project.id }}">{{ project.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
             <div class="form_row">
                 <div class="form_row submit-btn">
                     <div class="input_data">
