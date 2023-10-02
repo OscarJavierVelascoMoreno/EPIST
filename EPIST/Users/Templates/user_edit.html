@@ -19,30 +19,70 @@ Crear usuario de Epist KMS
     <div class="create_container">
         <form method="post">
             {% csrf_token %}
-            {% for field in form %}
-                {% if field.name == 'project_ids' %}
-                    <div class="form_row">
-                        <div class="many2many_data">
-                            <label for="">Proyectos</label>
-                            {{ form.project_ids }}
-                        </div>
-                    </div>
-                {% elif field.name == 'password' %}
-                    <input name="password" type="password" value="{{ field.value }}" readonly hidden>
-                    <div class="form_row">
-                        <a class="update_password_button" href="{% url 'user_change_password' selected_user.id %}"> <img class="update_password_icon" src="../static/Icons/password_icon.svg" alt="Update Password"> Cambiar contraseña</a>
-                    </div>
-                {% else %}
-                    <div class="form_row">
-                        <div class="input_data">
-                            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" value="{{ field.value | default:'' }}" required>
-                            <div class="underline"></div>
-                            <label for="">{{ field.label }}</label>
-                        </div>
-                    </div>
-                {% endif %}
-                <div>{{field.errors}}</div>
-            {% endfor %}
+            <div class="form_row" style="display: flex;">
+                <div class="input_data">
+                    <input name="first_name" type="text" value="{{ selected_user.first_name }}" required>
+                    <div class="underline"></div>
+                    <label for="">Nombres</label>
+                </div>
+                &emsp;
+                <div class="input_data">
+                    <input name="last_name" type="text" value="{{ selected_user.last_name }}" required>
+                    <div class="underline"></div>
+                    <label for="">Apellidos</label>
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="input_data">
+                    <input name="ident_number" type="text" value="{{ selected_user.ident_number }}" required>
+                    <div class="underline"></div>
+                    <label for="">Número de Identificación</label>
+                </div>
+            </div>
+            <div class="form_row" style="display: flex;">
+                <div class="input_data">
+                    <input name="email" type="text" value="{{ selected_user.email }}" required>
+                    <div class="underline"></div>
+                    <label for="">Correo Electrónico</label>
+                </div>
+                &emsp;
+                <div class="input_data">
+                    <input name="username" type="text" value="{{ selected_user.username }}" required>
+                    <div class="underline"></div>
+                    <label for="">Nombre de Usuario</label>
+                </div>
+            </div>
+            <input name="password" type="password" value="{{ selected_user.password }}" readonly hidden>
+            <div class="form_row">
+                <a class="update_password_button" href="{% url 'user_change_password' selected_user.id %}"> <img class="update_password_icon" src="../static/Icons/password_icon.svg" alt="Update Password"> Cambiar contraseña</a>
+            </div>
+            <div class="form_row" style="display: flex;">
+                <div class="many2many_data">
+                    <label for="">Proyectos</label>
+                    <select name="projects" id="projects" multiple required>
+                        {% for project in projects_list %}
+                            {% if project in projects_selected %}
+                                <option value="{{ project.id }}" selected>{{ project.title }}</option>
+                            {% else %}
+                                <option value="{{ project.id }}">{{ project.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                &emsp;
+                <div class="many2many_data">
+                    <label for="">Permisos</label>
+                    <select name="projects" id="projects" multiple required>
+                        {% for project in projects_list %}
+                            {% if project in projects_selected %}
+                                <option value="{{ project.id }}" selected>{{ project.title }}</option>
+                            {% else %}
+                                <option value="{{ project.id }}">{{ project.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
             <div class="edit_form_footer">
                 <input class="edit_form_button edit_button" type="submit" value="Guardar">
                 <button class="edit_form_button cancel_button" type="button" onclick="location.href = '/users_list'">Cancelar</a>

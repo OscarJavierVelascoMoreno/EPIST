@@ -19,23 +19,32 @@ Usuario Epist KMS
     <div class="create_container">
         <form method="get">
             {% csrf_token %}
-            {% for field in form %}
-                {% if field.name == 'project_ids' %}
-                    <div class="many2many_details">
-                        <span>Proyectos</span><br><br>
-                        {% for project in selected_user.project_ids.all %}
-                            <span class="tags">{{ project }}</span>
-                        {% endfor %}
-                    </div>
-                {% elif field.name == 'password' %}
-                {% else %}
-                    <div class="form_row">
-                        <div class="input_data_details">
-                            {{ field.label }}: {{ field.value | default:'' }}
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
+            <div class="form_row">
+                <div class="input_data_details">
+                    <b>Nombre Completo:&emsp;</b> {{ selected_user.first_name }} {{ selected_user.last_name }}
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="input_data_details">
+                    <b>Número de Identificación:&emsp;</b> {{ selected_user.ident_number }}
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="input_data_details">
+                    <b>Correo Electrónico:&emsp;</b> {{ selected_user.email }}
+                </div>
+            </div>
+            <div class="form_row">
+                <div class="input_data_details">
+                    <b>Nombre de Usuario:&emsp;</b> {{ selected_user.username }}
+                </div>
+            </div>
+            <div class="many2many_details">
+                <span>Proyectos</span><br><br>
+                {% for project in selected_user.project_ids.all %}
+                    <span class="tags">{{ project }}</span>
+                {% endfor %}
+            </div>
             <div class="details_form_footer">
                 <a class="details_action" href="{% url 'user_edit' selected_user.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
                 <a class="details_action" href="{% url 'user_delete' selected_user.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete User"> Eliminar</a>
