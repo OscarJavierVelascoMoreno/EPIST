@@ -26,18 +26,22 @@
                                 Inicio
                             </a>
                         </li>
-                        <li>
-                            <a href="{% url 'forums_list' %}">
-                                <img src="../static/Icons/forum_main_icon.svg" alt="Foro">
-                                Foro
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'knowledges_list' %}">
-                                <img src="../static/Icons/knowledge_icon.svg" alt="Conocimiento">
-                                Conocimiento
-                            </a>
-                        </li>
+                        {% if request.user|has_group:"Foro" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'forums_list' %}">
+                                    <img src="../static/Icons/forum_main_icon.svg" alt="Foro">
+                                    Foro
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if request.user|has_group:"Conocimiento" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'knowledges_list' %}">
+                                    <img src="../static/Icons/knowledge_icon.svg" alt="Conocimiento">
+                                    Conocimiento
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="nav_opt_about">

@@ -241,7 +241,7 @@ body {
     border-radius: 30px;
     background-color: #D9D9D9;
     height: 4%;
-    width: 15%;
+    width: 20%;
     margin: 2%;
     font-size: 150%;
     display: flex;
@@ -417,7 +417,8 @@ form .form-row .textarea{
 }
 
 .cancel_button:hover{
-    background: #FFC107;
+    background: black;
+    color: #D9D9D9;
 }
 
 .edit_form_footer{
