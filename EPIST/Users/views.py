@@ -42,7 +42,6 @@ def user_create(request):
     form = UserForm(request.POST or None)
     projects_list = Project.objects.all()
     groups_list = Group.objects.all()
-    print("-----------------> groups_list", groups_list)
     if form.is_valid():
         try:
             selected_user = form.save()
@@ -68,24 +67,46 @@ def user_details(request, id):
 def user_edit(request, id):
     selected_user = User.objects.get(id=id)
     form = UserForm(request.POST or None, instance=selected_user)
-    projects_selected = selected_user.project_ids.all()
     projects_list = Project.objects.all()
+    groups_list = Group.objects.all()
+    projects_selected = selected_user.project_ids.all()
+    groups_selected = selected_user.groups.all()
     if form.is_valid() and request.method == 'POST':
-        projects_ids = [int(x) for x in request.POST.getlist('projects')]
-        if projects_ids:
-            new_projects_selected = Project.objects.filter(id__in=projects_ids)
-            if list(new_projects_selected) != list(projects_selected):
-                for old_project in projects_selected:
-                    selected_user.project_ids.remove(old_project)
-                for project in new_projects_selected:
-                    selected_user.project_ids.add(project)
-        else:
-            for old_project in projects_selected:
-                selected_user.project_ids.remove(old_project)
+        model_edit_validation(
+            request,
+            selected_user.project_ids,
+            'projects',
+            Project,
+            projects_selected)
+        model_edit_validation(
+            request,
+            selected_user.groups,
+            'groups',
+            Group,
+            groups_selected)
         selected_user.save()
         form.save()
         return redirect("user_details", id=selected_user.id)
-    return render(request, "user_edit.html", {'form': form, 'selected_user': selected_user, 'projects_list': projects_list, 'projects_selected': projects_selected})
+    return render(request, "user_edit.html", {
+        'form': form,
+        'selected_user': selected_user,
+        'projects_list': projects_list,
+        'projects_selected': projects_selected,
+        'groups_list': groups_list,
+        'groups_selected': groups_selected})
+
+def model_edit_validation(request, user_field, field_name, model, records_selected):
+    record_ids = [int(x) for x in request.POST.getlist(field_name)]
+    if record_ids:
+        new_records_selected = model.objects.filter(id__in=record_ids)
+        if list(new_records_selected) != list(record_ids):
+            for old_project in records_selected:
+                user_field.remove(old_project)
+            for project in new_records_selected:
+                user_field.add(project)
+    else:
+        for old_project in records_selected:
+            user_field.remove(old_project)
 
 @login_required()
 def user_delete(request, id):
@@ -168,7 +189,6 @@ def groups_list(request):
 def group_create(request):
     form = GroupForm(request.POST or None)
     permissions_list = Permission.objects.all()
-    print("-----------------> permissions_list", permissions_list)
     if form.is_valid():
         new_group = form.save()
         for permission in request.POST.getlist('permissions'):
@@ -185,36 +205,34 @@ def group_details(request, id):
 
 @login_required()
 def group_edit(request, id):
-    selected_user = User.objects.get(id=id)
-    form = GroupForm(request.POST or None, instance=selected_user)
-    projects_selected = selected_user.project_ids.all()
-    projects_list = Project.objects.all()
+    selected_group = Group.objects.get(id=id)
+    form = GroupForm(request.POST or None, instance=selected_group)
+    permissions_selected = selected_group.permissions.all()
+    permissions_list = Permission.objects.all()
     if form.is_valid() and request.method == 'POST':
-        projects_ids = [int(x) for x in request.POST.getlist('projects')]
-        if projects_ids:
-            new_projects_selected = Project.objects.filter(id__in=projects_ids)
-            if list(new_projects_selected) != list(projects_selected):
-                for old_project in projects_selected:
-                    selected_user.project_ids.remove(old_project)
-                for project in new_projects_selected:
-                    selected_user.project_ids.add(project)
+        permissions_ids = [int(x) for x in request.POST.getlist('permissions')]
+        if permissions_ids:
+            new_permissions_selected = Permission.objects.filter(id__in=permissions_ids)
+            if list(new_permissions_selected) != list(permissions_selected):
+                for old_permission in permissions_selected:
+                    selected_group.permissions.remove(old_permission)
+                for permission in new_permissions_selected:
+                    selected_group.permissions.add(permission)
         else:
-            for old_project in projects_selected:
-                selected_user.project_ids.remove(old_project)
-        selected_user.save()
+            for old_permission in permissions_selected:
+                selected_group.permissions.remove(old_permission)
+        selected_group.save()
         form.save()
-        return redirect("user_details", id=selected_user.id)
-    return render(request, "user_edit.html", {'form': form, 'selected_user': selected_user, 'projects_list': projects_list, 'projects_selected': projects_selected})
+        return redirect("group_details", id=selected_group.id)
+    return render(request, "group_edit.html", {'form': form, 'selected_group': selected_group, 'permissions_list': permissions_list, 'permissions_selected': permissions_selected})
 
 @login_required()
 def group_delete(request, id):
-    user = User.objects.get(id=id)
-    first_name = user.first_name
-    last_name = user.last_name
+    group = Group.objects.get(id=id)
+    group_name = group.name
     if request.method == 'POST':
-        user.delete()
-        return redirect("users_list")
-    return render(request, "user_delete.html", {
-        'first_name': first_name,
-        'last_name': last_name
+        group.delete()
+        return redirect("groups_list")
+    return render(request, "group_delete.html", {
+        'group_name': group_name
         })

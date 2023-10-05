@@ -1,4 +1,5 @@
 {% load static %}
+{% load user_tags %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,24 +26,30 @@
                 </div>
                 <div class="nav_opt_list">
                     <ul>
-                        <li>
-                            <a href="{% url 'groups_list' %}">
-                                <img src="../static/Icons/users_menu_icon.svg" alt="Grupos">
-                                Grupos de Usuarios
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'users_list' %}">
-                                <img src="../static/Icons/users_menu_icon.svg" alt="Usuarios">
-                                Usuarios
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'projects_list' %}">
-                                <img src="../static/Icons/projects_icon.svg" alt="Proyectos">
-                                Proyectos
-                            </a>
-                        </li>
+                        {% if request.user|has_group:"Grupos" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'groups_list' %}">
+                                    <img src="../static/Icons/users_menu_icon.svg" alt="Grupos">
+                                    Grupos de Usuarios
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if request.user|has_group:"Usuarios" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'users_list' %}">
+                                    <img src="../static/Icons/users_menu_icon.svg" alt="Usuarios">
+                                    Usuarios
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if request.user|has_group:"Proyectos" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'projects_list' %}">
+                                    <img src="../static/Icons/projects_icon.svg" alt="Proyectos">
+                                    Proyectos
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="nav_opt_about">

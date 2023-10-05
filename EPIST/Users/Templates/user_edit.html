@@ -72,12 +72,12 @@ Crear usuario de Epist KMS
                 &emsp;
                 <div class="many2many_data">
                     <label for="">Permisos</label>
-                    <select name="projects" id="projects" multiple required>
-                        {% for project in projects_list %}
-                            {% if project in projects_selected %}
-                                <option value="{{ project.id }}" selected>{{ project.title }}</option>
+                    <select name="groups" id="groups" multiple required>
+                        {% for group in groups_list %}
+                            {% if group in groups_selected %}
+                                <option value="{{ group.id }}" selected>{{ group.name }}</option>
                             {% else %}
-                                <option value="{{ project.id }}">{{ project.title }}</option>
+                                <option value="{{ group.id }}">{{ group.name }}</option>
                             {% endif %}
                         {% endfor %}
                     </select>
