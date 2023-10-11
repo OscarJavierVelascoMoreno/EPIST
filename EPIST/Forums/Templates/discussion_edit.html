@@ -1,0 +1,51 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+Editar {{ discussion.title }} - Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes modificar algunos datos de {{ discussion.title }}.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_knowledge_container">
+    <div class="knowledge_header_create">
+        <form method="post">
+            {% csrf_token %}
+            <div class="knowledge_basic_data">
+                <div class="title_container">
+                    <label for="">Titulo: </label>
+                    <input name="title" type="text" value="{{ discussion.title }}" required>
+                </div>
+                <div>{{fields.title.errors}}</div>
+            </div>
+            <div class="knowledge_description_container">
+                <label for="">Descripción: </label><br />
+                <textarea class="text_area_description" name="description" rows="3" required>{{ discussion.description }}</textarea>
+            </div>
+            <div class="pagination_container">
+                <div class="pagination">
+                    <div class="input_data">
+                        <input type="submit" value="Guardar">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="knowledge_steps_details_edit">
+        {% for message in messages %}
+            <div class="knowledge_step">
+                <a href="{% url 'message_details' message.id %}">{{ message.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

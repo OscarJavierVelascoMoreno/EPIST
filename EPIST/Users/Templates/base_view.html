@@ -1,0 +1,106 @@
+{% load static %}
+{% load user_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/css/base.css">
+        <link rel="stylesheet" href="../static/css/project_base.css">
+        <link rel="stylesheet" href="../static/css/knowledge_base.css">
+        <title>{% block title %} {% endblock %}</title>
+    </head>
+    <body>
+        <div class="all_page">
+            <div class="nav_bar_ver">
+                <div class="nav_var_icon">
+                    <img src="../static/Icons/epist_main_icon.svg" alt="EPIST">
+                    <a style="text-decoration: none;" href="{% url 'welcome' %}"><h1>EPIST KMS</h1></a>
+                </div>
+                <div class="nav_opt_list">
+                    <ul>
+                        <li>
+                            <a href="{% url 'welcome' %}">
+                                <img src="../static/Icons/home_icon.svg" alt="Inicio">
+                                Inicio
+                            </a>
+                        </li>
+                        {% if request.user|has_group:"Foro" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'forums_list' %}">
+                                    <img src="../static/Icons/forum_main_icon.svg" alt="Foro">
+                                    Foro
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if request.user|has_group:"Conocimiento" or request.user.is_staff %}
+                            <li>
+                                <a href="{% url 'knowledges_list' %}">
+                                    <img src="../static/Icons/knowledge_icon.svg" alt="Conocimiento">
+                                    Conocimiento
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="nav_opt_about">
+                    <ul>
+                        <li>
+                            <a href="">Ayuda</a>
+                        </li>
+                        <li>
+                            <a href="">Acerca de</a>
+                        </li>
+                    </ul>
+                </div>
+                {% if request.user|has_group:"Administracion" or request.user.is_staff %}
+                    <div class="nav_settings_opt">
+                        <a href="{% url 'settings' %}">
+                            <img src="../static/Icons/settings_icon.svg" alt="Inicio">
+                            Ajustes
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="content_base">
+                <div class="content_header">
+                    <div class="content_header_title">
+                        {% block content_header %}
+                        {% endblock %}
+                    </div>
+                    <div class="content_header_users">
+                        <a href=".">
+                            <img src="../static/Icons/notification_icon.svg" alt="Notificaciones">
+                        </a>
+                        <a href=".">
+                            <div class="nav-container">
+                                <ul class="nav-items">
+                                    <!-- Dropdown menu -->
+                                    <li class="nav-item nav-item-dropdown">
+                                        <a class="dropdown-trigger" href="#"><img src="../static/Icons/user_icon.svg" alt="Perfil">{{ user.first_name }}</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-menu-item">
+                                                <a href="{% url 'user_details' user.id %}">Ver Perfil</a>
+                                            </li>
+                                            <li class="dropdown-menu-item">
+                                                <a href="{% url 'user_change_password' user.id %}">Cambiar Contraseña</a>
+                                            </li>
+                                            <li class="dropdown-menu-item">
+                                                <a href="{% url 'logout' %}">Cerrar Sesion</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="content_main">
+                    {% block main_container %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

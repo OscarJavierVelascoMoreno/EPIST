@@ -1,0 +1,229 @@
+.create_knowledge_container{
+    border-radius: 3%;
+    background-color: black;
+    height: 90%;
+    width: 90%;
+}
+
+.knowledge_header_create{
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1% 5%;
+    height: 35%;
+    width: 90%;
+    background: #D9D9D9;
+}
+
+.knowledge_header_create form{
+    width: 100%;
+}
+
+.knowledge_description_container{
+    display: block;
+    width: 90%;
+    height: 100%;
+    border: none;
+    font-size: 200%;
+    margin: 1%;
+    margin-top: 3%;
+}
+
+.knowledge_description{
+    display: block;
+    width: 50%;
+    height: 100%;
+    border: none;
+    font-size: 150%;
+    margin: 1%;
+    margin-top: 3%;
+}
+
+
+.knowledge_basic_data{
+    max-height: 90%;
+    display: flex;
+    align-content: space-between;
+}
+
+.knowledge_header_create .pagination{
+    width: 20%;
+    font-size: 120%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 45%;
+    padding: 10px;
+}
+
+.knowledge_header_create .pagination .input_data{
+    width: 100%;
+}
+
+.knowledge_header_create .pagination .input_data input:hover{
+    background: black;
+    color: #D9D9D9;
+    border: solid #D9D9D9 3px;
+}
+
+.project_container{
+    margin: 1%;
+    font-size: 200%;
+}
+
+.project_container select{
+    margin-left: 1%;
+    position: fixed;
+    font-size: 100%;
+    max-width: 20%;
+    overflow-x: auto;
+}
+
+.project_container option:hover{
+    background-color: #D9D9D9;
+    color: black;
+    border: solid black 1px;
+}
+
+.project_container option:checked{
+    background-color: #D9D9D9;
+    color: black;
+    border: solid black 1px;
+}
+
+.title_container{
+    margin: 1%;
+    width: 50%;
+    font-size: 200%;
+    display: block;
+    align-items: center;
+    align-content: center;
+}
+
+.title_container input{
+    font-size: 100%;
+}
+
+label{
+    font-weight: bold;
+}
+
+.knowledge_steps_create{
+    height: 45%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1% 5%;
+    width: 90%;
+    background: #D9D9D9;
+}
+
+.alert_steps_create{
+    font-size: 150%;
+}
+
+.knowledge_state_tag{
+    border-radius: 25px;
+    background-color: black;
+    color: #D9D9D9;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    font-size: 90%;
+}
+
+.knowledge_text_area_detail{
+    width: 94%;
+    font-size: 150%;
+    resize: none;
+    background-color: #D9D9D9;
+    font-size: 90%;
+    border: none;
+}
+
+.knowledge_detail{
+    width: 100%;
+    display: flex;
+    align-content: space-evenly;
+}
+
+.knowledge_detail_rows{
+    margin: 1%;
+    width: 100%;
+    font-size: 150%;
+    display: block;
+}
+
+.knowledge_header_details{
+    border-radius: 10px;
+    display: block;
+    justify-content: center;
+    align-items: start;
+    margin: 1% 5%;
+    height: 35%;
+    width: 90%;
+    background: #D9D9D9;
+}
+
+.knowledge_details_form_footer{
+    width: 50%;
+    height: 10%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2%;
+    background: #D9D9D9;
+}
+
+.knowledge_steps_details{
+    height: 60%;
+    border-radius: 10px;
+    display: block;
+    margin: 1% 5%;
+    width: 90%;
+    background: #D9D9D9;
+    overflow-y: scroll;
+}
+
+.knowledge_step{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.knowledge_step a{
+    text-decoration: none;
+    border-radius: 10px;
+    width: 100%;
+    margin: 1% 5%;
+    border: solid black 1px;
+    color: black;
+    background: #D9D9D9;
+    font-size: 150%;
+}
+
+.knowledge_steps_details .actions_list{
+    font-size: 120%;
+    margin: 1%;
+}
+
+.knowledge_step_description{
+    width: 90%;
+    height: 20vh;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.knowledge_steps_details_edit{
+    height: 40%;
+    border-radius: 10px;
+    display: block;
+    margin: 1% 5%;
+    width: 90%;
+    background: #D9D9D9;
+    overflow-y: scroll;
+}

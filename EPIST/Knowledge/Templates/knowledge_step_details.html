@@ -1,0 +1,53 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+{{ knowledge_step.title }} - Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes ver la información del paso de conocimiento {{ knowledge_step.title }}.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_main_container">
+    <div class="create_container">
+        <form method="get">
+            {% csrf_token %}
+            <div class="view_project_header">
+                <div class="project_tittle_container">
+                    <label class="project_field_label">Título: </label>
+                    <p class="description_content">{{ knowledge_step.title }}</p>
+                </div>
+            </div>
+            <div class="form_row">
+                <label class="project_field_label">Descripción:</label>
+                <div class="knowledge_step_description">
+                    {{ knowledge_step.description|safe }}
+                </div>
+            </div>
+            <div class="view_project_footer">
+                <div class="project_field_container">
+                    <label class="project_field_label">Creado por: </label>
+                    <p class="description_content">{{ knowledge_step.created_by }}</p>
+                </div>
+                <div class="project_field_container">
+                    <label class="project_field_label">Creado en:</label>
+                    <p class="description_content">{{ knowledge_step.creation_date }}</p>
+                </div>
+            </div>
+            <div class="details_form_footer">
+                <a class="details_action" href="{% url 'knowledge_step_edit' knowledge_step.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Knowledge Step"> Editar</a>
+                <a class="details_action" href="{% url 'knowledge_step_delete' knowledge_step.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Knowledge Step"> Eliminar</a>
+                <a class="details_action" href="{% url 'knowledge_details' knowledge_step.knowledge_id.id %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Back to Knowledge"> Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

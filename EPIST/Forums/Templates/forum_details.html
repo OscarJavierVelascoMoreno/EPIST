@@ -1,0 +1,69 @@
+{% extends "base_view.html" %}
+
+{% block title %}
+
+{{ forum.title }} - Epist KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes ver la información del foro {{ forum.title }} registrada en el sistema.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+<div class="create_knowledge_container">
+    <div class="knowledge_header_details">
+        {% csrf_token %}
+        <div class="knowledge_detail">
+            <div class="knowledge_detail_rows">
+                <label for="">Titulo: </label>
+                <p>{{ forum.title }}</p>
+            </div>
+            <div class="knowledge_detail_rows">
+                <label for="">Proyecto: </label>
+                <p>{{ forum.project_id }}</p>
+            </div>
+            <div class="knowledge_detail_rows">
+                <label for="">Estado: </label>
+                <label class="knowledge_state_tag">{{ forum.get_state_display }}</label>
+            </div>
+            <div class="knowledge_detail_rows">
+                <label>Creado por: </label>
+                <p>{{ forum.created_by }}</p>
+            </div>
+            <div class="knowledge_detail_rows">
+                <label>Creado en:</label>
+                <p>{{ forum.creation_date }}</p>
+            </div>
+        </div>
+        <div class="knowledge_detail">
+            <div class="knowledge_description">
+                <label for="">Descripción: </label><br />
+                <textarea class="knowledge_text_area_detail" name="description" rows="3" readonly>{{ forum.description }}</textarea>
+            </div>
+            <div class="knowledge_details_form_footer">
+                <a class="details_action" href="{% url 'forum_edit' forum.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Forum"> Editar</a>
+                <a class="details_action" href="{% url 'forum_delete' forum.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Forum"> Eliminar</a>
+                <a class="details_action" href="{% url 'forums_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete Forum"> Volver</a>
+            </div>
+        </div>
+    </div>
+    <div class="knowledge_steps_details">
+        {% if user.id == forum.created_by.id %}
+            <div class="actions_list">
+                <a href="{% url 'discussion_create' forum.id %}"> Crear una nueva Discusión </a>
+            </div>
+        {% endif %}
+        {% for discussion in discussions %}
+            <div class="knowledge_step">
+                <a href="{% url 'discussion_details' discussion.id %}">{{ discussion.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
