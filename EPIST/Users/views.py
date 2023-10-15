@@ -15,7 +15,7 @@ def welcome(request):
 
 @login_required()
 def settings(request):
-    return render(request, "base_view_settings.html")
+    return render(request, "settings.html")
 
 # Users views here.
 @login_required()

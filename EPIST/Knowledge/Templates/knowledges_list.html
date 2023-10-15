@@ -44,23 +44,38 @@ Conocimiento - Epist KMS
         </tbody>
     </table>
 
-    <div class="pagination_container">
-        <span class="pagination">
+    <nav>
+        <ul class="pagination">
             {% if page_obj.has_previous %}
-                <a class="show_a_pagination" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+                <li class="page-item" aria-current="page">
+                    <span class="page-link">{{ page_obj.number|add:"-1" }}</span>
+                </li>
             {% else %}
-                <a href="" class="hide_a_pagination">Anterior</a>
+                <li class="page-item disabled">
+                    <a class="page-link" href="">Anterior</a>
+                </li>
             {% endif %}
-            <span>
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-            </span>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">{{ page_obj.number }}</span>
+            </li>
             {% if page_obj.has_next %}
-                <a class="show_a_pagination" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <li class="page-item" aria-current="page">
+                    <span class="page-link">{{ page_obj.number|add:"+1" }}</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                </li>
             {% else %}
-                <a href="" class="hide_a_pagination">Siguiente</a>
+                <li class="page-item disabled">
+                    <a class="page-link" href="">Siguiente</a>
+                </li>
             {% endif %}
-        </span>
-    </div>
+            </li>
+        </ul>
+    </nav>
 
 </div>
 
