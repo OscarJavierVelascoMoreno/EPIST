@@ -14,53 +14,57 @@ Usuario Epist KMS
 {% endblock %}
 
 {% block main_container %}
-
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'user_edit' selected_user.id %}">
+                <img width="40" height="32" src="../static/Icons/edit_icon.svg" alt="Editar Usuario">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'user_delete' selected_user.id %}">
+                <img width="40" height="32" src="../static/Icons/delete_icon.svg" alt="Delete User">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'users_list' %}" >
+                <img width="40" height="32" src="../static/Icons/back_icon.svg" alt="Delete User">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
+        </div>
         <form method="get">
             {% csrf_token %}
-            <div class="form_row">
-                <div class="input_data_details">
-                    <b>Nombre Completo:&emsp;</b> {{ selected_user.first_name }} {{ selected_user.last_name }}
+            <section class="my-4">
+                <label class="form-check-label" for="user_name">Nombre Completo:</label>
+                <input class="form-control" type="text" id="user_name" value="{{ selected_user.first_name }} {{ selected_user.last_name }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="form-check-label" for="ident_number">Número de Identificación:</label>
+                <input class="form-control" type="text" id="ident_number" value="{{ selected_user.ident_number }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="form-check-label" for="email">Correo Electrónico:</label>
+                <input class="form-control" type="text" id="email" value="{{ selected_user.email }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="form-check-label" for="username">Nombre de Usuario:</label>
+                <input class="form-control" type="text" id="username" value="{{ selected_user.username }}" readonly/>
+            </section>
+            <section class="d-flex">
+                <div class="card card-body mx-2">
+                    <span class="text-bg-dark p-1 text-center rounded-4">Proyectos</span>
+                    <div class="d-block my-4">
+                        {% for project in selected_user.project_ids.all %}
+                            <span class="text-bg-dark p-2 text-center rounded-4 nowrap">{{ project }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="form_row">
-                <div class="input_data_details">
-                    <b>Número de Identificación:&emsp;</b> {{ selected_user.ident_number }}
+                <div class="card card-body mx-2">
+                    <span class="text-bg-dark p-1 text-center rounded-4">Grupos</span>
+                    <div class="d-block my-4">
+                        {% for group in selected_user.groups.all %}
+                            <span class="text-bg-dark p-2 text-center rounded-4 nowrap">{{ group }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="form_row">
-                <div class="input_data_details">
-                    <b>Correo Electrónico:&emsp;</b> {{ selected_user.email }}
-                </div>
-            </div>
-            <div class="form_row">
-                <div class="input_data_details">
-                    <b>Nombre de Usuario:&emsp;</b> {{ selected_user.username }}
-                </div>
-            </div>
-            <div style="display: flex;">
-                <div class="many2many_details">
-                    <span>Proyectos</span><br><br>
-                    {% for project in selected_user.project_ids.all %}
-                        <span class="tags">{{ project }}</span>
-                    {% endfor %}
-                </div>
-                &emsp;
-                <div class="many2many_details">
-                    <span>Grupos</span><br><br>
-                    {% for group in selected_user.groups.all %}
-                        <span class="tags">{{ group }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="details_form_footer">
-                <a class="details_action" href="{% url 'user_edit' selected_user.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
-                <a class="details_action" href="{% url 'user_delete' selected_user.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete User"> Eliminar</a>
-                <a class="details_action" href="{% url 'users_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete User"> Volver</a>
-            </div>
+            </section>
         </form>
     </div>
-</div>
-
 {% endblock %}

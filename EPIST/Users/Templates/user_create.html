@@ -15,78 +15,53 @@ Crear usuario de Epist KMS
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
-        <form method="post">
-            {% csrf_token %}
-            <div class="form_row" style="display: flex;">
-                <div class="input_data">
-                    <input name="first_name" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Nombres</label>
-                </div>
-                &emsp;
-                <div class="input_data">
-                    <input name="last_name" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Apellidos</label>
-                </div>
+<div class="card card-body">
+    <form method="post">
+        {% csrf_token %}
+        <section class="my-4 d-lg-inline-flex align-items-center w-100">
+            <label class="me-2 form-check-label fw-bold" for="first_name">Nombres:</label>
+            <input class="form-control" type="text" id="first_name" name="first_name" required/>
+            <label class="m-2 form-check-label fw-bold" for="last_name">Apellidos:</label>
+            <input class="form-control" type="text" id="last_name" name="last_name" required/>
+        </section>
+        <section class="my-4 d-lg-inline-flex align-items-center w-100">
+            <label class="form-check-label fw-bold" for="ident_number">Número de Identificación:</label>
+            <input class="form-control" type="text" id="ident_number" name="ident_number" required/>
+        </section>
+        <section class="my-4 d-lg-inline-flex align-items-center w-100">
+            <label class="form-check-label fw-bold" for="email">Correo Electrónico:</label>
+            <input class="form-control" type="email" id="email" name="email" required/>
+        </section>
+        <section class="my-4 d-lg-inline-flex align-items-center w-100">
+            <label class="form-check-label fw-bold" for="username">Nombre de Usuario:</label>
+            <input class="form-control" type="text" id="username" name="username" required/>
+        </section>
+        <section class="my-4 d-lg-inline-flex align-items-center w-100">
+            <label class="me-2 form-check-label fw-bold" for="password">Contraseña:</label>
+            <input class="form-control" type="text" id="password" name="password" required/>
+        </section>
+        <section class="d-flex">
+            <div class="card card-body mx-2">
+                <label class="text-bg-dark p-1 text-center rounded-4" for="projects">Proyectos</label>
+                <select class="form-select my-4" id="projects" name="projects" multiple required>
+                    {% for project in projects_list %}
+                        <option value="{{ project.id }}">{{ project.title }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="form_row">
-                <div class="input_data">
-                    <input name="ident_number" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Número de Identificación</label>
-                </div>
+            <div class="card card-body mx-2">
+                <label class="text-bg-dark p-1 text-center rounded-4" for="groups">Permisos</label>
+                <select class="form-select my-4" id="groups" name="groups" multiple required>
+                    {% for group in groups_list %}
+                        <option value="{{ group.id }}">{{ group.name }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="form_row" style="display: flex;">
-                <div class="input_data">
-                    <input name="email" type="email" required>
-                    <div class="underline"></div>
-                    <label for="">Correo Electrónico</label>
-                </div>
-                &emsp;
-                <div class="input_data">
-                    <input name="username" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Nombre de Usuario</label>
-                </div>
-            </div>
-            <div class="form_row">
-                <div class="input_data">
-                    <input name="password" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Contraseña</label>
-                </div>
-            </div>
-            <div class="form_row" style="display: flex;">
-                <div class="many2many_data">
-                    <label for="">Proyectos</label>
-                    <select name="projects" id="projects" multiple required>
-                        {% for project in projects_list %}
-                            <option value="{{ project.id }}">{{ project.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                &emsp;
-                <div class="many2many_data">
-                    <label for="">Permisos</label>
-                    <select name="groups" id="groups" multiple required>
-                        {% for group in groups_list %}
-                            <option value="{{ group.id }}">{{ group.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="form_row">
-                <div class="form_row submit-btn">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+        </section>
+        <div class="d-flex justify-content-center">
+            <input class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+        </div>
+    </form>
 </div>
 
 {% endblock %}

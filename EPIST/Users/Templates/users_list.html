@@ -25,10 +25,10 @@ Usuarios de Epist KMS
         <table class="table w-75 table-hover">
             <thead class="table-dark">
                 <tr class="text-center">
-                    <th>Identificación - Nombre</th>
-                    <th>Correo Electrónico</th>
-                    <th>Nombre de Usuario</th>
-                    <th>Acciones</th>
+                    <th class="w-25">Identificación - Nombre</th>
+                    <th class="w-25">Correo Electrónico</th>
+                    <th class="w-25">Nombre de Usuario</th>
+                    <th class="w-25">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,33 +60,33 @@ Usuarios de Epist KMS
             </tbody>
         </table>
     </div>
-    <nav>
+    <nav class="d-flex d-inline justify-content-center">
         <ul class="pagination">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
                 </li>
                 <li class="page-item" aria-current="page">
-                    <span class="page-link">{{ page_obj.number|add:"-1" }}</span>
+                    <span class="page-link text-dark">{{ page_obj.number|add:"-1" }}</span>
                 </li>
             {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="">Anterior</a>
+                    <a class="page-link text-dark" href="">Anterior</a>
                 </li>
             {% endif %}
             <li class="page-item active" aria-current="page">
-                <span class="page-link">{{ page_obj.number }}</span>
+                <span class="page-link bg-black">{{ page_obj.number }}</span>
             </li>
             {% if page_obj.has_next %}
                 <li class="page-item" aria-current="page">
-                    <span class="page-link">{{ page_obj.number|add:"+1" }}</span>
+                    <span class="page-link text-dark">{{ page_obj.number|add:"+1" }}</span>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="">Siguiente</a>
+                    <a class="page-link text-dark" href="">Siguiente</a>
                 </li>
             {% endif %}
             </li>
