@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from Projects.models import User, Project
 from django.contrib.auth import authenticate, login, logout
+from EPIST.passwordValidators import ComplexPasswordValidator
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.hashers import make_password
 from .forms import UserForm, GroupForm
@@ -45,6 +46,8 @@ def user_create(request):
     if form.is_valid():
         try:
             selected_user = form.save()
+            validator = ComplexPasswordValidator()
+            validator.validate(password=selected_user.password)
             selected_user.password = make_password(selected_user.password)
             for project in request.POST.getlist('projects'):
                 selected_user.project_ids.add(Project.objects.get(id=int(project)))
@@ -52,9 +55,33 @@ def user_create(request):
                 selected_user.groups.add(Group.objects.get(id=int(group)))
             selected_user.save()
         except Exception as e:
+            projects_selected = request.POST.getlist('projects')
+            groups_selected = request.POST.getlist('groups')
+            basic_data = {
+                'form': form,
+                'projects_list': projects_list,
+                'projects_selected': projects_selected,
+                'groups_list': groups_list,
+                'groups_selected': groups_selected,
+                'exception': e}
+            cleaned_data = form.cleaned_data
+            basic_data.update(cleaned_data)
             selected_user.delete()
-            return render(request, 'exception_popup.html', {'exception': e})
+            return render(request, 'user_create.html', basic_data)
         return redirect("user_details", id=selected_user.id)
+    elif form.errors:
+        projects_selected = request.POST.getlist('projects')
+        groups_selected = request.POST.getlist('groups')
+        basic_data = {
+            'form': form,
+            'projects_list': projects_list,
+            'projects_selected': projects_selected,
+            'groups_list': groups_list,
+            'groups_selected': groups_selected,
+            'exception': form.errors}
+        cleaned_data = form.cleaned_data
+        basic_data.update(cleaned_data)
+        return render(request, 'user_create.html', basic_data)
     return render(request, "user_create.html", {'form': form, 'projects_list': projects_list, 'groups_list': groups_list})
 
 @login_required()
@@ -117,6 +144,7 @@ def user_delete(request, id):
         user.delete()
         return redirect("users_list")
     return render(request, "user_delete.html", {
+        'id': id,
         'first_name': first_name,
         'last_name': last_name
         })
@@ -128,19 +156,45 @@ def user_change_password(request, id):
     new_error = False
     if request.method == 'POST':
         old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_password_confirm = request.POST['new_password_confirm']
         if selected_user.check_password(old_password):
-            new_password = request.POST['new_password']
-            new_password_confirm = request.POST['new_password_confirm']
             if new_password_confirm == new_password:
                 selected_user.password = make_password(new_password)
+                try:
+                    validator = ComplexPasswordValidator()
+                    validator.validate(password=new_password)
+                except Exception as e:
+                    basic_data = {
+                        'selected_user': selected_user,
+                        "new_error": e,
+                        "old_error": old_error,
+                        "old_password": request.POST['old_password'],
+                        "new_password": new_password,
+                        "new_password_confirm": new_password_confirm}
+                    return render(request, "user_change_password.html", basic_data)
                 selected_user.save()
                 return redirect("user_details", id=selected_user.id)
             else:
                 new_error = "La nueva contraseña y su confirmación no coinciden."
-                return render(request, "user_change_password.html", {'selected_user':selected_user, "new_error": new_error, "old_error": old_error})
+                basic_data = {
+                        'selected_user': selected_user,
+                        "new_error": new_error,
+                        "old_error": old_error,
+                        "old_password": request.POST['old_password'],
+                        "new_password": new_password,
+                        "new_password_confirm": new_password_confirm}
+                return render(request, "user_change_password.html", basic_data)
         else:
             old_error = "La contraseña no coincide con la antigua contraseña."
-            return render(request, "user_change_password.html", {'selected_user':selected_user, "new_error": new_error, "old_error": old_error})
+            basic_data = {
+                        'selected_user': selected_user,
+                        "new_error": new_error,
+                        "old_error": old_error,
+                        "old_password": request.POST['old_password'],
+                        "new_password": new_password,
+                        "new_password_confirm": new_password_confirm}
+            return render(request, "user_change_password.html", basic_data)
     return render(request, "user_change_password.html", {'selected_user':selected_user, "new_error": new_error, "old_error": old_error})
 
 # Login views here

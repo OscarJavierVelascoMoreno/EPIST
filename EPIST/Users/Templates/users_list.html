@@ -51,8 +51,14 @@ Usuarios de Epist KMS
                     </td>
                     <td class="text-center">
                         <div class="d-flex align-content-between justify-content-center">
-                            <a href="{% url 'user_edit' user_data.id %}" class="mx-3 text-decoration-none text-black"> <img width="40" height="32" src="../static/Icons/edit_icon.svg" alt="Edit User"> Editar</a>
-                            <a href="{% url 'user_delete' user_data.id %}" class="mx-3 text-decoration-none text-black"> <img width="40" height="32" src="../static/Icons/delete_list_icon.svg" alt="Delete User"> Eliminar</a>
+                            <a href="{% url 'user_edit' user_data.id %}" class="mx-3 text-decoration-none text-black">
+                                <img width="40" height="32" src="../static/Icons/edit_icon_list.svg" alt="Edit User">
+                                Editar
+                            </a>
+                            <a href="{% url 'user_delete' user_data.id %}" class="mx-3 text-decoration-none text-black">
+                                <img width="40" height="32" src="../static/Icons/delete_list_icon.svg" alt="Delete User">
+                                Eliminar
+                            </a>
                         </div>
                     </td>
                 </tr>
