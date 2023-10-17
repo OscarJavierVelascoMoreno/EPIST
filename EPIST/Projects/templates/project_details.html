@@ -15,41 +15,46 @@ Usuario Epist KMS
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'project_edit' project.id %}">
+                <img width="40" height="32" src="../static/Icons/edit_icon.svg" alt="Editar Proyecto">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'project_delete' project.id %}">
+                <img width="40" height="32" src="../static/Icons/delete_icon.svg" alt="Eliminar Proyecto">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'projects_list' %}" >
+                <img width="40" height="32" src="../static/Icons/back_icon.svg" alt="Volver">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
+        </div>
         <form method="get">
             {% csrf_token %}
-            <div class="view_project_header">
-                <div class="project_tittle_container">
-                    <label class="project_field_label">Título: </label>
-                    <p class="description_content">{{ project.title }}</p>
-                </div>
-                <div class="project_state_container">
-                    <label class="project_field_label">Estado</label>
-                    <label class="project_state_tag">{{ project.get_state_display }}</label>
-                </div>
+            <section class="my-4 d-flex justify-content-md-end">
+                <label class="me-2 form-check-label fw-bold" for="state">Estado:</label>
+                <input class="btn btn-dark" type="text" id="state" name="state" value="{{ project.get_state_display }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ project.title }}" readonly/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción del proyecto.</label>
+                <textarea name="description" id="description" class="form-control" readonly>{{ project.description }}</textarea>
             </div>
-            <div class="form_row">
-                <label class="project_field_label">Descripción:</label>
-                <textarea class="text_area_detail" name="description" rows="8" readonly>{{ project.description }}</textarea>
-            </div>
-            <div class="view_project_footer">
-                <div class="project_field_container">
-                    <label class="project_field_label">Creado por: </label>
-                    <p class="description_content">{{ project.created_by }}</p>
-                </div>
-                <div class="project_field_container">
-                    <label class="project_field_label">Creado en:</label>
-                    <p class="description_content">{{ project.creation_date }}</p>
-                </div>
-            </div>
-            <div class="details_form_footer">
-                <a class="details_action" href="{% url 'project_edit' project.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Project"> Editar</a>
-                <a class="details_action" href="{% url 'project_delete' project.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Project"> Eliminar</a>
-                <a class="details_action" href="{% url 'projects_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete Project"> Volver</a>
+            <div class="card card-body">
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="created_by">Creado por:</label>
+                    <input class="form-control w-auto" type="text" id="created_by" name="created_by" value="{{ project.created_by }}" readonly/>
+                </section>
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="creation_date">Creado en:</label>
+                    <input class="form-control w-auto" type="text" id="creation_date" name="creation_date" value="{{ project.creation_date }}" readonly/>
+                </section>
             </div>
         </form>
     </div>
-</div>
 
 {% endblock %}
