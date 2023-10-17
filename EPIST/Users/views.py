@@ -249,6 +249,16 @@ def group_create(request):
             new_group.permissions.add(Permission.objects.get(id=int(permission)))
         new_group.save()
         return redirect("group_details", id=new_group.id)
+    elif form.errors:
+        permissions_selected = request.POST.getlist('permissions')
+        basic_data = {
+            'form': form,
+            'permissions_list': permissions_list,
+            'permissions_selected': permissions_selected,
+            'exception': form.errors}
+        cleaned_data = form.cleaned_data
+        basic_data.update(cleaned_data)
+        return render(request, 'group_create.html', basic_data)
     return render(request, "group_create.html", {'form': form, 'permissions_list': permissions_list})
 
 @login_required()
@@ -288,5 +298,5 @@ def group_delete(request, id):
         group.delete()
         return redirect("groups_list")
     return render(request, "group_delete.html", {
-        'group_name': group_name
-        })
+        'group_name': group_name,
+        'id': id})
