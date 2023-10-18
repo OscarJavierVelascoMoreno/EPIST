@@ -13,6 +13,9 @@ STATE_CHOICES = (
 # Class for projects
 class Project(models.Model):
 
+    class Meta:
+        verbose_name = "Proyecto"
+
     title = models.CharField(max_length=100, unique=True, verbose_name="Título")
     description = models.TextField(verbose_name="Descripción")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")

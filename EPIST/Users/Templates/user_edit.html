@@ -15,6 +15,13 @@ Editar Usuario de Epist KMS
 
 {% block main_container %}
     <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
             <section class="my-4 d-lg-inline-flex align-items-center w-100">

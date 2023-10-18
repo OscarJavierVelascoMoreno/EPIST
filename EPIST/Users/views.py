@@ -114,6 +114,19 @@ def user_edit(request, id):
         selected_user.save()
         form.save()
         return redirect("user_details", id=selected_user.id)
+    elif form.errors:
+        projects_selected = selected_user.project_ids.all()
+        groups_selected = selected_user.groups.all()
+        basic_data = {
+            'form': form,
+            'projects_list': projects_list,
+            'projects_selected': projects_selected,
+            'groups_list': groups_list,
+            'groups_selected': groups_selected,
+            'exception': form.errors}
+        cleaned_data = form.cleaned_data
+        basic_data.update(cleaned_data)
+        return render(request, 'user_edit.html', basic_data)
     return render(request, "user_edit.html", {
         'form': form,
         'selected_user': selected_user,

@@ -16,24 +16,48 @@ Crear Proyecto EPIST KMS
 {% block main_container %}
 
     <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
             <section class="my-4 d-lg-inline-flex align-items-center w-100">
                 <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
-                <input class="form-control" type="text" id="title" name="title" required/>
+                <input class="form-control" type="text" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' required/>
                 <label class="m-2 form-check-label fw-bold" for="state">Estado:</label>
                 <select class="form-select" name="state" id="state">
-                    <option value="draft">Borrador</option>
-                    <option value="in_progress">En Progreso</option>
-                    <option value="closed">Cerrado</option>
+                    {% if form.state.value %}
+                        {% if form.state.value == 'draft' %}
+                            <option value="draft" selected>Borrador</option>
+                            <option value="in_progress">En Progreso</option>
+                            <option value="closed">Cerrado</option>
+                        {% elif form.state.value == 'in_progress' %}
+                            <option value="draft">Borrador</option>
+                            <option value="in_progress" selected>En Progreso</option>
+                            <option value="closed">Cerrado</option>
+                        {% elif form.state.value == 'closed' %}
+                            <option value="draft">Borrador</option>
+                            <option value="in_progress">En Progreso</option>
+                            <option value="closed" selected>Cerrado</option>
+                        {% endif %}
+                    {% else %}
+                        <option value="draft">Borrador</option>
+                        <option value="in_progress">En Progreso</option>
+                        <option value="closed">Cerrado</option>
+                    {% endif %}
                 </select>
             </section>
             <div class="my-4">
                 <label class="me-2 form-check-label fw-bold" for="description">Descripción del proyecto.</label>
-                <textarea name="description" id="description" class="form-control" required></textarea>
+                <textarea name="description" id="description" class="form-control" required>{{ form.description.value|default_if_none:"" }}</textarea>
             </div>
             <div class="d-flex justify-content-center">
-                <input class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="button" href="{% url 'projects_list' %}">Cancelar</a>
             </div>
         </form>
     </div>

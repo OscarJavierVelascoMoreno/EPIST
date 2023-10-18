@@ -32,6 +32,13 @@ def project_create(request):
         project.created_by = request.user
         project.save()
         return redirect("project_details", id=project.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'exception': form.errors,}
+        cleaned_data = form.cleaned_data
+        basic_data.update(cleaned_data)
+        return render(request, "project_create.html", basic_data)
     return render(request, "project_create.html", {'form': form})
 
 @login_required()
@@ -47,6 +54,13 @@ def project_edit(request, id):
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("project_details", id=project.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'exception': form.errors,}
+        cleaned_data = form.cleaned_data
+        basic_data.update(cleaned_data)
+        return render(request, "project_create.html", basic_data)
     return render(request, "project_edit.html", {'form': form, 'project': project})
 
 @login_required()

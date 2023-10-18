@@ -54,6 +54,15 @@ def knowledge_edit(request, id):
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("knowledge_details", id=knowledge.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'knowledge': knowledge,
+            'projects': projects,
+            'types': types,
+            'steps': steps,
+            'exception': form.errors}
+        return render(request, "knowledge_edit.html", basic_data)
     return render(request, "knowledge_edit.html", {'form': form, 'knowledge': knowledge, 'projects': projects, 'types': types, 'steps': steps})
 
 @login_required()
@@ -63,7 +72,7 @@ def knowledge_delete(request, id):
     if request.method == 'POST':
         knowledge.delete()
         return redirect("knowledges_list")
-    return render(request, "knowledge_delete.html", {'title': title})
+    return render(request, "knowledge_delete.html", {'title': title, 'id': id})
 
 @login_required()
 def knowledge_to_approval(request, id):

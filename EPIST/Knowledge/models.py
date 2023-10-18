@@ -16,6 +16,9 @@ KNL_STATE_CHOICES = (
 # Models for Knowledge management
 class KnowledgeType(models.Model):
 
+    class Meta:
+        verbose_name = "Tipo de Conocimiento"
+
     title = models.CharField(max_length=100, unique=True)
     description = models.TextField()
 
@@ -25,16 +28,19 @@ class KnowledgeType(models.Model):
 
 class Knowledge(models.Model):
 
-    title = models.CharField(max_length=100, unique=True)
-    state = models.CharField(choices=KNL_STATE_CHOICES, default='new')
-    type_id = models.ForeignKey(KnowledgeType, null=True, on_delete=models.SET_NULL)
-    project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
-    note = RichTextField()
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
-    approved_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_approved')
+    class Meta:
+        verbose_name = "Conocimiento"
+
+    title = models.CharField(max_length=100, unique=True, verbose_name="Título")
+    state = models.CharField(choices=KNL_STATE_CHOICES, default='new', verbose_name="Estado")
+    type_id = models.ForeignKey(KnowledgeType, null=True, on_delete=models.SET_NULL, verbose_name="Tipo")
+    project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL, verbose_name="Proyecto")
+    note = models.TextField(verbose_name="Descripción")
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created', verbose_name="Creado Por")
+    approved_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_approved', verbose_name="Aprobado Por")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
-    approved_date = models.DateField(blank=True, null=True)
-    active = models.BooleanField(default=True)
+    approved_date = models.DateField(blank=True, null=True, verbose_name="Fecha de Aprobación")
+    active = models.BooleanField(default=True, verbose_name="Activo")
 
     def approve_knowledge(self):
         self.state = 'approved'
@@ -50,11 +56,12 @@ class Knowledge(models.Model):
 
 class KnowledgeStep(models.Model):
 
-    title = models.CharField(max_length=100)
-    description = RichTextField()
-    knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, verbose_name="Título")
+    description = models.TextField(verbose_name="Descripción")
+    image = models.ImageField(upload_to='../Knowledge/uploads/KnowledgeSteps/', null=True, verbose_name="Imagen")
+    knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE, verbose_name="Conocimiento")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name="Creado Por")
 
     def __str__(self):
         return self.title
