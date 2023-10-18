@@ -56,5 +56,5 @@ def project_delete(request, id):
     if request.method == 'POST':
         project.delete()
         return redirect("projects_list")
-    return render(request, "project_delete.html", {'title': title})
+    return render(request, "project_delete.html", {'title': title, 'id': id})
 

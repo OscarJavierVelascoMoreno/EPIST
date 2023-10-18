@@ -44,10 +44,6 @@ Editar Proyecto EPIST KMS
                 <label class="me-2 form-check-label fw-bold" for="description">Descripción del proyecto.</label>
                 <textarea name="description" id="description" class="form-control" required>{{ project.description }}</textarea>
             </div>
-            <!-- <div class="form-floating">
-                <textarea name="description" id="description" class="form-control" placeholder="Escriba la descripción del proyecto aquí."></textarea>
-                <label for="description">Descripción del proyecto.</label>
-            </div> -->
             <div class="d-flex justify-content-center">
                 <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
                 <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'project_details' project.id %}">Cancelar</a>
