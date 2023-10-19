@@ -1,5 +1,5 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
 {{ forum.title }} - Epist KMS
@@ -46,9 +46,9 @@
                 <textarea class="knowledge_text_area_detail" name="description" rows="3" readonly>{{ forum.description }}</textarea>
             </div>
             <div class="knowledge_details_form_footer">
-                <a class="details_action" href="{% url 'forum_edit' forum.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Forum"> Editar</a>
-                <a class="details_action" href="{% url 'forum_delete' forum.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Forum"> Eliminar</a>
-                <a class="details_action" href="{% url 'forums_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete Forum"> Volver</a>
+                <a class="details_action" href="{% url 'forum_edit' forum.id %}"> <img class="details_action_icon" src="{% static 'Icons/edit_icon.svg' %}" alt="Edit Forum"> Editar</a>
+                <a class="details_action" href="{% url 'forum_delete' forum.id %}"> <img class="details_action_icon" src="{% static 'Icons/delete_icon.svg' %}" alt="Delete Forum"> Eliminar</a>
+                <a class="details_action" href="{% url 'forums_list' %}" > <img class="details_action_icon" src="{% static 'Icons/back_icon.svg' %}" alt="Delete Forum"> Volver</a>
             </div>
         </div>
     </div>

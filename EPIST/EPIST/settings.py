@@ -14,8 +14,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_ROOT = ''
-MEDIA_URL = ''
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -43,6 +41,7 @@ INSTALLED_APPS = [
     'Projects',
     'Knowledge',
     'Forums',
+    'EPIST',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +63,7 @@ TEMPLATES = [
             '../Users/Templates',
             '../Projecs/Templates',
             '../Knowledge/Templates',
+            '../Forums/Templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -134,7 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/Users/maste/Documents/Tesis/EPIST/EPIST/Users/static/'
+STATIC_ROOT = str(BASE_DIR).replace('\\','/') + '/EPIST/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = str(BASE_DIR).replace('\\','/') + '/EPIST/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

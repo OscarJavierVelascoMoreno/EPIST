@@ -103,14 +103,13 @@ def knowledge_approve(request, id):
 # Knowledge Step views here.
 @login_required()
 def knowledge_step_create(request, id):
-    form = KnowledgeStepForm(request.POST or None)
+    form = KnowledgeStepForm(request.POST or None, files=request.FILES)
     knowledge = Knowledge.objects.get(id=id)
     if form.is_valid():
-        knowledge_step = form.save(commit=False)
+        knowledge_step = form.save()
         knowledge_step.created_by = request.user
-        knowledge_step.knowledge_id = knowledge
         knowledge_step.save()
-        return redirect("knowledge_details", id=id)
+        return redirect("knowledge_step_details", id=knowledge_step.id)
     return render(request, "knowledge_step_create.html", {'form': form, 'knowledge': knowledge})
 
 @login_required()
@@ -122,10 +121,17 @@ def knowledge_step_details(request, id):
 @login_required()
 def knowledge_step_edit(request, id):
     knowledge_step = KnowledgeStep.objects.get(id=id)
-    form = KnowledgeStepForm(request.POST or None, instance=knowledge_step)
+    form = KnowledgeStepForm(request.POST or None, instance=knowledge_step, files=request.FILES)
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("knowledge_step_details", id=knowledge_step.id)
+    elif form.errors and request.method == 'POST':
+        basic_data = {
+            'form': form,
+            'knowledge_step': knowledge_step,
+            'exception': form.errors}
+        basic_data.update(form.cleaned_data)
+        return render(request, "knowledge_step_edit.html", basic_data)
     return render(request, "knowledge_step_edit.html", {'form': form, 'knowledge_step': knowledge_step})
 
 @login_required()
@@ -136,7 +142,7 @@ def knowledge_step_delete(request, id):
     if request.method == 'POST':
         knowledge_step.delete()
         return redirect("knowledge_details", id=knowledge)
-    return render(request, "knowledge_delete.html", {'title': title, 'knowledge': knowledge})
+    return render(request, "knowledge_delete.html", {'title': title, 'knowledge': knowledge, 'id': id})
 
 # Knowledge Type views here.
 @login_required()

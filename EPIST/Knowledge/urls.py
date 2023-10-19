@@ -1,7 +1,5 @@
 from django.urls import path
 from . import views
-from django.conf.urls.static import static
-from django.conf import settings
 
 urlpatterns = [
     path('knowledge_list/', views.knowledge_list, name='knowledge_list'),
@@ -21,5 +19,3 @@ urlpatterns = [
     path('knowledge_type_delete/<int:id>', views.knowledge_type_delete, name='knowledge_type_delete'),
     path('knowledge_types_list/', views.knowledge_types_list, name='knowledge_types_list'),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, documents_root=settings.MEDIA_ROOT)

@@ -1,5 +1,5 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
 Proyectos EPIST KMS
@@ -17,7 +17,7 @@ Proyectos EPIST KMS
 
     <div>
         <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'project_create' %}">
-            <img width="40" height="32" src="../static/Icons/create_icon.svg" alt="Crear Proyecto">
+            <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Proyecto">
             <span class="ms-1 fs-3 text-white me-3">Crear Proyecto</span>
         </a>
 
@@ -40,11 +40,11 @@ Proyectos EPIST KMS
                         <td class="text-center">
                             <div class="d-flex align-content-between justify-content-center">
                                 <a href="{% url 'project_edit' project.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="../static/Icons/edit_icon_list.svg" alt="Editar Proyecto">
+                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Proyecto">
                                     Editar
                                 </a>
                                 <a href="{% url 'project_delete' project.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="../static/Icons/delete_list_icon.svg" alt="Eliminar Proyecto">
+                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Proyecto">
                                     Eliminar
                                 </a>
                             </div>

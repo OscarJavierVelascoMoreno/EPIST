@@ -1,5 +1,5 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
 Usuarios de Epist KMS
@@ -17,7 +17,7 @@ Usuarios de Epist KMS
 
 <div>
     <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'user_create' %}">
-        <img width="40" height="32" src="../static/Icons/create_icon.svg" alt="Crear Usuario">
+        <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Usuario">
         <span class="ms-1 fs-3 text-white me-3">Crear Usuario</span>
     </a>
 
@@ -52,11 +52,11 @@ Usuarios de Epist KMS
                     <td class="text-center">
                         <div class="d-flex align-content-between justify-content-center">
                             <a href="{% url 'user_edit' user_data.id %}" class="mx-3 text-decoration-none text-black">
-                                <img width="40" height="32" src="../static/Icons/edit_icon_list.svg" alt="Editar Usuario">
+                                <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Usuario">
                                 Editar
                             </a>
                             <a href="{% url 'user_delete' user_data.id %}" class="mx-3 text-decoration-none text-black">
-                                <img width="40" height="32" src="../static/Icons/delete_list_icon.svg" alt="Eliminar Usuario">
+                                <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Usuario">
                                 Eliminar
                             </a>
                         </div>

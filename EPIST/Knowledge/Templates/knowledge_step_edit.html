@@ -1,5 +1,5 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
 Editar {{ knowledge_step.title }} - Epist KMS
@@ -15,34 +15,33 @@ Editar {{ knowledge_step.title }} - Epist KMS
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
-        <form method="post">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form_row">
-                <div class="input_data">
-                    <input name="title" type="text" value="{{ knowledge_step.title }}" required>
-                    <div class="underline"></div>
-                    <label for="">Titulo</label>
-                </div>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ knowledge_step.title }}" required/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción:</label>
+                <textarea name="description" id="description" class="form-control" required>{{ knowledge_step.description }}</textarea>
             </div>
-            <div class="form-row">
-                <div class="project_description_container">
-                    <label for="">Descripción:</label><br/>
-                    {{ form.media }}
-                    {{ form.description }}
-                </div>
+            <div class="card card-body">
+                <label class="me-2 form-check-label fw-bold">Imagen:</label>
+                {{ form.image }}
             </div>
-            <div>{{field.errors}}</div>
-            <div class="form_row">
-                <div class="form_row submit-btn">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_step_details' knowledge_step.id %}">Cancelar</a>
             </div>
         </form>
     </div>
-</div>
 
 {% endblock %}

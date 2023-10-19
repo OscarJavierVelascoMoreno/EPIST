@@ -56,9 +56,12 @@ class Knowledge(models.Model):
 
 class KnowledgeStep(models.Model):
 
+    class Meta:
+        verbose_name = "Pasos de Conocimiento"
+
     title = models.CharField(max_length=100, verbose_name="Título")
     description = models.TextField(verbose_name="Descripción")
-    image = models.ImageField(upload_to='../Knowledge/uploads/KnowledgeSteps/', null=True, verbose_name="Imagen")
+    image = models.ImageField(upload_to='uploads/KnowledgeSteps/', null=True, verbose_name="Imagen")
     knowledge_id = models.ForeignKey(Knowledge, on_delete=models.CASCADE, verbose_name="Conocimiento")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
     created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name="Creado Por")

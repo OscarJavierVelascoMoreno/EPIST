@@ -1,5 +1,5 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
 {{ project.title }} EPIST KMS
@@ -18,15 +18,15 @@
     <div class="card card-body">
         <div class="d-flex justify-content-center">
             <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'project_edit' project.id %}">
-                <img width="40" height="32" src="../static/Icons/edit_icon.svg" alt="Editar Proyecto">
+                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Proyecto">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
             </a>
             <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'project_delete' project.id %}">
-                <img width="40" height="32" src="../static/Icons/delete_icon.svg" alt="Eliminar Proyecto">
+                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Proyecto">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
             </a>
             <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'projects_list' %}" >
-                <img width="40" height="32" src="../static/Icons/back_icon.svg" alt="Volver">
+                <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
             </a>
         </div>

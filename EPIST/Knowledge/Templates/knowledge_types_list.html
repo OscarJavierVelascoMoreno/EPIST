@@ -1,5 +1,5 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
 Tipos de Conocimiento EPIST KMS
@@ -17,7 +17,7 @@ Tipos de Conocimiento EPIST KMS
 
     <div>
         <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'knowledge_type_create' %}">
-            <img width="40" height="32" src="../static/Icons/create_icon.svg" alt="Crear Tipo de Conocimiento">
+            <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Tipo de Conocimiento">
             <span class="ms-1 fs-3 text-white me-3">Crear Tipo de Conocimiento</span>
         </a>
 
@@ -40,11 +40,11 @@ Tipos de Conocimiento EPIST KMS
                         <td class="text-center">
                             <div class="d-flex align-content-between justify-content-center">
                                 <a href="{% url 'knowledge_type_edit' knowledge_type.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="../static/Icons/edit_icon_list.svg" alt="Editar Tipo de Conocimiento">
+                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Tipo de Conocimiento">
                                     Editar
                                 </a>
                                 <a href="{% url 'knowledge_type_delete' knowledge_type.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="../static/Icons/delete_list_icon.svg" alt="Eliminar Tipo de Conocimiento">
+                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Tipo de Conocimiento">
                                     Eliminar
                                 </a>
                             </div>

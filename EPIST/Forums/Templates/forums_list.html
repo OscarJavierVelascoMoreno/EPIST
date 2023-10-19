@@ -1,5 +1,5 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
 Foros - Epist KMS
@@ -16,7 +16,7 @@ Foros - Epist KMS
 {% block main_container %}
 
 <div class="content_main_container">
-    <a class="create_button" href="{% url 'forum_create' %}"> <img class="create_icon" src="../static/Icons/create_icon.svg" alt="Create Forum"> Crear Foro</a>
+    <a class="create_button" href="{% url 'forum_create' %}"> <img class="create_icon" src="{% static 'Icons/create_icon.svg' %}" alt="Create Forum"> Crear Foro</a>
 
     <table class="table_list">
         <thead>
@@ -35,8 +35,8 @@ Foros - Epist KMS
                 <td width="20%">{{forum.project_id}}</td>
                 <td width="30%">
                     <div class="actions_list">
-                        <a href="{% url 'forum_edit' forum.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_icon.svg" alt="Edit Forum"> Editar</a>
-                        <a href="{% url 'forum_delete' forum.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_list_icon.svg" alt="Delete Forum"> Eliminar</a>
+                        <a href="{% url 'forum_edit' forum.id %}"> <img class="actions_list_icon" src="{% static 'Icons/edit_icon.svg' %}" alt="Edit Forum"> Editar</a>
+                        <a href="{% url 'forum_delete' forum.id %}"> <img class="actions_list_icon" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Delete Forum"> Eliminar</a>
                     </div>
                 </td>
             </tr>
