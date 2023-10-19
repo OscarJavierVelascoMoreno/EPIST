@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}
 
-{{ forum.title }} - Epist KMS
+{{ forum.title }} - EPIST KMS
 
 {% endblock %}
 
@@ -15,55 +15,77 @@
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_details">
-        {% csrf_token %}
-        <div class="knowledge_detail">
-            <div class="knowledge_detail_rows">
-                <label for="">Titulo: </label>
-                <p>{{ forum.title }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label for="">Proyecto: </label>
-                <p>{{ forum.project_id }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label for="">Estado: </label>
-                <label class="knowledge_state_tag">{{ forum.get_state_display }}</label>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label>Creado por: </label>
-                <p>{{ forum.created_by }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label>Creado en:</label>
-                <p>{{ forum.creation_date }}</p>
-            </div>
+    <div class="card card-body">
+
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'forum_edit' forum.id %}">
+                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Foro">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'forum_delete' forum.id %}">
+                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Foro">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'forums_list' %}" >
+                <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
         </div>
-        <div class="knowledge_detail">
-            <div class="knowledge_description">
-                <label for="">Descripción: </label><br />
-                <textarea class="knowledge_text_area_detail" name="description" rows="3" readonly>{{ forum.description }}</textarea>
+
+        <form method="get">
+            {% csrf_token %}
+            <section class="my-4 d-flex justify-content-md-end">
+                <label class="me-2 form-check-label fw-bold" for="state">Estado:</label>
+                <input class="btn btn-dark" type="text" id="state" name="state" value="{{ forum.get_state_display }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ forum.title }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="project_id">Proyecto:</label>
+                <input class="form-control" type="text" id="project_id" name="project_id" value="{{ forum.project_id }}" readonly/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción:</label>
+                <textarea name="description" id="description" class="form-control" readonly>{{ forum.description }}</textarea>
             </div>
-            <div class="knowledge_details_form_footer">
-                <a class="details_action" href="{% url 'forum_edit' forum.id %}"> <img class="details_action_icon" src="{% static 'Icons/edit_icon.svg' %}" alt="Edit Forum"> Editar</a>
-                <a class="details_action" href="{% url 'forum_delete' forum.id %}"> <img class="details_action_icon" src="{% static 'Icons/delete_icon.svg' %}" alt="Delete Forum"> Eliminar</a>
-                <a class="details_action" href="{% url 'forums_list' %}" > <img class="details_action_icon" src="{% static 'Icons/back_icon.svg' %}" alt="Delete Forum"> Volver</a>
+            <div class="card card-body">
+                {% if user.id == forum.created_by.id %}
+                    <a class="btn btn-dark m-3 btn-sm align-items-center justify-content-center" href="{% url 'discussion_create' forum.id %}">
+                        Crear nueva discusión
+                    </a>
+                {% endif %}
+                <table class="table w-100 table-hover">
+                    <thead class="table-dark">
+                        <tr class="text-center">
+                            <th>Discusiones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for discussion in discussions %}
+                        <tr>
+                            <td>
+                                <a class="mx-3 text-decoration-none text-black" href="{% url 'discussion_details' discussion.id %}">
+                                    {{ discussion.title }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
+            <div class="card card-body">
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="created_by">Creado por:</label>
+                    <input class="form-control w-auto" type="text" id="created_by" name="created_by" value="{{ forum.created_by }}" readonly/>
+                </section>
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="creation_date">Creado en:</label>
+                    <input class="form-control w-auto" type="text" id="creation_date" name="creation_date" value="{{ forum.creation_date }}" readonly/>
+                </section>
+            </div>
+        </form>
     </div>
-    <div class="knowledge_steps_details">
-        {% if user.id == forum.created_by.id %}
-            <div class="actions_list">
-                <a href="{% url 'discussion_create' forum.id %}"> Crear una nueva Discusión </a>
-            </div>
-        {% endif %}
-        {% for discussion in discussions %}
-            <div class="knowledge_step">
-                <a href="{% url 'discussion_details' discussion.id %}">{{ discussion.title }}</a>
-            </div>
-        {% endfor %}
-    </div>
-</div>
 
 {% endblock %}

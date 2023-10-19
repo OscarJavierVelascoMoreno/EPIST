@@ -20,12 +20,15 @@ DCS_STATE_CHOICES = (
 # Models for forum management.
 class Forum(models.Model):
 
-    title = models.CharField(max_length=100, unique=True)
-    description = RichTextField()
+    class Meta:
+        verbose_name = "Foro"
+
+    title = models.CharField(max_length=100, unique=True, verbose_name="Título")
+    description = models.TextField(verbose_name="Descripción")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
-    state = models.CharField(choices=FRM_STATE_CHOICES, default='open')
-    project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created', verbose_name="Creado Por")
+    state = models.CharField(choices=FRM_STATE_CHOICES, default='open', verbose_name="Estado")
+    project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL, verbose_name="Proyecto")
 
     def __str__(self):
         return self.title
@@ -36,13 +39,16 @@ class Forum(models.Model):
 
 class Discussion(models.Model):
 
-    title = models.CharField(max_length=100, unique=True)
-    description = RichTextField()
+    class Meta:
+        verbose_name = "Discusión"
+
+    title = models.CharField(max_length=100, unique=True, verbose_name="Título")
+    description = models.TextField(verbose_name="Descripción")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created')
-    state = models.CharField(choices=DCS_STATE_CHOICES, default='open')
-    forum_id = models.ForeignKey(Forum, null=True, on_delete=models.CASCADE)
-    project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL)
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_created', verbose_name="Creado Por")
+    state = models.CharField(choices=DCS_STATE_CHOICES, default='open', verbose_name="Estado")
+    forum_id = models.ForeignKey(Forum, null=True, on_delete=models.CASCADE, verbose_name="Foro")
+    project_id = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL, verbose_name="Proyecto")
 
     def __str__(self):
         return self.title
@@ -77,12 +83,16 @@ class Discussion(models.Model):
 
 class Message(models.Model):
 
-    title = models.CharField(max_length=100)
-    description = RichTextField()
+    class Meta:
+        verbose_name = "Mensaje"
+
+    title = models.CharField(max_length=100, verbose_name="Título")
+    description = models.TextField(verbose_name="Descripción")
+    image = models.ImageField(upload_to='uploads/ForumMessage/', null=True, verbose_name="Imagen")
     creation_date = models.DateField(default=timezone.now, verbose_name="Fecha de Creación")
-    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    discussion_id = models.ForeignKey(Discussion, on_delete=models.CASCADE)
-    mark_relevant = models.BooleanField()
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name="Creado Por")
+    discussion_id = models.ForeignKey(Discussion, on_delete=models.CASCADE, verbose_name="Discusión")
+    mark_relevant = models.BooleanField(verbose_name="Marcar como Relevante")
 
     def __str__(self):
         return self.title

@@ -34,6 +34,15 @@ def forum_create(request):
         forum.created_by = request.user
         forum.save()
         return redirect("forum_details", id=forum.id)
+    elif form.errors:
+        project_selected = request.POST.get('project_id')
+        basic_data = {
+            'form': form,
+            'projects': projects,
+            'project_selected': project_selected,
+            'exception': form.errors}
+        basic_data.update(form.cleaned_data)
+        return render(request, "forum_create.html", basic_data)
     return render(request, "forum_create.html", {'form': form, 'projects': projects})
 
 @login_required()
@@ -52,6 +61,14 @@ def forum_edit(request, id):
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("forum_details", id=forum.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'forum': forum,
+            'projects': projects,
+            'discussions': discussions,
+            'exception': form.errors}
+        return render(request, "forum_edit.html", basic_data)
     return render(request, "forum_edit.html", {'form': form, 'forum': forum, 'projects': projects, 'discussions': discussions})
 
 @login_required()
@@ -61,7 +78,7 @@ def forum_delete(request, id):
     if request.method == 'POST':
         forum.delete()
         return redirect("forums_list")
-    return render(request, "forum_delete.html", {'title': title})
+    return render(request, "forum_delete.html", {'title': title, 'id': id})
 
 # Discussion views here.
 @login_required()
@@ -76,6 +93,14 @@ def discussion_create(request, id):
         discussion.project_id = project
         discussion.save()
         return redirect("discussion_details", id=discussion.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'forum': forum,
+            'project': project,
+            'exception': form.errors}
+        basic_data.update(form.cleaned_data)
+        return render(request, "discussion_create.html", basic_data)
     return render(request, "discussion_create.html", {'form': form, 'forum': forum, 'project': project})
 
 @login_required()
@@ -93,6 +118,13 @@ def discussion_edit(request, id):
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("discussion_details", id=discussion.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'messages': messages,
+            'discussion': discussion,
+            'exception': form.errors}
+        return render(request, "discussion_edit.html", basic_data)
     return render(request, "discussion_edit.html", {'form': form, 'discussion': discussion, 'messages': messages})
 
 @login_required()
@@ -103,19 +135,25 @@ def discussion_delete(request, id):
     if request.method == 'POST':
         discussion.delete()
         return redirect("forum_details", id=forum)
-    return render(request, "discussion_delete.html", {'title': title, 'forum': forum})
+    return render(request, "discussion_delete.html", {'title': title, 'forum': forum, 'id': id})
 
 # Message views here.
 @login_required()
 def message_create(request, id):
-    form = MessageForm(request.POST or None)
+    form = MessageForm(request.POST or None, files=request.FILES)
     discussion = Discussion.objects.get(id=id)
     if form.is_valid():
-        message = form.save(commit=False)
+        message = form.save()
         message.created_by = request.user
-        message.discussion_id = discussion
         message.save()
-        return redirect("discussion_details", id=id)
+        return redirect("message_details", id=message.id)
+    elif form.errors:
+        basic_data = {
+            'form': form,
+            'discussion': discussion,
+            'exception': form.errors}
+        basic_data.update(form.cleaned_data)
+        return render(request, "message_create.html", basic_data)
     return render(request, "message_create.html", {'form': form, 'discussion': discussion})
 
 @login_required()
@@ -127,10 +165,16 @@ def message_details(request, id):
 @login_required()
 def message_edit(request, id):
     message = Message.objects.get(id=id)
-    form = MessageForm(request.POST or None, instance=message)
+    form = MessageForm(request.POST or None, instance=message, files=request.FILES)
     if form.is_valid() and request.method == 'POST':
         form.save()
         return redirect("message_details", id=message.id)
+    elif form.errors and request.method == 'POST':
+        basic_data = {
+            'form': form,
+            'message': message,
+            'exception': form.errors}
+        return render(request, "message_edit.html", basic_data)
     return render(request, "message_edit.html", {'form': form, 'message': message})
 
 @login_required()
@@ -141,4 +185,4 @@ def message_delete(request, id):
     if request.method == 'POST':
         message.delete()
         return redirect("discussion_details", id=discussion)
-    return render(request, "message_delete.html", {'title': title, 'message': message})
+    return render(request, "message_delete.html", {'title': title, 'message': message, 'id': id})

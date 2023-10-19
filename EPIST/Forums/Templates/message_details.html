@@ -15,39 +15,57 @@
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
+
+        <div class="d-flex justify-content-center">
+            {% if user.id == message.created_by.id %}
+                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'message_edit' message.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Paso de Conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+                </a>
+                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'message_delete' message.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Paso de Conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+                </a>
+            {% else %}
+                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'message_edit' message.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Paso de Conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+                </a>
+            {% endif %}
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'discussion_details' message.discussion_id.id  %}" >
+                <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
+        </div>
+
         <form method="get">
             {% csrf_token %}
-            <div class="view_project_header">
-                <div class="project_tittle_container">
-                    <label class="project_field_label">Título: </label>
-                    <p class="description_content">{{ message.title }}</p>
-                </div>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ message.title }}" readonly/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción:</label>
+                <textarea name="description" id="description" class="form-control" readonly>{{ message.description }}</textarea>
             </div>
-            <div class="form_row">
-                <label class="project_field_label">Descripción:</label>
-                <div class="knowledge_step_description">
-                    {{ message.description|safe }}
+            {% if message.image %}
+                <div class="card card-body">
+                    <label class="me-2 form-check-label fw-bold" for="description">Imagen:</label>
+                    <img class="img-fluid img-thumbnail" src="{{ message.image.url }}" alt="Volver">
                 </div>
-            </div>
-            <div class="view_project_footer">
-                <div class="project_field_container">
-                    <label class="project_field_label">Creado por: </label>
-                    <p class="description_content">{{ message.created_by }}</p>
-                </div>
-                <div class="project_field_container">
-                    <label class="project_field_label">Creado en:</label>
-                    <p class="description_content">{{ message.creation_date }}</p>
-                </div>
-            </div>
-            <div class="details_form_footer">
-                <a class="details_action" href="{% url 'message_edit' message.id %}"> <img class="details_action_icon" src="{% static 'Icons/edit_icon.svg' %}" alt="Edit Message"> Editar</a>
-                <a class="details_action" href="{% url 'message_delete' message.id %}"> <img class="details_action_icon" src="{% static 'Icons/delete_icon.svg' %}" alt="Delete Message"> Eliminar</a>
-                <a class="details_action" href="{% url 'discussion_details' message.discussion_id.id %}" > <img class="details_action_icon" src="{% static 'Icons/back_icon.svg' %}" alt="Back to Discussion"> Volver</a>
+            {% endif %}
+            <div class="card card-body">
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="created_by">Creado por:</label>
+                    <input class="form-control w-auto" type="text" id="created_by" name="created_by" value="{{ message.created_by }}" readonly/>
+                </section>
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="creation_date">Creado en:</label>
+                    <input class="form-control w-auto" type="text" id="creation_date" name="creation_date" value="{{ message.creation_date }}" readonly/>
+                </section>
             </div>
         </form>
     </div>
-</div>
 
 {% endblock %}
