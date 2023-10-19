@@ -1,0 +1,27 @@
+{% extends "base_view_settings.html" %}
+
+{% block title %}
+
+{{ title }} EPIST KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Estas a punto de eliminar el Tipo de Conocimiento: {{ title }} registrado en el sistema.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+    <div class="card card-body">
+        <h1>Se eliminará el Tipo de Conocimiento {{ title }} permanentemente. ¿Deseas continuar?</h1>
+        <form method="post" class="d-flex justify-content-center">
+            {% csrf_token %}
+            <input class="me-2 btn btn-danger" type="submit" value="Si, eliminar.">
+            <a class="btn btn-dark" type="button" href="{% url 'knowledge_type_details' id %}">No, cancelar</a>
+        </form>
+    </div>
+
+{% endblock %}

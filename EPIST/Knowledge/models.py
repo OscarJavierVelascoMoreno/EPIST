@@ -19,8 +19,8 @@ class KnowledgeType(models.Model):
     class Meta:
         verbose_name = "Tipo de Conocimiento"
 
-    title = models.CharField(max_length=100, unique=True)
-    description = models.TextField()
+    title = models.CharField(max_length=100, unique=True, verbose_name="Título")
+    description = models.TextField(verbose_name="Descripción")
 
     def __str__(self):
         return self.title
