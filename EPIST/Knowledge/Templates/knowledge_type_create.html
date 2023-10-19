@@ -1,0 +1,43 @@
+{% extends "base_view_settings.html" %}
+{% load static %}
+{% block title %}
+
+Crear Tipo de Conocimiento EPIST KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes registrar un nuevo Tipo de Conocimiento en el sistema.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' required/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción del tipo de conocimiento.</label>
+                <textarea name="description" id="description" class="form-control" required>{{ form.description.value|default_if_none:"" }}</textarea>
+            </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="button" href="{% url 'knowledge_types_list' %}">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

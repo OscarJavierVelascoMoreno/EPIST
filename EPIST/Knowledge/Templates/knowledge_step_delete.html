@@ -1,8 +1,8 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
-{{ title }} Epist KMS
+{{ title }} EPIST KMS
 
 {% endblock %}
 
@@ -15,15 +15,13 @@
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
         <h1>Se eliminará el paso de conocimiento {{ title }} permanentemente. ¿Deseas continuar?</h1>
-        <form method="post" class="delete_form">
+        <form method="post" class="d-flex justify-content-center">
             {% csrf_token %}
-            <input class="delete_form_button delete_button" type="submit" value="Si, eliminar.">
-            <button class="delete_form_button cancel_button" type="button" onclick="location.href = '/knowledges_list'">No, cancelar</a>
+            <input class="me-2 btn btn-danger" type="submit" value="Si, eliminar.">
+            <a class="btn btn-dark" type="button" href="{% url 'knowledge_step_details' id %}">No, cancelar</a>
         </form>
     </div>
-</div>
 
 {% endblock %}

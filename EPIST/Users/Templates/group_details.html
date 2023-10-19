@@ -1,5 +1,5 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
 Grupo de Usuarios Epist KMS
@@ -15,28 +15,38 @@ Grupo de Usuarios Epist KMS
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'group_edit' selected_group.id %}">
+                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Grupo">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'group_delete' selected_group.id %}">
+                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Grupo">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'groups_list' %}" >
+                <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
+        </div>
         <form method="get">
             {% csrf_token %}
-            <div class="form_row">
-                <div class="input_data_details">
-                    <b>Nombre:&emsp;</b> {{ selected_group.name }}
+            <section class="my-4">
+                <label class="form-check-label" for="name">Nombre:</label>
+                <input class="form-control" type="text" id="name" value="{{ selected_group.name }}" readonly/>
+            </section>
+            <section class="d-flex">
+                <div class="card card-body mx-2">
+                    <span class="text-bg-dark p-1 text-center rounded-4">Permisos</span>
+                    <div class="d-block my-4">
+                        {% for permission in selected_group.permissions.all %}
+                            <span class="text-bg-dark p-2 text-center rounded-4 nowrap">{{ permission }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="many2many_details">
-                <span>Permisos</span><br><br>
-                {% for permission in selected_group.permissions.all %}
-                    <span class="tags">{{ permission }}</span>
-                {% endfor %}
-            </div>
-            <div class="details_form_footer">
-                <a class="details_action" href="{% url 'group_edit' selected_group.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Group"> Editar</a>
-                <a class="details_action" href="{% url 'group_delete' selected_group.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Group"> Eliminar</a>
-                <a class="details_action" href="{% url 'groups_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Group List"> Volver</a>
-            </div>
+            </section>
         </form>
     </div>
-</div>
 
 {% endblock %}

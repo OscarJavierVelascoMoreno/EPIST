@@ -1,5 +1,5 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
 {{ knowledge.title }}
@@ -15,61 +15,89 @@
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_details">
-        {% csrf_token %}
-        <div class="knowledge_detail">
-            <div class="knowledge_detail_rows">
-                <label for="">Titulo: </label>
-                <p>{{ knowledge.title }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label for="">Proyecto: </label>
-                <p>{{ knowledge.project_id }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label for="">Estado: </label>
-                <label class="knowledge_state_tag">{{ knowledge.get_state_display }}</label>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label>Creado por: </label>
-                <p>{{ knowledge.created_by }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label>Creado en:</label>
-                <p>{{ knowledge.creation_date }}</p>
-            </div>
+    <div class="card card-body">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_edit' knowledge.id %}">
+                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Conocimiento">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_delete' knowledge.id %}">
+                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Conocimiento">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_list' %}" >
+                <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
+            {% if knowledge.state == 'new' %}
+                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_to_approval' knowledge.id %}" >
+                    <img width="40" height="32" src="{% static 'Icons/send_icon.svg' %}" alt="Enviar a aprobación">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Enviar a aprobación</span>
+                </a>
+            {% endif %}
+            {% if knowledge.state == 'for_approval' %}
+                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_approve' knowledge.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/send_icon.svg' %}" alt="Aprobar conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Aprobar</span>
+                </a>
+            {% endif %}
         </div>
-        <div class="knowledge_detail">
-            <div class="knowledge_description">
-                <label for="">Descripción: </label><br />
-                <textarea class="knowledge_text_area_detail" name="note" rows="3" readonly>{{ knowledge.note }}</textarea>
+        <form method="get">
+            {% csrf_token %}
+            <section class="my-4 d-flex justify-content-md-end">
+                <label class="me-2 form-check-label fw-bold" for="state">Estado:</label>
+                <input class="btn btn-dark" type="text" id="state" name="state" value="{{ knowledge.get_state_display }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ knowledge.title }}" readonly/>
+            </section>
+            <section class="my-4 d-lg-inline-flex align-items-center w-100">
+                <label class="me-2 form-check-label fw-bold" for="type_id">Tipo de Conocimiento:</label>
+                <input class="form-control" type="text" id="type_id" name="type_id" value="{{ knowledge.type_id }}" readonly/>
+                <label class="m-2 form-check-label fw-bold" for="project_id">Proyecto:</label>
+                <input class="form-control" type="text" id="project_id" name="project_id" value="{{ knowledge.project_id }}" readonly/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="note">Descripción:</label>
+                <textarea name="note" id="note" class="form-control" readonly>{{ knowledge.note }}</textarea>
             </div>
-            <div class="knowledge_details_form_footer">
-                <a class="details_action" href="{% url 'knowledge_edit' knowledge.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Knowledge"> Editar</a>
-                <a class="details_action" href="{% url 'knowledge_delete' knowledge.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Knowledge"> Eliminar</a>
-                <a class="details_action" href="{% url 'knowledges_list' %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="Delete Knowledge"> Volver</a>
-                {% if knowledge.state == 'new' %}
-                    <a class="details_action" href="{% url 'knowledge_to_approval' knowledge.id %}" > <img class="details_action_icon" style="width: 70%;" src="../static/Icons/send_icon.svg" alt="To Approval Knowledge"> Enviar a aprobación</a>
+            <div class="card card-body">
+                {% if user.id == knowledge.created_by.id %}
+                    <a class="btn btn-dark m-3 btn-sm align-items-center justify-content-center" href="{% url 'knowledge_step_create' knowledge.id %}">
+                        Crear nuevo paso
+                    </a>
                 {% endif %}
-                {% if knowledge.state == 'for_approval' %}
-                    <a class="details_action" href="{% url 'knowledge_approve' knowledge.id %}" > <img class="details_action_icon" style="width: 70%;" src="../static/Icons/send_icon.svg" alt="Approve Knowledge"> Aprobar</a>
-                {% endif %}
+                <table class="table w-100 table-hover">
+                    <thead class="table-dark">
+                        <tr class="text-center">
+                            <th>Pasos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for knowledge_step in steps %}
+                        <tr>
+                            <td>
+                                <a class="mx-3 text-decoration-none text-black" href="{% url 'knowledge_step_details' knowledge_step.id %}">
+                                    {{ knowledge_step.title }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
+            <div class="card card-body">
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="created_by">Creado por:</label>
+                    <input class="form-control w-auto" type="text" id="created_by" name="created_by" value="{{ knowledge.created_by }}" readonly/>
+                </section>
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="creation_date">Creado en:</label>
+                    <input class="form-control w-auto" type="text" id="creation_date" name="creation_date" value="{{ knowledge.creation_date }}" readonly/>
+                </section>
+            </div>
+        </form>
     </div>
-    <div class="knowledge_steps_details">
-        {% if user.id == knowledge.created_by.id %}
-            <div class="actions_list">
-                <a href="{% url 'knowledge_step_create' knowledge.id %}"> Crear nuevo paso </a>
-            </div>
-        {% endif %}
-        {% for knowledge_step in steps %}
-            <div class="knowledge_step">
-                <a href="{% url 'knowledge_step_details' knowledge_step.id %}">{{ knowledge_step.title }}</a>
-            </div>
-        {% endfor %}
-    </div>
-</div>
 
 {% endblock %}

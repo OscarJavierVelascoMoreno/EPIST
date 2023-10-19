@@ -1,8 +1,8 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
-Crear Conocimiento de Epist KMS
+Crear Conocimiento EPIST KMS
 
 {% endblock %}
 
@@ -15,51 +15,69 @@ Crear Conocimiento de Epist KMS
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_create">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
-            <div class="knowledge_basic_data">
-                <div class="title_container">
-                    <label for="">Titulo: </label>
-                    <input name="title" type="text" required>
-                </div>
-                <div>{{fields.title.errors}}</div>
-                <div class="project_container">
-                    <label for="">Proyecto: </label>
-                    <select name="project_id" id="project_id" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
-                        {% for project in projects %}
+            <section class="my-4 d-lg-inline-flex align-items-center w-100">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' required/>
+                <label class="me-2 form-check-label fw-bold" for="project_id">Proyecto: </label>
+                <select class="form-select" name="project_id" id="project_id" required>
+                    {% for project in projects %}
+                        {% if project_selected and project.id|stringformat:"i" == project_selected %}
+                            <option value="{{ project.id }}" selected>{{ project.title }}</option>
+                        {% else %}
                             <option value="{{ project.id }}">{{ project.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="project_container">
-                <label for="">Tipo: </label>
-                <select name="type_id" id="type_id" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="type_id">Tipo: </label>
+                <select class="form-select" name="type_id" id="type_id" required>
                     {% for type in types %}
-                        <option value="{{ type.id }}">{{ type.title }}</option>
+                        {% if type_selected and type.id|stringformat:"i" == type_selected %}
+                            <option value="{{ type.id }}" selected>{{ type.title }}</option>
+                        {% else %}
+                            <option value="{{ type.id }}">{{ type.title }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
-            <div class="knowledge_description_container">
-                <label for="">Descripción: </label><br />
-                <textarea class="text_area_description" name="note" rows="3" required></textarea>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="note">Descripción:</label>
+                <textarea name="note" id="note" class="form-control" required>{{ form.note.value|default_if_none:"" }}</textarea>
             </div>
-            <div class="pagination_container">
-                <div class="pagination">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_list' %}">Cancelar</a>
             </div>
         </form>
     </div>
-    <div class="knowledge_steps_create">
-        <div class="alert_steps_create">
-            <p>Aqui podras crear nuevos pasos luego de guardar el conocimiento.</p>
-        </div>
+    <div class="card card-body">
+        <table class="table w-100 table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>Pasos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a class="mx-3 text-decoration-none text-black">
+                            <p>Aquí podrás crear nuevos pasos luego de guardar el conocimiento.</p>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
 
 {% endblock %}

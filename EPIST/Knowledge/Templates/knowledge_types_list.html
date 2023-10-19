@@ -1,0 +1,93 @@
+{% extends "base_view_settings.html" %}
+{% load static %}
+{% block title %}
+
+Tipos de Conocimiento EPIST KMS
+
+{% endblock %}
+
+{% block content_header %}
+
+<h1>Hola, {{ user.first_name }}</h1>
+<h3>Aquí puedes ver todos los Tipos de Conocimiento registrados en el sistema.</h3>
+
+{% endblock %}
+
+{% block main_container %}
+
+    <div>
+        <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'knowledge_type_create' %}">
+            <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Tipo de Conocimiento">
+            <span class="ms-1 fs-3 text-white me-3">Crear Tipo de Conocimiento</span>
+        </a>
+
+        <div class="table-responsive mt-5 d-flex justify-content-center">
+            <table class="table w-75 table-hover">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th class="w-50">Título</th>
+                        <th class="w-50">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for knowledge_type in page_obj %}
+                    <tr>
+                        <td>
+                            <a class="mx-3 text-decoration-none text-black" href="{% url 'knowledge_type_details' knowledge_type.id %}">
+                                {{knowledge_type.title}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex align-content-between justify-content-center">
+                                <a href="{% url 'knowledge_type_edit' knowledge_type.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Tipo de Conocimiento">
+                                    Editar
+                                </a>
+                                <a href="{% url 'knowledge_type_delete' knowledge_type.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Tipo de Conocimiento">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="d-flex d-inline justify-content-center">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                    <li class="page-item" aria-current="page">
+                        <span class="page-link text-dark">{{ page_obj.number|add:"-1" }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="">Anterior</a>
+                    </li>
+                {% endif %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link bg-black">{{ page_obj.number }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                    <li class="page-item" aria-current="page">
+                        <span class="page-link text-dark">{{ page_obj.number|add:"+1" }}</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="">Siguiente</a>
+                    </li>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+{% endblock %}

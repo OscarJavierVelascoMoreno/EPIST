@@ -1,28 +1,35 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
-Crear usuario de Epist KMS
+Editar Proyecto EPIST KMS
 
 {% endblock %}
 
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes modificar algunos datos de {{ user.first_name }} {{ user.last_name }}.</h3>
+<h3>Aquí puedes modificar algunos datos de {{ project.title }}.</h3>
 
 {% endblock %}
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
-            <div class="state_container">
-                <label class="state_label">Estado:</label>
-                <div class="state_select">
-                    <select name="state">
+            <section class="my-4 d-lg-inline-flex align-items-center w-100">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ project.title }}" required/>
+                <label class="m-2 form-check-label fw-bold" for="state">Estado:</label>
+                <select class="form-select" name="state" id="state">
                     {% if project.state == 'draft' %}
                         <option value="draft" selected>Borrador</option>
                     {% else %}
@@ -38,29 +45,17 @@ Crear usuario de Epist KMS
                     {% else %}
                         <option value="closed">Cerrado</option>
                     {% endif %}
-                    </select>
-                </div>
+                </select>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción del proyecto.</label>
+                <textarea name="description" id="description" class="form-control" required>{{ project.description }}</textarea>
             </div>
-            <div class="form_row">
-                <div class="input_data">
-                    <input name="title" value="{{ project.title }}" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Titulo</label>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="input-data textarea">
-                    <label for="">Descripción del proyecto.</label><br />
-                    <div class="underline"></div>
-                    <textarea name="description" rows="8" cols="80" required>{{ project.description }}</textarea>
-                </div>
-            </div>
-            <div class="edit_form_footer">
-                <input class="edit_form_button edit_button" type="submit" value="Guardar">
-                <button class="edit_form_button cancel_button" type="button" onclick="location.href = '/projects_list'">Cancelar</a>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'project_details' project.id %}">Cancelar</a>
             </div>
         </form>
     </div>
-</div>
 
 {% endblock %}

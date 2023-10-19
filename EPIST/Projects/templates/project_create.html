@@ -1,8 +1,8 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
-Crear Proyecto de Epist KMS
+Crear Proyecto EPIST KMS
 
 {% endblock %}
 
@@ -15,43 +15,51 @@ Crear Proyecto de Epist KMS
 
 {% block main_container %}
 
-<div class="create_main_container">
-    <div class="create_container">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
-            <div class="state_container">
-                <label class="state_label">Estado:</label>
-                <div class="state_select">
-                    <select name="state">
+            <section class="my-4 d-lg-inline-flex align-items-center w-100">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' required/>
+                <label class="m-2 form-check-label fw-bold" for="state">Estado:</label>
+                <select class="form-select" name="state" id="state">
+                    {% if form.state.value %}
+                        {% if form.state.value == 'draft' %}
+                            <option value="draft" selected>Borrador</option>
+                            <option value="in_progress">En Progreso</option>
+                            <option value="closed">Cerrado</option>
+                        {% elif form.state.value == 'in_progress' %}
+                            <option value="draft">Borrador</option>
+                            <option value="in_progress" selected>En Progreso</option>
+                            <option value="closed">Cerrado</option>
+                        {% elif form.state.value == 'closed' %}
+                            <option value="draft">Borrador</option>
+                            <option value="in_progress">En Progreso</option>
+                            <option value="closed" selected>Cerrado</option>
+                        {% endif %}
+                    {% else %}
                         <option value="draft">Borrador</option>
                         <option value="in_progress">En Progreso</option>
                         <option value="closed">Cerrado</option>
-                    </select>
-                </div>
+                    {% endif %}
+                </select>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción del proyecto.</label>
+                <textarea name="description" id="description" class="form-control" required>{{ form.description.value|default_if_none:"" }}</textarea>
             </div>
-            <div class="form_row">
-                <div class="input_data">
-                    <input name="title" type="text" required>
-                    <div class="underline"></div>
-                    <label for="">Titulo</label>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="project_description_container">
-                    <label for="">Descripción del proyecto.</label><br />
-                    <textarea class="text_area_description" name="description" rows="8" required></textarea>
-                </div>
-            </div>
-            <div>{{field.errors}}</div>
-            <div class="form_row">
-                <div class="form_row submit-btn">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="button" href="{% url 'projects_list' %}">Cancelar</a>
             </div>
         </form>
     </div>
-</div>
 
 {% endblock %}

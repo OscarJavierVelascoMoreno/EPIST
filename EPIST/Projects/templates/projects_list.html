@@ -1,8 +1,8 @@
 {% extends "base_view_settings.html" %}
-
+{% load static %}
 {% block title %}
 
-Proyectos de Epist KMS
+Proyectos EPIST KMS
 
 {% endblock %}
 
@@ -15,49 +15,79 @@ Proyectos de Epist KMS
 
 {% block main_container %}
 
-<div class="content_main_container">
-    <a class="create_button" href="{% url 'project_create' %}"> <img class="create_icon" src="../static/Icons/create_icon.svg" alt="Create Project"> Crear Proyecto</a>
+    <div>
+        <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'project_create' %}">
+            <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Proyecto">
+            <span class="ms-1 fs-3 text-white me-3">Crear Proyecto</span>
+        </a>
 
-    <table class="table_list">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for project in page_obj %}
-            <tr>
-                <td width="70%"><a class="a_details" href="{% url 'project_details' project.id %}">{{project.title}}</a></td>
-                <td width="30%">
-                    <div class="actions_list">
-                        <a href="{% url 'project_edit' project.id %}"> <img class="actions_list_icon" src="../static/Icons/edit_icon.svg" alt="Edit Project"> Editar</a>
-                        <a href="{% url 'project_delete' project.id %}"> <img class="actions_list_icon" src="../static/Icons/delete_list_icon.svg" alt="Delete Project"> Eliminar</a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div class="table-responsive mt-5 d-flex justify-content-center">
+            <table class="table w-75 table-hover">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th class="w-50">Título</th>
+                        <th class="w-50">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in page_obj %}
+                    <tr>
+                        <td>
+                            <a class="mx-3 text-decoration-none text-black" href="{% url 'project_details' project.id %}">
+                                {{project.title}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex align-content-between justify-content-center">
+                                <a href="{% url 'project_edit' project.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Proyecto">
+                                    Editar
+                                </a>
+                                <a href="{% url 'project_delete' project.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Proyecto">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-    <div class="pagination_container">
-        <span class="pagination">
-            {% if page_obj.has_previous %}
-                <a class="show_a_pagination" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-            {% else %}
-                <a href="" class="hide_a_pagination">Anterior</a>
-            {% endif %}
-            <span>
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-            </span>
-            {% if page_obj.has_next %}
-                <a class="show_a_pagination" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-            {% else %}
-                <a href="" class="hide_a_pagination">Siguiente</a>
-            {% endif %}
-        </span>
+        <nav class="d-flex d-inline justify-content-center">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                    <li class="page-item" aria-current="page">
+                        <span class="page-link text-dark">{{ page_obj.number|add:"-1" }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="">Anterior</a>
+                    </li>
+                {% endif %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link bg-black">{{ page_obj.number }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                    <li class="page-item" aria-current="page">
+                        <span class="page-link text-dark">{{ page_obj.number|add:"+1" }}</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="">Siguiente</a>
+                    </li>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+
     </div>
-
-</div>
 
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
-Editar {{ forum.title }} - Epist KMS
+Editar {{ forum.title }} EPIST KMS
 
 {% endblock %}
 
@@ -15,49 +15,59 @@ Editar {{ forum.title }} - Epist KMS
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_create">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
-            <div class="knowledge_basic_data">
-                <div class="title_container">
-                    <label for="">Titulo: </label>
-                    <input name="title" type="text" value="{{ forum.title }}" required>
-                </div>
-                <div>{{fields.title.errors}}</div>
-                <div class="project_container">
-                    <label for="">Proyecto: </label>
-                    <select name="project_id" id="project_id" onfocus='this.size=3;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
-                        {% for project in projects %}
-                            {% if project.id == forum.project_id.id %}
-                                <option value="{{ project.id }}" selected>{{ project.title }}</option>
-                            {% else %}
-                                <option value="{{ project.id }}">{{ project.title }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
+            <section class="my-4 d-lg-inline-flex align-items-center w-100">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value='{{ forum.title }}' required/>
+                <label class="m-2 form-check-label fw-bold" for="project_id">Proyecto: </label>
+                <select class="form-select" name="project_id" id="project_id" required>
+                    {% for project in projects %}
+                        {% if project.id == forum.project_id.id %}
+                            <option value="{{ project.id }}" selected>{{ project.title }}</option>
+                        {% else %}
+                            <option value="{{ project.id }}">{{ project.title }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción:</label>
+                <textarea name="description" id="description" class="form-control" required>{{ forum.description }}</textarea>
             </div>
-            <div class="knowledge_description_container">
-                <label for="">Descripción: </label><br />
-                <textarea class="text_area_description" name="description" rows="3" required>{{ forum.description }}</textarea>
-            </div>
-            <div class="pagination_container">
-                <div class="pagination">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'forum_details' forum.id %}">Cancelar</a>
             </div>
         </form>
     </div>
-    <div class="knowledge_steps_details_edit">
-        {% for discussion in discussions %}
-            <div class="knowledge_step">
-                <a href="{% url 'discussion_details' discussion.id %}">{{ discussion.title }}</a>
-            </div>
-        {% endfor %}
+    <div class="card card-body">
+        <table class="table w-100 table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>Discusiones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for discussion in steps %}
+                <tr>
+                    <td>
+                        <a class="mx-3 text-decoration-none text-black" href="{% url 'discussion_details' discussion.id %}">
+                            {{ discussion.title }}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-</div>
 
 {% endblock %}

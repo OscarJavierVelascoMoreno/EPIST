@@ -1,8 +1,8 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
-Editar {{ discussion.title }} - Epist KMS
+Editar {{ discussion.title }} - EPIST KMS
 
 {% endblock %}
 
@@ -15,37 +15,49 @@ Editar {{ discussion.title }} - Epist KMS
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_create">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
-            <div class="knowledge_basic_data">
-                <div class="title_container">
-                    <label for="">Titulo: </label>
-                    <input name="title" type="text" value="{{ discussion.title }}" required>
-                </div>
-                <div>{{fields.title.errors}}</div>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value='{{ discussion.title }}' required/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción del objetivo de la discusión.</label>
+                <textarea name="description" id="description" class="form-control" required>{{ discussion.description }}</textarea>
             </div>
-            <div class="knowledge_description_container">
-                <label for="">Descripción: </label><br />
-                <textarea class="text_area_description" name="description" rows="3" required>{{ discussion.description }}</textarea>
-            </div>
-            <div class="pagination_container">
-                <div class="pagination">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="button" href="{% url 'discussion_details' discussion.id %}">Cancelar</a>
             </div>
         </form>
+        <div class="card card-body">
+            <table class="table w-100 table-hover">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th>Mensajes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                    <tr>
+                        <td>
+                            <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
+                                {{ message.title }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="knowledge_steps_details_edit">
-        {% for message in messages %}
-            <div class="knowledge_step">
-                <a href="{% url 'message_details' message.id %}">{{ message.title }}</a>
-            </div>
-        {% endfor %}
-    </div>
-</div>
 
 {% endblock %}

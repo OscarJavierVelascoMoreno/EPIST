@@ -1,5 +1,5 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
 {{ discussion.title }} - Epist KMS
@@ -15,52 +15,73 @@
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_details">
-        {% csrf_token %}
-        <div class="knowledge_detail">
-            <div class="knowledge_detail_rows">
-                <label for="">Titulo: </label>
-                <p>{{ discussion.title }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label for="">Proyecto: </label>
-                <p>{{ discussion.project_id }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label for="">Estado: </label>
-                <label class="knowledge_state_tag">{{ discussion.get_state_display }}</label>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label>Creado por: </label>
-                <p>{{ discussion.created_by }}</p>
-            </div>
-            <div class="knowledge_detail_rows">
-                <label>Creado en:</label>
-                <p>{{ discussion.creation_date }}</p>
-            </div>
+    <div class="card card-body">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'discussion_edit' discussion.id %}">
+                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Discusión">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'discussion_delete' discussion.id %}">
+                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Discusión">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+            </a>
+            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'forum_details' discussion.forum_id.id %}" >
+                <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
+                <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
+            </a>
         </div>
-        <div class="knowledge_detail">
-            <div class="knowledge_description">
-                <label for="">Descripción: </label><br/>
-                <textarea class="knowledge_text_area_detail" name="description" rows="3" readonly>{{ discussion.description }}</textarea>
+        <form method="get">
+            {% csrf_token %}
+            <section class="my-4 d-flex justify-content-md-end">
+                <label class="me-2 form-check-label fw-bold" for="state">Estado:</label>
+                <input class="btn btn-dark" type="text" id="state" name="state" value="{{ discussion.get_state_display }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value="{{ discussion.title }}" readonly/>
+            </section>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="project_id">Proyecto:</label>
+                <input class="form-control" type="text" id="project_id" name="project_id" value="{{ discussion.project_id }}" readonly/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción:</label>
+                <textarea name="description" id="description" class="form-control" readonly>{{ discussion.description }}</textarea>
             </div>
-            <div class="knowledge_details_form_footer">
-                <a class="details_action" href="{% url 'discussion_edit' discussion.id %}"> <img class="details_action_icon" src="../static/Icons/edit_icon.svg" alt="Edit Discussion"> Editar</a>
-                <a class="details_action" href="{% url 'discussion_delete' discussion.id %}"> <img class="details_action_icon" src="../static/Icons/delete_icon.svg" alt="Delete Discussion"> Eliminar</a>
-                <a class="details_action" href="{% url 'forum_details' discussion.forum_id.id %}" > <img class="details_action_icon" src="../static/Icons/back_icon.svg" alt="List Discussions"> Volver</a>
+            <div class="card card-body">
+                <a class="btn btn-dark m-3 btn-sm align-items-center justify-content-center" href="{% url 'message_create' discussion.id %}">
+                    Escribir nuevo mensaje
+                </a>
+                <table class="table w-100 table-hover">
+                    <thead class="table-dark">
+                        <tr class="text-center">
+                            <th>Mensajes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in messages %}
+                        <tr>
+                            <td>
+                                <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
+                                    {{ message.title }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
-    <div class="knowledge_steps_details">
-        <div class="actions_list">
-            <a href="{% url 'message_create' discussion.id %}"> Crear un nuevo Mensaje </a>
-        </div>
-        {% for message in messages %}
-            <div class="knowledge_step">
-                <a href="{% url 'message_details' message.id %}">{{ message.title }}</a>
+            <div class="card card-body">
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="created_by">Creado por:</label>
+                    <input class="form-control w-auto" type="text" id="created_by" name="created_by" value="{{ discussion.created_by }}" readonly/>
+                </section>
+                <section class="my-4">
+                    <label class="me-2 form-check-label fw-bold" for="creation_date">Creado en:</label>
+                    <input class="form-control w-auto" type="text" id="creation_date" name="creation_date" value="{{ discussion.creation_date }}" readonly/>
+                </section>
             </div>
-        {% endfor %}
+        </form>
     </div>
 </div>
 

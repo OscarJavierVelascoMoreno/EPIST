@@ -1,5 +1,5 @@
 {% extends "base_view.html" %}
-
+{% load static %}
 {% block title %}
 
 Crear Discusión - Epist KMS
@@ -15,35 +15,47 @@ Crear Discusión - Epist KMS
 
 {% block main_container %}
 
-<div class="create_knowledge_container">
-    <div class="knowledge_header_create">
+    <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
-            <div class="knowledge_basic_data">
-                <div class="title_container">
-                    <label for="">Titulo: </label>
-                    <input name="title" type="text" required>
-                </div>
-                <div>{{fields.title.errors}}</div>
+            <section class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
+                <input class="form-control" type="text" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' required/>
+            </section>
+            <div class="my-4">
+                <label class="me-2 form-check-label fw-bold" for="description">Descripción del objetivo de la discusión.</label>
+                <textarea name="description" id="description" class="form-control" required>{{ form.description.value|default_if_none:"" }}</textarea>
             </div>
-            <div class="knowledge_description_container">
-                <label for="">Descripción: </label><br />
-                <textarea class="text_area_description" name="description" rows="3" required></textarea>
-            </div>
-            <div class="pagination_container">
-                <div class="pagination">
-                    <div class="input_data">
-                        <input type="submit" value="Guardar">
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" type="button" href="{% url 'forum_details' forum.id %}">Cancelar</a>
             </div>
         </form>
     </div>
-    <div class="knowledge_steps_create">
-        <div class="alert_steps_create">
-            <p>Aqui podras crear nuevos mensajes luego de registrar la nueva discusión.</p>
-        </div>
+    <div class="card card-body">
+        <table class="table w-100 table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>Mensajes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a class="mx-3 text-decoration-none text-black">
+                            <p>Aquí podrás escribir nuevos mensajes luego de crear la discusión.</p>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
 
 {% endblock %}
