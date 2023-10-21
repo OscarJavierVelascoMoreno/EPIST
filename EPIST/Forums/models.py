@@ -5,6 +5,8 @@ from datetime import date
 from Users.models import User
 from Projects.models import Project
 from Knowledge.models import Knowledge, KnowledgeStep
+from Knowledge.views import knowledge_details
+from django.shortcuts import render
 
 FRM_STATE_CHOICES = (
     ("open", "Abierto"),
@@ -63,22 +65,24 @@ class Discussion(models.Model):
             project_id = self.project_id,
             note = self.description,
             created_by = self.created_by,
-            partner_ids = self.created_by,
             creation_date = date.today()
         )
         message_ids = self.create_message(new_knowledge)
+        return new_knowledge
 
     def create_message(self, knowledge):
         messages = Message.objects.filter(discussion_id=self.id)
         new_messages = []
         for message in messages:
-            new_msg = KnowledgeStep.objects.create(
-                title = message.title,
-                description = message.description,
-                knowledge_id = knowledge,
-                created_by = self.created_by
-            )
-            new_messages.append(new_msg)
+            if message.mark_relevant:
+                new_msg = KnowledgeStep.objects.create(
+                    title = message.title,
+                    description = message.description,
+                    image = message.image,
+                    knowledge_id = knowledge,
+                    created_by = self.created_by
+                )
+                new_messages.append(new_msg)
 
 
 class Message(models.Model):

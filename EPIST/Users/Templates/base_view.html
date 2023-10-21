@@ -27,30 +27,22 @@
                                     <span class="ms-1 d-none d-sm-inline">Inicio</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{% url 'forums_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
-                                    <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Foro">
-                                    <span class="ms-1 d-none d-sm-inline">Foro</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'knowledge_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
-                                    <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/knowledge_icon.svg' %}" alt="Conocimiento">
-                                    <span class="ms-1 d-none d-sm-inline">Conocimiento</span>
-                                </a>
-                            </li>
-                            <!-- <li>
-                                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                    <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
-                                <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
-                                    </li>
-                                </ul>
-                            </li> -->
+                            {% if request.user|has_group:"Foro" or request.user.is_staff %}
+                                <li>
+                                    <a href="{% url 'forums_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
+                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Foro">
+                                        <span class="ms-1 d-none d-sm-inline">Foro</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if request.user|has_group:"Conocimiento" or request.user.is_staff %}
+                                <li>
+                                    <a href="{% url 'knowledge_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
+                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/knowledge_icon.svg' %}" alt="Conocimiento">
+                                        <span class="ms-1 d-none d-sm-inline">Conocimiento</span>
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                         <hr>
                         <div class="dropdown">
@@ -59,7 +51,9 @@
                                 <span class="ms-1 d-none d-sm-inline">Ajustes</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="{% url 'settings' %}">Ajustes</a></li>
+                                {% if request.user|has_group:"Administracion" or request.user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'settings' %}">Ajustes</a></li>
+                                {% endif %}
                                 <li><a class="dropdown-item" href="#">Ayuda</a></li>
                                 <li><a class="dropdown-item" href="#">Acerca de</a></li>
                                 <li><hr class="dropdown-divider"></li>

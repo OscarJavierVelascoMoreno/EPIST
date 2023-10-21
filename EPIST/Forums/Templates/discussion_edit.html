@@ -42,18 +42,24 @@ Editar {{ discussion.title }} - EPIST KMS
             <table class="table w-100 table-hover">
                 <thead class="table-dark">
                     <tr class="text-center">
-                        <th>Mensajes</th>
+                        <th>Mensaje</th>
+                        <th>Autor</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for message in messages %}
-                    <tr>
-                        <td>
-                            <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
-                                {{ message.title }}
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
+                                    {{ message.title }}
+                                </a>
+                            </td>
+                            <td>
+                                <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
+                                    {{ message.created_by }}
+                                </a>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

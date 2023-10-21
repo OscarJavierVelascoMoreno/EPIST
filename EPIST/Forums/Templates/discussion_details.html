@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}
 
-{{ discussion.title }} - Epist KMS
+{{ discussion.title }} - EPIST KMS
 
 {% endblock %}
 
@@ -16,15 +16,28 @@
 {% block main_container %}
 
     <div class="card card-body">
+
+        {% if exception %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Se encontraron errores: {{ exception }} </strong>
+            </div>
+        {% endif %}
+
         <div class="d-flex justify-content-center">
-            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'discussion_edit' discussion.id %}">
-                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Discusión">
-                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
-            </a>
-            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'discussion_delete' discussion.id %}">
-                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Discusión">
-                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
-            </a>
+            {% if user.id == discussion.created_by.id %}
+                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'discussion_edit' discussion.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Discusión">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+                </a>
+                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'discussion_delete' discussion.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Discusión">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+                </a>
+                <a class="btn btn-dark btn-sm align-items-center me-3 justify-content-center" href="{% url 'create_knowledge' discussion.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/knowledge_icon.svg' %}" alt="Crear Conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Crear Conocimiento</span>
+                </a>
+            {% endif %}
             <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'forum_details' discussion.forum_id.id %}" >
                 <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
@@ -55,18 +68,44 @@
                 <table class="table w-100 table-hover">
                     <thead class="table-dark">
                         <tr class="text-center">
-                            <th>Mensajes</th>
+                            <th class="w-50">Mensaje</th>
+                            <th class="w-25">Autor</th>
+                            <th class="w-25">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for message in messages %}
-                        <tr>
-                            <td>
-                                <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
-                                    {{ message.title }}
-                                </a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
+                                        {{ message.title }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="mx-3 text-decoration-none text-black" href="{% url 'message_details' message.id %}">
+                                        {{ message.created_by }}
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex align-content-between justify-content-center">
+                                        {% if user.id == message.created_by.id %}
+                                            <a class="mx-3 text-decoration-none text-black" href="{% url 'message_edit' message.id %}">
+                                                <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Mensaje">
+                                                <span class="ms-1 fs-5 me-3 align-middle">Editar</span>
+                                            </a>
+                                            <a class="mx-3 text-decoration-none text-black" href="{% url 'message_delete' message.id %}">
+                                                <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Mensaje">
+                                                <span class="ms-1 fs-5 me-3 align-middle">Eliminar</span>
+                                            </a>
+                                        {% elif not message.mark_relevant %}
+                                            <a class="mx-3 text-decoration-none text-black" href="{% url 'relevant_message' message.id %}">
+                                                <img width="40" height="32" src="{% static 'Icons/like_icon_list.svg' %}" alt="Mensaje Relevante">
+                                                <span class="ms-1 fs-5 me-3 align-middle">Marcar como Relevante</span>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

@@ -18,7 +18,7 @@ Conocimiento - EPIST KMS
 <div>
     <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'knowledge_create' %}">
         <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Conocimiento">
-        <span class="ms-1 fs-3 text-white me-3">Crear Conocimiento</span>
+        <span class="ms-1 fs-5 text-white me-3">Crear Conocimiento</span>
     </a>
 
     <div class="table-responsive mt-5 d-flex justify-content-center">
@@ -50,16 +50,18 @@ Conocimiento - EPIST KMS
                         </a>
                     </td>
                     <td class="text-center">
-                        <div class="d-flex align-content-between justify-content-center">
-                            <a href="{% url 'knowledge_edit' knowledge.id %}" class="mx-3 text-decoration-none text-black">
-                                <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Conocimiento">
-                                Editar
-                            </a>
-                            <a href="{% url 'knowledge_delete' knowledge.id %}" class="mx-3 text-decoration-none text-black">
-                                <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Conocimiento">
-                                Eliminar
-                            </a>
-                        </div>
+                        {% if user.id == knowledge.created_by.id %}
+                            <div class="d-flex align-content-between justify-content-center">
+                                <a href="{% url 'knowledge_edit' knowledge.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Conocimiento">
+                                    Editar
+                                </a>
+                                <a href="{% url 'knowledge_delete' knowledge.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Conocimiento">
+                                    Eliminar
+                                </a>
+                            </div>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

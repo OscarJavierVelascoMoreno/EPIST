@@ -18,7 +18,7 @@ Foros - EPIST KMS
     <div>
         <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'forum_create' %}">
             <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Foro">
-            <span class="ms-1 fs-3 text-white me-3">Crear Foro</span>
+            <span class="ms-1 fs-5 text-white me-3">Crear Foro</span>
         </a>
 
         <div class="table-responsive mt-5 d-flex justify-content-center">
@@ -51,14 +51,16 @@ Foros - EPIST KMS
                         </td>
                         <td class="text-center">
                             <div class="d-flex align-content-between justify-content-center">
-                                <a href="{% url 'forum_edit' forum.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Foro">
-                                    Editar
-                                </a>
-                                <a href="{% url 'forum_delete' forum.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Foro">
-                                    Eliminar
-                                </a>
+                                {% if user.id == forum.created_by.id %}
+                                    <a href="{% url 'forum_edit' forum.id %}" class="mx-3 text-decoration-none text-black">
+                                        <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Foro">
+                                        Editar
+                                    </a>
+                                    <a href="{% url 'forum_delete' forum.id %}" class="mx-3 text-decoration-none text-black">
+                                        <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Foro">
+                                        Eliminar
+                                    </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
