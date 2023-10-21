@@ -18,14 +18,16 @@
     <div class="card card-body">
 
         <div class="d-flex justify-content-center">
-            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_step_edit' knowledge_step.id %}">
-                <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Paso de Conocimiento">
-                <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
-            </a>
-            <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_step_delete' knowledge_step.id %}">
-                <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Paso de Conocimiento">
-                <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
-            </a>
+            {% if user.id == knowledge_step.created_by.id %}
+                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_step_edit' knowledge_step.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Paso de Conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
+                </a>
+                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_step_delete' knowledge_step.id %}">
+                    <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Paso de Conocimiento">
+                    <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
+                </a>
+            {% endif %}
             <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_details' knowledge_step.knowledge_id.id  %}" >
                 <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>

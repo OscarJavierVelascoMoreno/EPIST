@@ -27,38 +27,44 @@
                                     <span class="ms-1 d-none d-sm-inline">Ajustes</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#submenu_usuarios" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                    <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/users_menu_icon.svg' %}" alt="Usuarios">
-                                    <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Usuarios</span>
-                                </a>
-                                <ul class="collapse nav flex-column ms-4" id="submenu_usuarios" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="{% url 'groups_list' %}" class="nav-link px-0">
-                                            <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/users_group.svg' %}" alt="Grupos de Usuarios">
-                                            <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Grupos de Usuarios</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'users_list' %}" class="nav-link px-0">
-                                            <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/user_icon.svg' %}" alt="Usuarios">
-                                            <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Usuarios</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{% url 'projects_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
-                                    <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/projects_icon.svg' %}" alt="Proyectos">
-                                    <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Proyectos</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'knowledge_types_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
-                                    <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/knowledge_icon.svg' %}" alt="Tipos de Conocimiento">
-                                    <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Tipos de Conocimiento</span>
-                                </a>
-                            </li>
+                            {% if request.user|has_group:"Usuarios" or request.user.is_staff %}
+                                <li>
+                                    <a href="#submenu_usuarios" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/users_menu_icon.svg' %}" alt="Usuarios">
+                                        <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Usuarios</span>
+                                    </a>
+                                    <ul class="collapse nav flex-column ms-4" id="submenu_usuarios" data-bs-parent="#menu">
+                                        <li class="w-100">
+                                            <a href="{% url 'groups_list' %}" class="nav-link px-0">
+                                                <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/users_group.svg' %}" alt="Grupos de Usuarios">
+                                                <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Grupos de Usuarios</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'users_list' %}" class="nav-link px-0">
+                                                <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/user_icon.svg' %}" alt="Usuarios">
+                                                <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Usuarios</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if request.user|has_group:"Proyectos" or request.user.is_staff %}
+                                <li>
+                                    <a href="{% url 'projects_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
+                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/projects_icon.svg' %}" alt="Proyectos">
+                                        <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Proyectos</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if request.user|has_group:"Conocimiento" or request.user.is_staff %}
+                                <li>
+                                    <a href="{% url 'knowledge_types_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
+                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/knowledge_icon.svg' %}" alt="Tipos de Conocimiento">
+                                        <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Tipos de Conocimiento</span>
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                         <hr>
                         <div class="dropdown">
@@ -67,7 +73,9 @@
                                 <span class="ms-1 d-none d-sm-inline">Ajustes</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="{% url 'settings' %}">Ajustes</a></li>
+                                {% if request.user|has_group:"Administracion" or request.user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'settings' %}">Ajustes</a></li>
+                                {% endif %}
                                 <li><a class="dropdown-item" href="#">Ayuda</a></li>
                                 <li><a class="dropdown-item" href="#">Acerca de</a></li>
                                 <li><hr class="dropdown-divider"></li>

@@ -4,6 +4,8 @@ from .models import Forum, Discussion, Message
 from .forms import ForumForm, DiscussionForm, MessageForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from Knowledge.forms import KnowledgeForm
+from Knowledge.models import KnowledgeStep
 
 # Forum views here.
 @login_required()
@@ -128,6 +130,20 @@ def discussion_edit(request, id):
     return render(request, "discussion_edit.html", {'form': form, 'discussion': discussion, 'messages': messages})
 
 @login_required()
+def create_knowledge(request, id):
+    discussion = Discussion.objects.get(id=id)
+    knowledge = False
+    try:
+        knowledge = discussion.create_knowledge()
+        form = KnowledgeForm(request.POST or None, instance=knowledge)
+        steps = KnowledgeStep.objects.filter(knowledge_id=knowledge.id)
+    except Exception as e:
+        if knowledge:
+            knowledge.delete()
+        return render(request, "discussion_details.html", {'discussion': discussion, 'exception': e})
+    return render(request, "knowledge_details.html", {'form': form, 'knowledge': knowledge, 'steps': steps})
+
+@login_required()
 def discussion_delete(request, id):
     discussion = Discussion.objects.get(id=id)
     forum = discussion.forum_id.id
@@ -142,12 +158,12 @@ def discussion_delete(request, id):
 def message_create(request, id):
     form = MessageForm(request.POST or None, files=request.FILES)
     discussion = Discussion.objects.get(id=id)
-    if form.is_valid():
+    if form.is_valid() and request.method == 'POST':
         message = form.save()
         message.created_by = request.user
         message.save()
         return redirect("message_details", id=message.id)
-    elif form.errors:
+    elif form.errors and request.method == 'POST':
         basic_data = {
             'form': form,
             'discussion': discussion,
@@ -159,6 +175,14 @@ def message_create(request, id):
 @login_required()
 def message_details(request, id):
     message = Message.objects.get(id=id)
+    form = DiscussionForm(request.POST or None, instance=message)
+    return render(request, "message_details.html", {'form': form, 'message': message})
+
+@login_required()
+def relevant_message(request, id):
+    message = Message.objects.get(id=id)
+    message.mark_relevant = True
+    message.save()
     form = DiscussionForm(request.POST or None, instance=message)
     return render(request, "message_details.html", {'form': form, 'message': message})
 

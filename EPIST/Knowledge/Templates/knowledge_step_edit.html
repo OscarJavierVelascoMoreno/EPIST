@@ -29,6 +29,7 @@ Editar {{ knowledge_step.title }} - Epist KMS
                 <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
                 <input class="form-control" type="text" id="title" name="title" value="{{ knowledge_step.title }}" required/>
             </section>
+            <input class="form-control" type="text" id="knowledge_id" name="knowledge_id" value='{{ knowledge_step.knowledge_id.id }}' readonly hidden/>
             <div class="my-4">
                 <label class="me-2 form-check-label fw-bold" for="description">Descripción:</label>
                 <textarea name="description" id="description" class="form-control" required>{{ knowledge_step.description }}</textarea>
