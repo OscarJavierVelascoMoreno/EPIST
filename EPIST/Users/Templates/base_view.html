@@ -29,10 +29,24 @@
                             </li>
                             {% if request.user|has_group:"Foro" or request.user.is_staff %}
                                 <li>
-                                    <a href="{% url 'forums_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
-                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Foro">
-                                        <span class="ms-1 d-none d-sm-inline">Foro</span>
+                                    <a href="#submenu_foros" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                                        <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Foros">
+                                        <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Foro</span>
                                     </a>
+                                    <ul class="collapse nav flex-column ms-4" id="submenu_foros" data-bs-parent="#menu">
+                                        <li class="w-100">
+                                            <a href="{% url 'forums_list' %}" class="nav-link px-0">
+                                                <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Foros">
+                                                <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Foros</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'discussions_list' %}" class="nav-link px-0">
+                                                <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Discusiones">
+                                                <span class="ms-1 d-none d-sm-inline fs-5 text-white fw-bold">Discusiones</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             {% endif %}
                             {% if request.user|has_group:"Conocimiento" or request.user.is_staff %}

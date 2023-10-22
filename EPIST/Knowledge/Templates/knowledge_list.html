@@ -1,5 +1,6 @@
 {% extends "base_view.html" %}
 {% load static %}
+{% load user_tags %}
 {% block title %}
 
 Conocimiento - EPIST KMS
@@ -16,10 +17,19 @@ Conocimiento - EPIST KMS
 {% block main_container %}
 
 <div>
-    <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'knowledge_create' %}">
-        <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Conocimiento">
-        <span class="ms-1 fs-5 text-white me-3">Crear Conocimiento</span>
-    </a>
+    <div class="d-flex justify-content-between align-content-between w-100">
+        <a class="btn btn-dark text-white btn-sm d-inline-flex align-items-center" href="{% url 'knowledge_create' %}">
+            <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Conocimiento">
+            <span class="ms-1 fs-5 text-white me-3">Crear Conocimiento</span>
+        </a>
+        <div>
+            <form class="d-flex mt-3 mt-lg-0">
+                {% csrf_token %}
+                <input type="text" name="search" value="{{ title|default_if_none:'' }}" placeholder="Buscar Conocimiento">
+                <button class="btn btn-dark text-white" href="?search=title" type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
 
     <div class="table-responsive mt-5 d-flex justify-content-center">
         <table class="table w-75 table-hover">
@@ -73,7 +83,7 @@ Conocimiento - EPIST KMS
         <ul class="pagination">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    <a class="page-link text-dark" href="?{% url_replace request 'page' page_obj.previous_page_number %}">Anterior</a>
                 </li>
                 <li class="page-item" aria-current="page">
                     <span class="page-link text-dark">{{ page_obj.number|add:"-1" }}</span>
@@ -91,7 +101,7 @@ Conocimiento - EPIST KMS
                     <span class="page-link text-dark">{{ page_obj.number|add:"+1" }}</span>
                 </li>
                 <li class="page-item">
-                    <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    <a class="page-link text-dark" href="?{% url_replace request 'page' page_obj.next_page_number %}">Siguiente</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">

@@ -28,7 +28,7 @@ Crear Conocimiento EPIST KMS
             <section class="my-4 d-lg-inline-flex align-items-center w-100">
                 <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
                 <input class="form-control" type="text" id="title" name="title" value='{{ form.title.value|default_if_none:"" }}' required/>
-                <label class="me-2 form-check-label fw-bold" for="project_id">Proyecto: </label>
+                <label class="mx-2 form-check-label fw-bold" for="project_id">Proyecto: </label>
                 <select class="form-select" name="project_id" id="project_id" required>
                     {% for project in projects %}
                         {% if project_selected and project.id|stringformat:"i" == project_selected %}
@@ -56,8 +56,8 @@ Crear Conocimiento EPIST KMS
                 <textarea name="note" id="note" class="form-control" required>{{ form.note.value|default_if_none:"" }}</textarea>
             </div>
             <div class="d-flex justify-content-center">
-                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
-                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_list' %}">Cancelar</a>
+                <input class="my-2 me-2 btn btn-dark text-white btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'knowledge_list' %}">Cancelar</a>
             </div>
         </form>
     </div>

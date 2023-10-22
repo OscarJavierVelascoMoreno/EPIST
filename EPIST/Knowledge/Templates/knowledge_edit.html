@@ -39,8 +39,8 @@ Editar Conocimiento de Epist KMS
                     {% endfor %}
                 </select>
             </section>
-            <div class="my-4">
-                <label for="type_id">Tipo: </label>
+            <div class="my-4 d-lg-inline-flex align-items-center w-100">
+                <label for="type_id" class="me-2 form-check-label fw-bold">Tipo: </label>
                 <select class="form-select" name="type_id" id="type_id" required>
                     {% for type in types %}
                         {% if type.id == knowledge.type.id %}
@@ -56,8 +56,8 @@ Editar Conocimiento de Epist KMS
                 <textarea name="note" id="note" class="form-control" required>{{ knowledge.note }}</textarea>
             </div>
             <div class="d-flex justify-content-center">
-                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
-                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_details' knowledge.id %}">Cancelar</a>
+                <input class="my-2 me-2 btn btn-dark text-white btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'knowledge_details' knowledge.id %}">Cancelar</a>
             </div>
         </form>
     </div>

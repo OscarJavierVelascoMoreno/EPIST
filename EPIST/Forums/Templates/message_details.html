@@ -19,21 +19,21 @@
 
         <div class="d-flex justify-content-center">
             {% if user.id == message.created_by.id %}
-                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'message_edit' message.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'message_edit' message.id %}">
                     <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Mensaje">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
                 </a>
-                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'message_delete' message.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'message_delete' message.id %}">
                     <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Mensaje">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
                 </a>
             {% elif not message.mark_relevant %}
-                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'relevant_message' message.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'relevant_message' message.id %}">
                     <img width="40" height="32" src="{% static 'Icons/like_icon.svg' %}" alt="Mensaje Relevante">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Marcar como Relevante</span>
                 </a>
             {% endif %}
-            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'discussion_details' message.discussion_id.id  %}" >
+            <a class="btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'discussion_details' message.discussion_id.id  %}" >
                 <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
             </a>

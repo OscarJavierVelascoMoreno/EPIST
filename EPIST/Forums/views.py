@@ -10,7 +10,12 @@ from Knowledge.models import KnowledgeStep
 # Forum views here.
 @login_required()
 def forums_list(request):
-    forums = Forum.objects.all()
+    title = request.GET.get('search')
+    if title:
+        forums = Forum.objects.filter(title__icontains=title)
+    else:
+        forums = Forum.objects.all()
+
     order_forums = forums.order_by('title')
 
     page_num = request.GET.get('page', 1)
@@ -84,6 +89,30 @@ def forum_delete(request, id):
 
 # Discussion views here.
 @login_required()
+def discussions_list(request):
+    title = request.GET.get('search')
+    if title:
+        discussions = Discussion.objects.filter(title__icontains=title)
+    else:
+        discussions = Discussion.objects.all()
+
+    order_discussions = discussions.order_by('title')
+
+    page_num = request.GET.get('page', 1)
+    paginator = Paginator(order_discussions, 4)
+
+    try:
+        page_obj = paginator.page(page_num)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver the first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # if the page is out of range, deliver the last page
+        page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, "discussions_list.html", {'page_obj': page_obj})
+
+@login_required()
 def discussion_create(request, id):
     form = DiscussionForm(request.POST or None)
     forum = Forum.objects.get(id=id)
@@ -111,6 +140,13 @@ def discussion_details(request, id):
     messages = Message.objects.filter(discussion_id=id)
     form = DiscussionForm(request.POST or None, instance=discussion)
     return render(request, "discussion_details.html", {'form': form, 'discussion': discussion, 'messages': messages})
+
+@login_required()
+def discussions_details_list(request, id):
+    discussion = Discussion.objects.get(id=id)
+    messages = Message.objects.filter(discussion_id=id)
+    form = DiscussionForm(request.POST or None, instance=discussion)
+    return render(request, "discussions_details_list.html", {'form': form, 'discussion': discussion, 'messages': messages})
 
 @login_required()
 def discussion_edit(request, id):
