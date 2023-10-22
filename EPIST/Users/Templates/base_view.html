@@ -27,7 +27,7 @@
                                     <span class="ms-1 d-none d-sm-inline">Inicio</span>
                                 </a>
                             </li>
-                            {% if request.user|has_group:"Foro" or request.user.is_staff %}
+                            {% if request.user|has_group:4 or request.user.is_staff %}
                                 <li>
                                     <a href="#submenu_foros" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                         <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/forum_main_icon.svg' %}" alt="Foros">
@@ -49,7 +49,7 @@
                                     </ul>
                                 </li>
                             {% endif %}
-                            {% if request.user|has_group:"Conocimiento" or request.user.is_staff %}
+                            {% if request.user|has_group:3 or request.user.is_staff %}
                                 <li>
                                     <a href="{% url 'knowledge_list' %}" class="nav-link align-middle px-0 link-body-emphasis fs-5 text-white fw-bold d-flex align-items-center">
                                         <img class="bi pe-none me-2" width="40" height="32" src="{% static 'Icons/knowledge_icon.svg' %}" alt="Conocimiento">
@@ -65,7 +65,7 @@
                                 <span class="ms-1 d-none d-sm-inline">Ajustes</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                                {% if request.user|has_group:"Administracion" or request.user.is_staff %}
+                                {% if request.user|has_group:1 or request.user.is_staff %}
                                     <li><a class="dropdown-item" href="{% url 'settings' %}">Ajustes</a></li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="#">Ayuda</a></li>
@@ -73,7 +73,7 @@
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'user_details' user.id %}">Perfil</a></li>
                                 <li><a class="dropdown-item" href="{% url 'user_change_password' user.id %}">Cambiar Contraseña</a></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}" >Cerrar Sesion</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}" >Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     </div>

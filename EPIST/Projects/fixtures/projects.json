@@ -1,0 +1,10 @@
+[
+    {
+      "model": "Projects.Project",
+      "pk": 1,
+      "fields": {
+        "title": "Administración EPIST",
+        "description": "Proyecto para relacionar los conocimiento correspondientes a la Administración del sistema EPIST."
+      }
+    }
+  ]
