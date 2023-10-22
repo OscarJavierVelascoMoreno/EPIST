@@ -11,7 +11,7 @@ def has_group(user, group_name):
     """
     Verifica si este usuario pertenece a um grupo
     """
-    groups = user.groups.all().values_list('name', flat=True)
+    groups = user.groups.all().values_list('id', flat=True)
     return True if group_name in groups else False
 
 @register.simple_tag

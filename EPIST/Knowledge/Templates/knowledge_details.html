@@ -38,7 +38,7 @@
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Enviar a aprobación</span>
                 </a>
             {% endif %}
-            {% if knowledge.state == 'for_approval' and request.user|has_group:"Aprobador" %}
+            {% if knowledge.state == 'for_approval' and request.user|has_group:2 %}
                 <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_approve' knowledge.id %}">
                     <img width="40" height="32" src="{% static 'Icons/send_icon.svg' %}" alt="Aprobar conocimiento">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Aprobar</span>

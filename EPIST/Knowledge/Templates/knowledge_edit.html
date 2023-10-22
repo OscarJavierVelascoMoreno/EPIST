@@ -28,7 +28,7 @@ Editar Conocimiento de Epist KMS
             <section class="my-4 d-lg-inline-flex align-items-center w-100">
                 <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
                 <input class="form-control" type="text" id="title" name="title" value="{{ knowledge.title }}" required/>
-                <label class="me-2 form-check-label fw-bold" for="project_id">Proyecto: </label>
+                <label class="mx-2 form-check-label fw-bold" for="project_id">Proyecto: </label>
                 <select class="form-select" name="project_id" id="project_id" required>
                     {% for project in projects %}
                         {% if project.id == knowledge.project_id.id %}
