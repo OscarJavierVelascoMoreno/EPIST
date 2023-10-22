@@ -7,7 +7,13 @@ from django.contrib.auth.decorators import login_required
 # projects views here.
 @login_required()
 def projects_list(request):
-    projects = Project.objects.all()
+
+    title = request.GET.get('search')
+    if title:
+        projects = Project.objects.filter(title__icontains=title)
+    else:
+        projects = Project.objects.all()
+
     order_projects = projects.order_by('title')
 
     page_num = request.GET.get('page', 1)

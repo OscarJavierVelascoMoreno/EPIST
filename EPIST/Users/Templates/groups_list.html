@@ -1,8 +1,9 @@
 {% extends "base_view_settings.html" %}
 {% load static %}
+{% load user_tags %}
 {% block title %}
 
-Grupos de Usuarios de Epist KMS
+Grupos de Usuarios de EPIST KMS
 
 {% endblock %}
 
@@ -15,78 +16,87 @@ Grupos de Usuarios de Epist KMS
 
 {% block main_container %}
 
-<div class="">
-    <a class="btn btn-dark btn-sm d-inline-flex align-items-center" href="{% url 'group_create' %}">
-        <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Grupo">
-        <span class="ms-1 fs-5 text-white me-3">Crear Grupo</span>
-    </a>
+    <div>
+        <div class="d-flex justify-content-between align-content-between w-100">
+            <a class="btn btn-dark text-white btn-sm d-inline-flex align-items-center" href="{% url 'group_create' %}">
+                <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Grupo">
+                <span class="ms-1 fs-5 text-white me-3">Crear Grupo</span>
+            </a>
+            <div>
+                <form class="d-flex mt-3 mt-lg-0">
+                    {% csrf_token %}
+                    <input type="text" name="search" value="{{ name|default_if_none:'' }}" placeholder="Buscar Grupo">
+                    <button class="btn btn-dark text-white" href="?search=name" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
 
-    <div class="table-responsive mt-5 d-flex justify-content-center">
-        <table class="table w-75 table-hover">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th class="w-50">Nombre</th>
-                    <th class="w-50">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for group_data in page_obj %}
-                <tr>
-                    <td>
-                        <a class="mx-3 text-decoration-none text-black" href="{% url 'group_details' group_data.id %}">
-                            {{ group_data.name }}
-                        </a>
-                    </td>
-                    <td class="text-center">
-                        <div class="d-flex align-content-between justify-content-center">
-                            <a href="{% url 'group_edit' group_data.id %}" class="mx-3 text-decoration-none text-black">
-                                <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Edit group">
-                                Editar
+        <div class="table-responsive mt-5 d-flex justify-content-center">
+            <table class="table w-75 table-hover">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th class="w-50">Nombre</th>
+                        <th class="w-50">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group_data in page_obj %}
+                    <tr>
+                        <td>
+                            <a class="mx-3 text-decoration-none text-black" href="{% url 'group_details' group_data.id %}">
+                                {{ group_data.name }}
                             </a>
-                            <a href="{% url 'group_delete' group_data.id %}" class="mx-3 text-decoration-none text-black">
-                                <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Delete group">
-                                Eliminar
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex align-content-between justify-content-center">
+                                <a href="{% url 'group_edit' group_data.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Edit group">
+                                    Editar
+                                </a>
+                                <a href="{% url 'group_delete' group_data.id %}" class="mx-3 text-decoration-none text-black">
+                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Delete group">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <nav class="d-flex d-inline justify-content-center">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?{% url_replace request 'page' page_obj.previous_page_number %}">Anterior</a>
+                    </li>
+                    <li class="page-item" aria-current="page">
+                        <span class="page-link text-dark">{{ page_obj.number|add:"-1" }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="">Anterior</a>
+                    </li>
+                {% endif %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link bg-black">{{ page_obj.number }}</span>
+                </li>
+                {% if page_obj.has_next %}
+                    <li class="page-item" aria-current="page">
+                        <span class="page-link text-dark">{{ page_obj.number|add:"+1" }}</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link text-dark" href="?{% url_replace request 'page' page_obj.next_page_number %}">Siguiente</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link text-dark" href="">Siguiente</a>
+                    </li>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+
     </div>
-    <nav class="d-flex d-inline justify-content-center">
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link text-dark" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-                </li>
-                <li class="page-item" aria-current="page">
-                    <span class="page-link text-dark">{{ page_obj.number|add:"-1" }}</span>
-                </li>
-            {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link text-dark" href="">Anterior</a>
-                </li>
-            {% endif %}
-            <li class="page-item active" aria-current="page">
-                <span class="page-link bg-black">{{ page_obj.number }}</span>
-            </li>
-            {% if page_obj.has_next %}
-                <li class="page-item" aria-current="page">
-                    <span class="page-link text-dark">{{ page_obj.number|add:"+1" }}</span>
-                </li>
-                <li class="page-item">
-                    <a class="page-link text-dark" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-                </li>
-            {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link text-dark" href="">Siguiente</a>
-                </li>
-            {% endif %}
-            </li>
-        </ul>
-    </nav>
-
-</div>
 
 {% endblock %}

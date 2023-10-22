@@ -19,27 +19,27 @@
     <div class="card card-body">
         <div class="d-flex justify-content-center">
             {% if user.id == knowledge.created_by.id %}
-                <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_edit' knowledge.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'knowledge_edit' knowledge.id %}">
                     <img width="40" height="32" src="{% static 'Icons/edit_icon.svg' %}" alt="Editar Conocimiento">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Editar</span>
                 </a>
-                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_delete' knowledge.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_delete' knowledge.id %}">
                     <img width="40" height="32" src="{% static 'Icons/delete_icon.svg' %}" alt="Eliminar Conocimiento">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Eliminar</span>
                 </a>
             {% endif %}
-            <a class="btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'knowledge_list' %}" >
+            <a class="btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'knowledge_list' %}" >
                 <img width="40" height="32" src="{% static 'Icons/back_icon.svg' %}" alt="Volver">
                 <span class="ms-1 fs-5 text-white me-3 align-middle">Volver</span>
             </a>
             {% if knowledge.state == 'new' and user.id == knowledge.created_by.id%}
-                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_to_approval' knowledge.id %}" >
+                <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_to_approval' knowledge.id %}" >
                     <img width="40" height="32" src="{% static 'Icons/send_icon.svg' %}" alt="Enviar a aprobación">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Enviar a aprobación</span>
                 </a>
             {% endif %}
             {% if knowledge.state == 'for_approval' and request.user|has_group:"Aprobador" %}
-                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_approve' knowledge.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'knowledge_approve' knowledge.id %}">
                     <img width="40" height="32" src="{% static 'Icons/send_icon.svg' %}" alt="Aprobar conocimiento">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Aprobar</span>
                 </a>
@@ -49,7 +49,7 @@
             {% csrf_token %}
             <section class="my-4 d-flex justify-content-md-end">
                 <label class="me-2 form-check-label fw-bold" for="state">Estado:</label>
-                <input class="btn btn-dark" type="text" id="state" name="state" value="{{ knowledge.get_state_display }}" readonly/>
+                <input class="btn btn-dark text-white" type="text" id="state" name="state" value="{{ knowledge.get_state_display }}" readonly/>
             </section>
             <section class="my-4">
                 <label class="me-2 form-check-label fw-bold" for="title">Titulo:</label>
@@ -67,7 +67,7 @@
             </div>
             <div class="card card-body">
                 {% if user.id == knowledge.created_by.id %}
-                    <a class="btn btn-dark m-3 btn-sm align-items-center justify-content-center" href="{% url 'knowledge_step_create' knowledge.id %}">
+                    <a class="btn btn-dark text-white m-3 btn-sm align-items-center justify-content-center" href="{% url 'knowledge_step_create' knowledge.id %}">
                         Crear nuevo paso
                     </a>
                 {% endif %}

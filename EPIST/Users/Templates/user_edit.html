@@ -44,7 +44,7 @@ Editar Usuario de Epist KMS
             </section>
             <section class="my-4 d-lg-inline-flex align-items-center w-100">
                 <input type="password" name="password" value="{{ selected_user.password }}" readonly hidden>
-                <a class="btn btn-dark btn-sm align-items-center mx-3 justify-content-center" href="{% url 'user_change_password' selected_user.id %}">
+                <a class="btn btn-dark text-white btn-sm align-items-center mx-3 justify-content-center" href="{% url 'user_change_password' selected_user.id %}">
                     <img width="40" height="32" src="{% static 'Icons/password_icon.svg' %}" alt="Cambiar contraseña">
                     <span class="ms-1 fs-5 text-white me-3 align-middle">Cambiar contraseña</span>
                 </a>
@@ -76,8 +76,8 @@ Editar Usuario de Epist KMS
                 </div>
             </section>
             <div class="d-flex justify-content-center">
-                <input class="my-2 me-2 btn btn-dark btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
-                <a class="my-2 btn btn-dark btn-sm align-items-center justify-content-center" href="{% url 'user_details' selected_user.id %}">Cancelar</a>
+                <input class="my-2 me-2 btn btn-dark text-white btn-sm align-items-center justify-content-center" type="submit" value="Guardar">
+                <a class="my-2 btn btn-dark text-white btn-sm align-items-center justify-content-center" href="{% url 'user_details' selected_user.id %}">Cancelar</a>
             </div>
         </form>
     </div>

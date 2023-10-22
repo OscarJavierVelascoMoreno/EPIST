@@ -20,7 +20,7 @@
         <form method="post" class="d-flex justify-content-center">
             {% csrf_token %}
             <input class="me-2 btn btn-danger" type="submit" value="Si, eliminar.">
-            <a class="btn btn-dark" type="button" href="{% url 'knowledge_step_details' id %}">No, cancelar</a>
+            <a class="btn btn-dark text-white" type="button" href="{% url 'knowledge_step_details' id %}">No, cancelar</a>
         </form>
     </div>
 

@@ -21,7 +21,13 @@ def settings(request):
 # Users views here.
 @login_required()
 def users_list(request):
-    users = User.objects.all()
+
+    name = request.GET.get('search')
+    if name:
+        users = User.objects.filter(first_name__icontains=name)
+    else:
+        users = User.objects.all()
+
     order_users = users.order_by('first_name')
 
     page_num = request.GET.get('page', 1)
@@ -235,7 +241,13 @@ def page_logout(request):
 # Group views here
 @login_required()
 def groups_list(request):
-    groups = Group.objects.all()
+
+    name = request.GET.get('search')
+    if name:
+        groups = Group.objects.filter(name__icontains=name)
+    else:
+        groups = Group.objects.all()
+
     order_groups = groups.order_by('name')
 
     page_num = request.GET.get('page', 1)

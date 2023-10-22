@@ -1,61 +1,70 @@
-{% extends "base_view_settings.html" %}
+{% extends "base_view.html" %}
 {% load static %}
 {% load user_tags %}
 {% block title %}
 
-Tipos de Conocimiento EPIST KMS
+Discusiones - EPIST KMS
 
 {% endblock %}
 
 {% block content_header %}
 
 <h1>Hola, {{ user.first_name }}</h1>
-<h3>Aquí puedes ver todos los Tipos de Conocimiento registrados en el sistema.</h3>
+<h3>Aquí puedes ver todos los discusiones en el sistema.</h3>
 
 {% endblock %}
 
 {% block main_container %}
 
     <div>
-        <div class="d-flex justify-content-between align-content-between w-100">
-            <a class="btn btn-dark text-white btn-sm d-inline-flex align-items-center" href="{% url 'knowledge_type_create' %}">
-                <img width="40" height="32" src="{% static 'Icons/create_icon.svg' %}" alt="Crear Tipo de Conocimiento">
-                <span class="ms-1 fs-5 text-white me-3">Crear Tipo de Conocimiento</span>
-            </a>
-            <div>
-                <form class="d-flex mt-3 mt-lg-0">
-                    {% csrf_token %}
-                    <input type="text" name="search" value="{{ title|default_if_none:'' }}" placeholder="Buscar Tipo de Conocimiento">
-                    <button class="btn btn-dark text-white" href="?search=title" type="submit">Buscar</button>
-                </form>
-            </div>
+        <div class="d-flex justify-content-end">
+            <form class="d-flex mt-3 mt-lg-0">
+                {% csrf_token %}
+                <input type="text" name="search" value="{{ title|default_if_none:'' }}" placeholder="Buscar Discusión">
+                <button class="btn btn-dark text-white" href="?search=title" type="submit">Buscar</button>
+            </form>
         </div>
+
         <div class="table-responsive mt-5 d-flex justify-content-center">
             <table class="table w-75 table-hover">
                 <thead class="table-dark">
                     <tr class="text-center">
-                        <th class="w-50">Título</th>
-                        <th class="w-50">Acciones</th>
+                        <th class="w-25">Nombre</th>
+                        <th class="w-25">Foro</th>
+                        <th class="w-25">Proyecto</th>
+                        <th class="w-25">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for knowledge_type in page_obj %}
+                    {% for discussion in page_obj %}
                     <tr>
                         <td>
-                            <a class="mx-3 text-decoration-none text-black" href="{% url 'knowledge_type_details' knowledge_type.id %}">
-                                {{knowledge_type.title}}
+                            <a  class="mx-3 text-decoration-none text-black" href="{% url 'discussions_details_list' discussion.id %}">
+                                {{discussion.title}}
+                            </a>
+                        </td>
+                        <td>
+                            <a  class="mx-3 text-decoration-none text-black" href="{% url 'discussions_details_list' discussion.id %}">
+                                {{discussion.forum_id}}
+                            </a>
+                        </td>
+                        <td>
+                            <a  class="mx-3 text-decoration-none text-black" href="{% url 'discussions_details_list' discussion.id %}">
+                                {{discussion.project_id}}
                             </a>
                         </td>
                         <td class="text-center">
                             <div class="d-flex align-content-between justify-content-center">
-                                <a href="{% url 'knowledge_type_edit' knowledge_type.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Tipo de Conocimiento">
-                                    Editar
-                                </a>
-                                <a href="{% url 'knowledge_type_delete' knowledge_type.id %}" class="mx-3 text-decoration-none text-black">
-                                    <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Tipo de Conocimiento">
-                                    Eliminar
-                                </a>
+                                {% if user.id == discussion.created_by.id %}
+                                    <a href="{% url 'discussion_edit' discussion.id %}" class="mx-3 text-decoration-none text-black">
+                                        <img width="40" height="32" src="{% static 'Icons/edit_icon_list.svg' %}" alt="Editar Discusión">
+                                        Editar
+                                    </a>
+                                    <a href="{% url 'discussion_delete' discussion.id %}" class="mx-3 text-decoration-none text-black">
+                                        <img width="40" height="32" src="{% static 'Icons/delete_list_icon.svg' %}" alt="Eliminar Discusión">
+                                        Eliminar
+                                    </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

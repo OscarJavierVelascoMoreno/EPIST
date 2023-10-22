@@ -8,7 +8,13 @@ from django.contrib.auth.decorators import login_required
 # Knowledge views here.
 @login_required()
 def knowledge_list(request):
-    knowledge = Knowledge.objects.all()
+
+    title = request.GET.get('search')
+    if title:
+        knowledge = Knowledge.objects.filter(title__icontains=title)
+    else:
+        knowledge = Knowledge.objects.all()
+
     order_knowledge = knowledge.order_by('title')
 
     page_num = request.GET.get('page', 1)
@@ -147,7 +153,13 @@ def knowledge_step_delete(request, id):
 # Knowledge Type views here.
 @login_required()
 def knowledge_types_list(request):
-    knowledge_type = KnowledgeType.objects.all()
+
+    title = request.GET.get('search')
+    if title:
+        knowledge_type = KnowledgeType.objects.filter(title__icontains=title)
+    else:
+        knowledge_type = KnowledgeType.objects.all()
+
     order_knowledge_type = knowledge_type.order_by('title')
 
     page_num = request.GET.get('page', 1)
